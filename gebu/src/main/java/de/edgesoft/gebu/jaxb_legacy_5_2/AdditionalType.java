@@ -1,5 +1,5 @@
 
-package de.edgesoft.gebu.jaxb_legacy;
+package de.edgesoft.gebu.jaxb_legacy_5_2;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;

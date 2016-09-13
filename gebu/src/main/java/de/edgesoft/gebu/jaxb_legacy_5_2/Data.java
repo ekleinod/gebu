@@ -1,5 +1,5 @@
 
-package de.edgesoft.gebu.jaxb_legacy;
+package de.edgesoft.gebu.jaxb_legacy_5_2;
 
 import java.util.ArrayList;
 import java.util.List;

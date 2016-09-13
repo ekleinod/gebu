@@ -41,8 +41,8 @@ along with "Das Gebu-Programm".  If not, see <http://www.gnu.org/licenses/>.
 	<property name="local:bindings3" value="${ant.project.name}.xjb" />
 
 	<property name="legacy:xsd" value="${ant.project.name}-legacy-5.2.xsd" />
-	<property name="legacy:package" value="de.edgesoft.${ant.project.name}.jaxb_legacy" />
-	<property name="legacy:packagepath" value="${local:outpath}de/edgesoft/${ant.project.name}/jaxb_legacy/" />
+	<property name="legacy:package" value="de.edgesoft.${ant.project.name}.jaxb_legacy_5_2" />
+	<property name="legacy:packagepath" value="${local:outpath}de/edgesoft/${ant.project.name}/jaxb_legacy_5_2/" />
 	<property name="legacy:bindings3" value="${ant.project.name}-legacy-5.2.xjb" />
 
 	<target name="model" description="Removes, then generates the gebu and gebu-legacy model classes from xsd.">

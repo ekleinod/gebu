@@ -1,4 +1,4 @@
-package de.edgesoft.gebu.jaxb_legacy;
+package de.edgesoft.gebu.jaxb_legacy_5_2;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
