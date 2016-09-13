@@ -28,18 +28,21 @@ along with "Das Gebu-Programm".  If not, see <http://www.gnu.org/licenses/>.
 -->
 
 <jxb:bindings xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
-	jxb:version="2.1">
+							xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+							xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+							jxb:version="2.1">
 
 	<!-- bindings -->
-	<jxb:bindings schemaLocation="gebu.xsd">
+	<!--jxb:globalBindings-->
 
-		<!-- implementing classes -->
-		<!--jxb:bindings node="//xsd:complexType[@name='Event']">
-			<jxb:class implClass="de.edgesoft.gebu.model.EventModel" />
-		</jxb:bindings-->
+		<!-- date adapter with special format -->
+		<!--xjc:javaType
+			adapter="de.edgesoft.gebu.jaxb-legacy.model.LocalDateAdapter"
+			name="java.time.LocalDate"
+			xmlType="xsd:date"
+		/-->
 
-	</jxb:bindings>
+	<!--/jxb:globalBindings-->
 
 </jxb:bindings>
 

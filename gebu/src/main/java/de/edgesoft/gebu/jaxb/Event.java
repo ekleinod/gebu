@@ -25,7 +25,7 @@ import de.edgesoft.edgeutils.commons.ext.LocalDateAdapter;
  *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="eventtype" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="date" type="{http://www.w3.org/2001/XMLSchema}date"/>
- *         &lt;element name="category" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="category" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -53,7 +53,6 @@ public class Event
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
     @XmlSchemaType(name = "date")
     protected LocalDate date;
-    @XmlElement(required = true)
     protected String category;
 
     /**

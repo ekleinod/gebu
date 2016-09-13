@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<gebu>
+    <info>
+        <created>2016-09-13T23:00:04.174</created>
+        <modified>2016-09-14T01:00:04.183</modified>
+        <docversion>
+            <major>6</major>
+            <minor>0</minor>
+            <patch>0</patch>
+        </docversion>
+        <appversion>
+            <major>6</major>
+            <minor>0</minor>
+            <patch>0</patch>
+        </appversion>
+        <creator>de.edgesoft.gebu.jaxb.GebuTest</creator>
+    </info>
+    <content>
+        <event>
+            <title>Johann Wolfgang von Goethe</title>
+            <eventtype>Geburtstag</eventtype>
+            <date>1749-08-28</date>
+            <category>Dichter</category>
+        </event>
+        <event>
+            <title>Johann Wolfgang von Goethe</title>
+            <eventtype>Todestag</eventtype>
+            <date>1832-02-22</date>
+            <category>Dichter</category>
+        </event>
+        <event>
+            <title>Friedrich Schiller</title>
+            <eventtype>Geburtstag</eventtype>
+            <date>1759-11-10</date>
+            <category>Dichter</category>
+        </event>
+        <event>
+            <title>Charlotte von Lengefeld</title>
+            <eventtype>Geburtstag</eventtype>
+            <date>1766-11-22</date>
+        </event>
+        <event>
+            <title>Die Schillers</title>
+            <eventtype>Hochzeitstag</eventtype>
+            <date>1790-02-22</date>
+            <category>Dichterehen</category>
+        </event>
+    </content>
+</gebu>
