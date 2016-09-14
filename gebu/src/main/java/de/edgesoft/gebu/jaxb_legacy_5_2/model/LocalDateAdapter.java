@@ -1,7 +1,8 @@
 package de.edgesoft.gebu.jaxb_legacy_5_2.model;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+
+import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 
 /**
  * Adapter for LocalDate.
@@ -31,14 +32,12 @@ import java.time.format.DateTimeFormatter;
  */
 public class LocalDateAdapter {
 
-	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-
     public static LocalDate unmarshal(String value) {
-        return LocalDate.parse(value, formatter);
+        return DateTimeUtils.parseDate(value);
     }
 
     public static String marshal(LocalDate value) {
-        return value.format(formatter);
+        return DateTimeUtils.formatDate(value);
     }
 
 }
