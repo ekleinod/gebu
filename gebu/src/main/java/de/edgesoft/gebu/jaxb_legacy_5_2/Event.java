@@ -9,7 +9,6 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import de.edgesoft.edgeutils.commons.ModelClass;
-import de.edgesoft.edgeutils.commons.ext.LocalDateAdapter;
 
 
 /**
@@ -50,7 +49,7 @@ public class Event
     @XmlElement(required = true)
     protected String eventname;
     @XmlElement(required = true, type = String.class)
-    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    @XmlJavaTypeAdapter(Adapter2 .class)
     @XmlSchemaType(name = "date")
     protected LocalDate date;
     @XmlElement(required = true)

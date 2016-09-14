@@ -66,7 +66,7 @@ public class GebuTest {
 	public ExpectedException exception = ExpectedException.none();
 
 	/**
-	 * Tests marshalling.
+	 * Tests marshalling and unmarshalling.
 	 */
 	@Test
 	public void testMarshalFile() throws Exception {
@@ -121,6 +121,13 @@ public class GebuTest {
 		content.getEvent().add(event);
 		
 		JAXBFiles.marshal(new ObjectFactory().createGebu(gebu), FILENAME, null);
+
+
+		
+		Gebu readGebu = JAXBFiles.unmarshal(FILENAME, Gebu.class);
+		
+		Assert.assertEquals(5, readGebu.getContent().getEvent().size());
+		Assert.assertEquals(LocalDate.of(1749, 8, 28), readGebu.getContent().getEvent().stream().findFirst().get().getDate());
 
 	}
 

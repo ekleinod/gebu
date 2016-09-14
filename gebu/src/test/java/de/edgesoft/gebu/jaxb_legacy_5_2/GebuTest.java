@@ -115,6 +115,13 @@ public class GebuTest {
 		
 		JAXBFiles.marshal(new ObjectFactory().createGebu(gebu), FILENAME, null);
 
+
+		
+		Gebu readGebu = JAXBFiles.unmarshal(FILENAME, Gebu.class);
+		
+		Assert.assertEquals(5, readGebu.getData().getEvent().size());
+		Assert.assertEquals(LocalDate.of(1749, 8, 28), readGebu.getData().getEvent().stream().findFirst().get().getDate());
+
 	}
 
 }
