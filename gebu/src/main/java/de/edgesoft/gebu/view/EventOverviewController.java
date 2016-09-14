@@ -2,6 +2,7 @@ package de.edgesoft.gebu.view;
 
 import java.time.LocalDate;
 
+import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.gebu.Gebu;
 import de.edgesoft.gebu.jaxb.Event;
 import de.edgesoft.gebu.jaxb.model.ContentModel;
@@ -148,10 +149,18 @@ public class EventOverviewController {
 	 */
 	@FXML
 	private void initialize() {
+		
+		// hook data to columns
 		colTitle.setCellValueFactory(cellData -> cellData.getValue().getTitleProperty());
 		colDate.setCellValueFactory(cellData -> cellData.getValue().getDateProperty());
 		colEventtype.setCellValueFactory(cellData -> cellData.getValue().getEventtypeProperty());
 		colCategory.setCellValueFactory(cellData -> cellData.getValue().getCategoryProperty());
+		
+		// clear event details
+		showEventDetails(null);
+		
+		// listen to selection changes, show event
+		tblEvents.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showEventDetails(newValue));
 	}
 	
 	/**
@@ -167,6 +176,34 @@ public class EventOverviewController {
         tblEvents.setItems(((ContentModel) appGebu.getGebuData().getContent()).getObservableEvents());
         Gebu.logger.debug(String.format("Table loaded with %d items.", tblEvents.getItems().size()));
     }
+	
+	/**
+	 * Shows selected event data in detail window.
+	 * 
+	 * @param theEvent event (null if none is selected)
+	 * 
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	private void showEventDetails(final Event theEvent) {
+		
+	    if (theEvent == null) {
+	    	
+	        lblTitle.setText("");
+	        lblDate.setText("");
+	        lblEventtype.setText("");
+	        lblCategory.setText("");
+
+	    } else {
+	    	
+	        lblTitle.setText(theEvent.getTitle());
+	        lblDate.setText(DateTimeUtils.formatDate(theEvent.getDate()));
+	        lblEventtype.setText(theEvent.getEventtype());
+	        lblCategory.setText(theEvent.getCategory());
+
+	    }
+	    
+	}
 	
 }
 
