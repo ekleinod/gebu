@@ -1,15 +1,13 @@
-package de.edgesoft.gebu.jaxb_legacy.model;
+package de.edgesoft.gebu.jaxb_legacy_5_2.model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
-
 /**
  * Adapter for LocalDate.
- * 
+ *
  * ## Legal stuff
- * 
+ *
  * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of "Das Gebu-Programm".
@@ -31,20 +29,18 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  * @version 6.0.0
  * @since 6.0.0
  */
-public class LocalDateAdapter extends XmlAdapter<String, LocalDate> {
-	
-	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+public class LocalDateAdapter {
 
-	@Override
-    public LocalDate unmarshal(String value) throws Exception {
+	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
+    public static LocalDate unmarshal(String value) {
         return LocalDate.parse(value, formatter);
     }
-	
-	@Override
-    public String marshal(LocalDate value) throws Exception {
+
+    public static String marshal(LocalDate value) {
         return value.format(formatter);
     }
-	
+
 }
 
 /* EOF */

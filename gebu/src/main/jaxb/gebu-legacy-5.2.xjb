@@ -33,16 +33,21 @@ along with "Das Gebu-Programm".  If not, see <http://www.gnu.org/licenses/>.
 							jxb:version="2.1">
 
 	<!-- bindings -->
-	<!--jxb:globalBindings-->
+	<jxb:bindings schemaLocation="gebu-legacy-5.2.xsd">
 
 		<!-- date adapter with special format -->
-		<!--xjc:javaType
-			adapter="de.edgesoft.gebu.jaxb-legacy.model.LocalDateAdapter"
-			name="java.time.LocalDate"
-			xmlType="xsd:date"
-		/-->
+		<jxb:bindings node="//xsd:element[@name='date']">
+			<jxb:property>
+				<jxb:baseType>
+					<jxb:javaType name="java.time.LocalDate"
+						parseMethod="de.edgesoft.gebu.jaxb_legacy_5_2.model.LocalDateAdapter.unmarshal"
+						printMethod="de.edgesoft.gebu.jaxb_legacy_5_2.model.LocalDateAdapter.marshal"
+					/>
+				</jxb:baseType>
+			</jxb:property>
+		</jxb:bindings>
 
-	<!--/jxb:globalBindings-->
+	</jxb:bindings>
 
 </jxb:bindings>
 
