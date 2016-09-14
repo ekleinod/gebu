@@ -2,6 +2,12 @@ package de.edgesoft.gebu;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import de.edgesoft.edgeutils.EdgeUtilsException;
+import de.edgesoft.edgeutils.files.JAXBFiles;
+import de.edgesoft.gebu.view.EventOverviewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -37,6 +43,17 @@ import javafx.stage.Stage;
  */
 public class Gebu extends Application {
 	
+	/** Central logger for all classes. */
+	public static final Logger logger = LogManager.getLogger(Gebu.class.getPackage().getName());
+	
+	/**
+	 * Gebu event data.
+	 * 	
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	private de.edgesoft.gebu.jaxb.Gebu dtaGebu = null;
+
 	/**
 	 * Primary stage.
 	 * 	
@@ -66,17 +83,20 @@ public class Gebu extends Application {
 	}
 	
 	/**
-     * Returns the main stage.
-     * 
-     * @return primary stage
+	 * Constructor.
 	 * 
 	 * @version 6.0.0
 	 * @since 6.0.0
-     */
-    public Stage getPrimaryStage() {
-        return stgPrimary;
-    }
-
+	 */
+	public Gebu() {
+		// this is for debugging only, run GebuTest in order to create test file
+		try {
+			dtaGebu = JAXBFiles.unmarshal("src/test/resources/de.edgesoft.gebu.jaxb.gebutest.xml", de.edgesoft.gebu.jaxb.Gebu.class);
+		} catch (EdgeUtilsException e) {
+			e.printStackTrace();
+		}
+	}
+	
     /**
      * The main entry point for all JavaFX applications.
      * The start method is called after the init method has returned,
@@ -138,9 +158,37 @@ public class Gebu extends Application {
             // Set event overview into the center of root layout.
             pneAppLayout.setCenter(eventOverview);
             
+            // Give the controller access to the app.
+            EventOverviewController controller = loader.getController();
+            controller.setGebuApp(this);
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+	/**
+     * Returns the main stage.
+     * 
+     * @return primary stage
+	 * 
+	 * @version 6.0.0
+	 * @since 6.0.0
+     */
+    public Stage getPrimaryStage() {
+        return stgPrimary;
+    }
+
+	/**
+     * Returns gebu data.
+     * 
+     * @return gebu data
+	 * 
+	 * @version 6.0.0
+	 * @since 6.0.0
+     */
+    public de.edgesoft.gebu.jaxb.Gebu getGebuData() {
+        return dtaGebu;
     }
 
 }

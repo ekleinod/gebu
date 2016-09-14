@@ -6,6 +6,8 @@ import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.namespace.QName;
 import de.edgesoft.edgeutils.commons.Info;
+import de.edgesoft.gebu.jaxb.model.ContentModel;
+import de.edgesoft.gebu.jaxb.model.EventModel;
 
 
 /**
@@ -48,7 +50,7 @@ public class ObjectFactory {
      * 
      */
     public Content createContent() {
-        return new Content();
+        return new ContentModel();
     }
 
     /**
@@ -56,7 +58,7 @@ public class ObjectFactory {
      * 
      */
     public Event createEvent() {
-        return new Event();
+        return new EventModel();
     }
 
     /**

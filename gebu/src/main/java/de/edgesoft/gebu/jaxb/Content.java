@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import de.edgesoft.edgeutils.commons.ModelClass;
+import de.edgesoft.gebu.jaxb.model.EventModel;
 
 
 /**
@@ -37,7 +38,7 @@ public class Content
     extends ModelClass
 {
 
-    @XmlElement(required = true)
+    @XmlElement(required = true, type = EventModel.class)
     protected List<Event> event;
 
     /**

@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import de.edgesoft.edgeutils.commons.Info;
 import de.edgesoft.edgeutils.commons.ModelClass;
+import de.edgesoft.gebu.jaxb.model.ContentModel;
 
 
 /**
@@ -43,8 +44,8 @@ public class Gebu
 
     @XmlElement(required = true)
     protected Info info;
-    @XmlElement(required = true)
-    protected Content content;
+    @XmlElement(required = true, type = ContentModel.class)
+    protected ContentModel content;
     @XmlAttribute(name = "base", namespace = "http://www.w3.org/XML/1998/namespace")
     @XmlSchemaType(name = "anyURI")
     protected String base;
@@ -94,7 +95,7 @@ public class Gebu
      *     
      */
     public void setContent(Content value) {
-        this.content = value;
+        this.content = ((ContentModel) value);
     }
 
     /**
