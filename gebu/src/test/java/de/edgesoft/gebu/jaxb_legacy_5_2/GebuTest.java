@@ -67,53 +67,55 @@ public class GebuTest {
 	 */
 	@Test
 	public void testMarshalFile() throws Exception {
-
-		Gebu gebu = new Gebu();
 		
-		Program program = new Program();
+		ObjectFactory factory = new ObjectFactory();
+
+		Gebu gebu = factory.createGebu();
+		
+		Program program = factory.createProgram();
 		program.setName(GebuTest.class.getCanonicalName());
 		program.setVersion("6.0.0");
 		
 		gebu.setProgram(program);
 		
-		Data data = new Data();
+		Data data = factory.createData();
 		gebu.setData(data);
 		
-		Event event = new Event();
+		Event event = factory.createEvent();
 		event.setDescription("Johann Wolfgang von Goethe");
 		event.setEventname("Geburtstag");
 		event.setDate(LocalDate.of(1749, 8, 28));
 		event.setCategory("Dichter");
 		data.getEvent().add(event);
 		
-		event = new Event();
+		event = factory.createEvent();
 		event.setDescription("Johann Wolfgang von Goethe");
 		event.setEventname("Todestag");
 		event.setDate(LocalDate.of(1832, 2, 22));
 		event.setCategory("Dichter");
 		data.getEvent().add(event);
 		
-		event = new Event();
+		event = factory.createEvent();
 		event.setDescription("Friedrich Schiller");
 		event.setEventname("Geburtstag");
 		event.setDate(LocalDate.of(1759, 11, 10));
 		event.setCategory("Dichter");
 		data.getEvent().add(event);
 		
-		event = new Event();
+		event = factory.createEvent();
 		event.setDescription("Charlotte von Lengefeld");
 		event.setEventname("Geburtstag");
 		event.setDate(LocalDate.of(1766, 11, 22));
 		data.getEvent().add(event);
 		
-		event = new Event();
+		event = factory.createEvent();
 		event.setDescription("Die Schillers");
 		event.setEventname("Hochzeitstag");
 		event.setDate(LocalDate.of(1790, 2, 22));
 		event.setCategory("Dichterehen");
 		data.getEvent().add(event);
 		
-		JAXBFiles.marshal(new ObjectFactory().createGebu(gebu), FILENAME, null);
+		JAXBFiles.marshal(factory.createGebu(gebu), FILENAME, null);
 
 
 		

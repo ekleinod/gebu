@@ -36,11 +36,11 @@ along with "Das Gebu-Programm".  If not, see <http://www.gnu.org/licenses/>.
 
 		<!-- implementing classes -->
 		<jxb:bindings node="//xsd:complexType[@name='Event']">
-			<jxb:class implClass="de.edgesoft.gebu.jaxb.model.EventModel" />
+			<jxb:class implClass="de.edgesoft.gebu.model.EventModel" />
 		</jxb:bindings>
 
 		<jxb:bindings node="//xsd:complexType[@name='Content']">
-			<jxb:class implClass="de.edgesoft.gebu.jaxb.model.ContentModel" />
+			<jxb:class implClass="de.edgesoft.gebu.model.ContentModel" />
 		</jxb:bindings>
 
 	</jxb:bindings>

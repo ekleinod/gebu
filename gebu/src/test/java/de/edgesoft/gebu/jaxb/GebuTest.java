@@ -122,7 +122,7 @@ public class GebuTest {
 		event.setCategory("Dichterehen");
 		content.getEvent().add(event);
 
-		JAXBFiles.marshal(new ObjectFactory().createGebu(gebu), FILENAME, null);
+		JAXBFiles.marshal(factory.createGebu(gebu), FILENAME, null);
 
 
 
