@@ -13,6 +13,7 @@ import de.edgesoft.gebu.view.EventOverviewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -136,8 +137,12 @@ public class Gebu extends Application {
      */
 	@Override
 	public void start(Stage primaryStage) {
+
 		stgPrimary = primaryStage;
         stgPrimary.setTitle("Das Gebu-Programm");
+
+        // set icon
+        this.stgPrimary.getIcons().add(new Image("file:src/main/resources/images/icon-32.png"));
 
         initAppLayout();
 
