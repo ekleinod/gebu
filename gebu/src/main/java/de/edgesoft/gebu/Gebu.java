@@ -1,18 +1,30 @@
 package de.edgesoft.gebu;
 
 import java.io.IOException;
+import java.text.MessageFormat;
+import java.time.LocalDateTime;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.edgesoft.edgeutils.EdgeUtilsException;
+import de.edgesoft.edgeutils.commons.Info;
+import de.edgesoft.edgeutils.commons.Version;
+import de.edgesoft.edgeutils.commons.ext.VersionExt;
 import de.edgesoft.edgeutils.files.JAXBFiles;
+import de.edgesoft.gebu.jaxb.Content;
 import de.edgesoft.gebu.jaxb.Event;
+import de.edgesoft.gebu.jaxb.ObjectFactory;
+import de.edgesoft.gebu.utils.PrefKey;
+import de.edgesoft.gebu.utils.Prefs;
+import de.edgesoft.gebu.view.AppLayoutController;
 import de.edgesoft.gebu.view.EventEditDialogController;
 import de.edgesoft.gebu.view.EventOverviewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -49,6 +61,9 @@ public class Gebu extends Application {
 
 	/** Central logger for all classes. */
 	public static final Logger logger = LogManager.getLogger(Gebu.class.getPackage().getName());
+	
+	/** Program and doc version. */
+	public static final Version VERSION = new VersionExt("6.0.0");
 
 	/**
 	 * Gebu event data.
@@ -117,12 +132,7 @@ public class Gebu extends Application {
 	 * @since 6.0.0
 	 */
 	public Gebu() {
-		// this is for debugging only, run GebuTest in order to create test file
-		try {
-			dtaGebu = JAXBFiles.unmarshal("src/test/resources/de.edgesoft.gebu.jaxb.gebutest.xml", de.edgesoft.gebu.jaxb.Gebu.class);
-		} catch (EdgeUtilsException e) {
-			e.printStackTrace();
-		}
+		// nothing to do so far
 	}
 
     /**
@@ -146,6 +156,8 @@ public class Gebu extends Application {
 
         initAppLayout();
 
+        initData();
+
         showEventOverview();
 	}
 
@@ -167,10 +179,139 @@ public class Gebu extends Application {
             Scene scene = new Scene(pneAppLayout);
             stgPrimary.setScene(scene);
             stgPrimary.show();
+            
+            // Give the controller access to the main app.
+            AppLayoutController controller = loader.getController();
+            controller.setGebuApp(this);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+	/**
+	 * Initializes the data.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	private void initData() {
+
+		if (Prefs.get(PrefKey.FILE).isEmpty()) {
+			newData();
+		} else {
+			openData(Prefs.get(PrefKey.FILE));			
+		}
+		
+    }
+
+	/**
+	 * Sets the file name.
+	 * 
+	 * @param theFilename filename
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	private void setFilename(final String theFilename) {
+
+		if (theFilename == null) {
+			stgPrimary.setTitle("Das Gebu-Programm");
+			Prefs.put(PrefKey.FILE, "");
+		} else {
+			stgPrimary.setTitle(MessageFormat.format("Das Gebu-Programm - {0}", theFilename));
+			Prefs.put(PrefKey.FILE, theFilename);
+		}
+		
+    }
+
+	/**
+	 * Creates new data.
+	 * 
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public void newData() {
+
+		dtaGebu = new ObjectFactory().createGebu();
+
+		Info info = new de.edgesoft.edgeutils.commons.ObjectFactory().createInfo();
+
+		info.setCreated(LocalDateTime.now());
+		info.setModified(LocalDateTime.now());
+		info.setAppversion(VERSION);
+		info.setDocversion(VERSION);
+		info.setCreator(Gebu.class.getCanonicalName());
+
+		dtaGebu.setInfo(info);
+
+		Content content = new ObjectFactory().createContent();
+		dtaGebu.setContent(content);
+		
+		setFilename(null);
+    }
+
+	/**
+	 * Loads the data.
+	 * 
+	 * @param theFilename filename
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public void openData(final String theFilename) {
+
+		try {
+			
+			dtaGebu = JAXBFiles.unmarshal(theFilename, de.edgesoft.gebu.jaxb.Gebu.class);
+			setFilename(theFilename);
+			
+		} catch (EdgeUtilsException e) {
+			
+	        Alert alert = new Alert(AlertType.ERROR);
+	        alert.initOwner(stgPrimary);
+	        alert.setTitle("Datenfehler");
+	        alert.setHeaderText("Ein Fehler ist beim Laden der Gebu-Daten aufgetreten.");
+	        alert.setContentText(MessageFormat.format("{0}\nDas Programm wird ohne Daten gestartet.", e.getMessage()));
+
+	        alert.showAndWait();
+	        
+	        newData();
+			
+		}
+		
+    }
+
+	/**
+	 * Saves the data.
+	 * 
+	 * @param theFilename filename
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public void saveData(final String theFilename) {
+
+		try {
+			
+			dtaGebu.getInfo().setModified(LocalDateTime.now());
+			
+			JAXBFiles.marshal(new ObjectFactory().createGebu(dtaGebu), theFilename, null);
+			
+			setFilename(theFilename);
+			
+		} catch (EdgeUtilsException e) {
+			
+	        Alert alert = new Alert(AlertType.ERROR);
+	        alert.initOwner(stgPrimary);
+	        alert.setTitle("Datenfehler");
+	        alert.setHeaderText("Ein Fehler ist beim Speichern der Gebu-Daten aufgetreten.");
+	        alert.setContentText(MessageFormat.format("{0}\nDie Daten wurden nicht gespeichert.", e.getMessage()));
+
+	        alert.showAndWait();
+	        
+		}
+		
     }
 
 	/**
