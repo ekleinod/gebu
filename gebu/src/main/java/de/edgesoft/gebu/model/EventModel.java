@@ -2,6 +2,8 @@ package de.edgesoft.gebu.model;
 
 import java.time.LocalDate;
 
+import javax.xml.bind.annotation.XmlTransient;
+
 import de.edgesoft.gebu.jaxb.Event;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -40,9 +42,13 @@ import javafx.beans.property.StringProperty;
 public class EventModel extends Event {
 
 	// undocumented property code (self explanatory to a certain extent)
+	@XmlTransient
     private StringProperty titleProperty = new SimpleStringProperty();
+	@XmlTransient
     private ObjectProperty<LocalDate> dateProperty = new SimpleObjectProperty<>();
+	@XmlTransient
     private StringProperty eventtypeProperty = new SimpleStringProperty();
+	@XmlTransient
     private StringProperty categoryProperty = new SimpleStringProperty();
     
     public StringProperty getTitleProperty() {

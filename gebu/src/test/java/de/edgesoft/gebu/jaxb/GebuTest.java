@@ -126,10 +126,10 @@ public class GebuTest {
 
 
 
-//		Gebu readGebu = JAXBFiles.unmarshal(FILENAME, Gebu.class);
-//
-//		Assert.assertEquals(5, readGebu.getContent().getEvent().size());
-//		Assert.assertEquals(LocalDate.of(1749, 8, 28), readGebu.getContent().getEvent().stream().findFirst().get().getDate());
+		Gebu readGebu = JAXBFiles.unmarshal(FILENAME, Gebu.class);
+
+		Assert.assertEquals(5, readGebu.getContent().getEvent().size());
+		Assert.assertEquals(LocalDate.of(1749, 8, 28), readGebu.getContent().getEvent().stream().findFirst().get().getDate());
 
 	}
 
