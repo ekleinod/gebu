@@ -136,12 +136,9 @@ public class EventEditDialogController {
         currentEvent = theEvent;
 
         txtTitle.setText(theEvent.getTitle());
-        txtTitle.setPromptText("Titel eingeben");
         pickDate.setValue(theEvent.getDate());
         cboEventtype.setValue(theEvent.getEventtype());
-        cboEventtype.setPromptText("Ereignisart eingeben oder auswählen");
         cboCategory.setValue(theEvent.getCategory());
-        cboCategory.setPromptText("Kategorie eingeben oder auswählen");
 
     }
 
@@ -215,20 +212,19 @@ public class EventEditDialogController {
 
         if (sbErrorMessage.length() == 0) {
             return true;
-        } else {
-
-            // Show the error message.
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.initOwner(dialogStage);
-            alert.setTitle("Ungültige Eingaben");
-            alert.setHeaderText("Bitte korrigieren Sie die fehlerhaften Eingaben.");
-            alert.setContentText(sbErrorMessage.toString());
-
-            alert.showAndWait();
-
-            return false;
-
         }
+
+        // Show the error message.
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.initOwner(dialogStage);
+        alert.setTitle("Ungültige Eingaben");
+        alert.setHeaderText("Bitte korrigieren Sie die fehlerhaften Eingaben.");
+        alert.setContentText(sbErrorMessage.toString());
+
+        alert.showAndWait();
+
+        return false;
+
     }
 
 }

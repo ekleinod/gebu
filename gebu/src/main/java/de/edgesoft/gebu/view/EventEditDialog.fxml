@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.gebu.view.EventEditDialogController">
+<AnchorPane prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.gebu.view.EventEditDialogController">
    <children>
       <GridPane layoutX="88.0" layoutY="154.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
         <columnConstraints>
@@ -35,7 +35,7 @@
             <ComboBox fx:id="cboCategory" editable="true" prefWidth="150.0" promptText="eingeben oder auswählen" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
-      <ButtonBar layoutX="286.0" layoutY="346.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0">
+      <ButtonBar layoutX="286.0" layoutY="346.0" prefHeight="40.0" prefWidth="221.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0">
         <buttons>
           <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOk" text="OK" />
             <Button cancelButton="true" mnemonicParsing="false" onAction="#handleCancel" text="Abbrechen" />
