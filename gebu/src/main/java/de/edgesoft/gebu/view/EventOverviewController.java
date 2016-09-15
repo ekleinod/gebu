@@ -209,6 +209,53 @@ public class EventOverviewController {
 	}
 
 	/**
+	 * Opens edit dialog for new event.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private void handleNewEvent() {
+
+		EventModel newEvent = new EventModel();
+		if (appGebu.showEventEditDialog(newEvent)) {
+			((ContentModel) appGebu.getGebuData().getContent()).getObservableEvents().add(newEvent);
+		}
+
+	}
+
+	/**
+	 * Opens edit dialog for editing selected event.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private void handleEditEvent() {
+
+		EventModel editEvent = (EventModel) tblEvents.getSelectionModel().getSelectedItem();
+
+	    if (editEvent != null) {
+
+			if (appGebu.showEventEditDialog(editEvent)) {
+				showEventDetails(editEvent);
+			}
+
+	    } else {
+
+	    	Alert alert = new Alert(AlertType.WARNING);
+	        alert.initOwner(appGebu.getPrimaryStage());
+	        alert.setTitle("Keine Auswahl");
+	        alert.setHeaderText("Kein Ereignis zum Ändern ausgewählt");
+	        alert.setContentText("Bitte wählen Sie das zu ändernde Ereignis in der Tabelle aus.");
+
+	        alert.showAndWait();
+
+	    }
+
+	}
+
+	/**
 	 * Deletes selected event from list.
 	 *
 	 * @version 6.0.0
@@ -216,6 +263,7 @@ public class EventOverviewController {
 	 */
 	@FXML
 	private void handleDeleteEvent() {
+
 	    int selectedIndex = tblEvents.getSelectionModel().getSelectedIndex();
 
 	    if (selectedIndex >= 0) {
