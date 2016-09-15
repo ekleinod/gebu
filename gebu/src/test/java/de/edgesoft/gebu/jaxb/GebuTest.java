@@ -14,6 +14,8 @@ import org.junit.rules.ExpectedException;
 import de.edgesoft.edgeutils.commons.Info;
 import de.edgesoft.edgeutils.commons.ext.VersionExt;
 import de.edgesoft.edgeutils.files.JAXBFiles;
+import de.edgesoft.gebu.jaxb.model.ContentModel;
+import de.edgesoft.gebu.jaxb.model.EventModel;
 
 /**
  * Unit test for Gebu.
@@ -72,7 +74,7 @@ public class GebuTest {
 	public void testMarshalFile() throws Exception {
 
 		Gebu gebu = new Gebu();
-		
+
 		Info info = new Info();
 
 		info.setCreated(LocalDateTime.now().minusHours(2));
@@ -80,52 +82,52 @@ public class GebuTest {
 		info.setAppversion(new VersionExt("6.0.0"));
 		info.setDocversion(new VersionExt("6.0.0"));
 		info.setCreator(GebuTest.class.getCanonicalName());
-		
+
 		gebu.setInfo(info);
 
-		Content content = new Content();
+		ContentModel content = new ContentModel();
 		gebu.setContent(content);
-		
-		Event event = new Event();
+
+		EventModel event = new EventModel();
 		event.setTitle("Johann Wolfgang von Goethe");
 		event.setEventtype("Geburtstag");
 		event.setDate(LocalDate.of(1749, 8, 28));
 		event.setCategory("Dichter");
 		content.getEvent().add(event);
-		
-		event = new Event();
+
+		event = new EventModel();
 		event.setTitle("Johann Wolfgang von Goethe");
 		event.setEventtype("Todestag");
 		event.setDate(LocalDate.of(1832, 2, 22));
 		event.setCategory("Dichter");
 		content.getEvent().add(event);
-		
-		event = new Event();
+
+		event = new EventModel();
 		event.setTitle("Friedrich Schiller");
 		event.setEventtype("Geburtstag");
 		event.setDate(LocalDate.of(1759, 11, 10));
 		event.setCategory("Dichter");
 		content.getEvent().add(event);
-		
-		event = new Event();
+
+		event = new EventModel();
 		event.setTitle("Charlotte von Lengefeld");
 		event.setEventtype("Geburtstag");
 		event.setDate(LocalDate.of(1766, 11, 22));
 		content.getEvent().add(event);
-		
-		event = new Event();
+
+		event = new EventModel();
 		event.setTitle("Die Schillers");
 		event.setEventtype("Hochzeitstag");
 		event.setDate(LocalDate.of(1790, 2, 22));
 		event.setCategory("Dichterehen");
 		content.getEvent().add(event);
-		
+
 		JAXBFiles.marshal(new ObjectFactory().createGebu(gebu), FILENAME, null);
 
 
-		
+
 		Gebu readGebu = JAXBFiles.unmarshal(FILENAME, Gebu.class);
-		
+
 		Assert.assertEquals(5, readGebu.getContent().getEvent().size());
 		Assert.assertEquals(LocalDate.of(1749, 8, 28), readGebu.getContent().getEvent().stream().findFirst().get().getDate());
 
