@@ -29,7 +29,7 @@
             <Label text="Titel" GridPane.rowIndex="1" />
             <Label text="Ereignisart" GridPane.rowIndex="2" />
             <Label text="Kategorie" GridPane.rowIndex="3" />
-            <DatePicker fx:id="pickDate" GridPane.columnIndex="1" />
+            <DatePicker fx:id="pickDate" promptText="eingeben oder auswählen" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
             <TextField fx:id="txtTitle" promptText="Titel eingeben" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <ComboBox fx:id="cboEventtype" editable="true" prefWidth="150.0" promptText="eingeben oder auswählen" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <ComboBox fx:id="cboCategory" editable="true" prefWidth="150.0" promptText="eingeben oder auswählen" GridPane.columnIndex="1" GridPane.rowIndex="3" />
