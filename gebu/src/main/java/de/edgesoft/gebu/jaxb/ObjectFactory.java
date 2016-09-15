@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.namespace.QName;
 import de.edgesoft.edgeutils.commons.Info;
-import de.edgesoft.gebu.jaxb.model.ContentModel;
-import de.edgesoft.gebu.jaxb.model.EventModel;
+import de.edgesoft.gebu.model.ContentModel;
+import de.edgesoft.gebu.model.EventModel;
 
 
 /**

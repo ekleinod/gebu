@@ -1,4 +1,4 @@
-package de.edgesoft.gebu.jaxb.model;
+package de.edgesoft.gebu.model;
 
 import java.time.LocalDate;
 

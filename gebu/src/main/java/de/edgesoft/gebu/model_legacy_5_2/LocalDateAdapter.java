@@ -1,12 +1,11 @@
-package de.edgesoft.gebu.jaxb.model;
+package de.edgesoft.gebu.model_legacy_5_2;
 
-import de.edgesoft.gebu.jaxb.Content;
-import de.edgesoft.gebu.jaxb.Event;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import java.time.LocalDate;
+
+import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 
 /**
- * Model extension for model class Content.
+ * Adapter for LocalDate.
  *
  * ## Legal stuff
  *
@@ -31,19 +30,15 @@ import javafx.collections.ObservableList;
  * @version 6.0.0
  * @since 6.0.0
  */
-public class ContentModel extends Content {
-	
-    /**
-     * Returns observable list of events. 
-     * 
-     * @return observable list of events
-	 * 	
-	 * @version 6.0.0
-	 * @since 6.0.0
-     */
-	public ObservableList<Event> getObservableEvents() {
-		return FXCollections.observableArrayList(getEvent());
-	}
+public class LocalDateAdapter {
+
+    public static LocalDate unmarshal(String value) {
+        return DateTimeUtils.parseDate(value);
+    }
+
+    public static String marshal(LocalDate value) {
+        return DateTimeUtils.formatDate(value);
+    }
 
 }
 

@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import de.edgesoft.edgeutils.commons.Info;
 import de.edgesoft.edgeutils.commons.ModelClass;
-import de.edgesoft.gebu.jaxb.model.ContentModel;
+import de.edgesoft.gebu.model.ContentModel;
 
 
 /**

@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import de.edgesoft.edgeutils.commons.ModelClass;
-import de.edgesoft.gebu.jaxb.model.EventModel;
+import de.edgesoft.gebu.model.EventModel;
 
 
 /**
