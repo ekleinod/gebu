@@ -10,11 +10,11 @@ public class Adapter2
 
 
     public LocalDate unmarshal(String value) {
-        return (de.edgesoft.gebu.model_legacy_5_2.LocalDateAdapter.unmarshal(value));
+        return (de.edgesoft.edgeutils.datetime.DateTimeUtils.parseDate(value));
     }
 
     public String marshal(LocalDate value) {
-        return (de.edgesoft.gebu.model_legacy_5_2.LocalDateAdapter.marshal(value));
+        return (de.edgesoft.edgeutils.datetime.DateTimeUtils.formatDate(value));
     }
 
 }

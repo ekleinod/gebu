@@ -40,8 +40,8 @@ along with "Das Gebu-Programm".  If not, see <http://www.gnu.org/licenses/>.
 			<jxb:property>
 				<jxb:baseType>
 					<jxb:javaType name="java.time.LocalDate"
-						parseMethod="de.edgesoft.gebu.model_legacy_5_2.LocalDateAdapter.unmarshal"
-						printMethod="de.edgesoft.gebu.model_legacy_5_2.LocalDateAdapter.marshal"
+						parseMethod="de.edgesoft.edgeutils.datetime.DateTimeUtils.parseDate"
+						printMethod="de.edgesoft.edgeutils.datetime.DateTimeUtils.formatDate"
 					/>
 				</jxb:baseType>
 			</jxb:property>
