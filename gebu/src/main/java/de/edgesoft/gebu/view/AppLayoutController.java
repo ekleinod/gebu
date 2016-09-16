@@ -7,6 +7,7 @@ import de.edgesoft.gebu.Gebu;
 import de.edgesoft.gebu.utils.AlertUtils;
 import de.edgesoft.gebu.utils.PrefKey;
 import de.edgesoft.gebu.utils.Prefs;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -181,7 +182,7 @@ public class AppLayoutController {
 	 */
 	@FXML
 	private void handleProgramExit() {
-		System.exit(0);
+		Platform.exit();
 	}
 
 }
