@@ -176,7 +176,7 @@ public class EventOverviewController {
         appGebu = theApp;
 
         // Add observable list data to the table
-        tblEvents.setItems(((ContentModel) appGebu.getGebuData().getContent()).getObservableEvents());
+    	tblEvents.setItems(((ContentModel) appGebu.getGebuData().getContent()).getObservableEvents());
         Gebu.logger.debug(String.format("Table loaded with %d items.", tblEvents.getItems().size()));
     }
 

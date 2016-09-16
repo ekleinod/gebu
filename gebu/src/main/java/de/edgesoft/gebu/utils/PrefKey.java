@@ -43,6 +43,8 @@ public enum PrefKey {
 	FILE,
 	
 	INTERVAL,
+	
+	PATH,
 	;
 	
     private final String value;

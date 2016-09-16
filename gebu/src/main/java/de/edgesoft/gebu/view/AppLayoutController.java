@@ -3,6 +3,8 @@ package de.edgesoft.gebu.view;
 import java.io.File;
 
 import de.edgesoft.gebu.Gebu;
+import de.edgesoft.gebu.utils.PrefKey;
+import de.edgesoft.gebu.utils.Prefs;
 import javafx.fxml.FXML;
 import javafx.stage.FileChooser;
 
@@ -79,6 +81,9 @@ public class AppLayoutController {
         		new FileChooser.ExtensionFilter("Gebu-Dateien (*.esx)", "*.esx"),
         		new FileChooser.ExtensionFilter("Alle Dateien (*.*)", "*.*")
         		);
+        if (!Prefs.get(PrefKey.PATH).isEmpty()) {
+        	fileChooser.setInitialDirectory(new File(Prefs.get(PrefKey.PATH)));
+        }
 
         File file = fileChooser.showOpenDialog(appGebu.getPrimaryStage());
 

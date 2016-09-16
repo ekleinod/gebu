@@ -1,6 +1,7 @@
 package de.edgesoft.gebu;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
 
@@ -221,6 +222,7 @@ public class Gebu extends Application {
 		} else {
 			stgPrimary.setTitle(MessageFormat.format("Das Gebu-Programm - {0}", theFilename));
 			Prefs.put(PrefKey.FILE, theFilename);
+			Prefs.put(PrefKey.PATH, Paths.get(theFilename).getParent().toString());
 		}
 		
     }
