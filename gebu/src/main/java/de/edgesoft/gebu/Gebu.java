@@ -29,6 +29,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -65,6 +66,14 @@ public class Gebu extends Application {
 	
 	/** Program and doc version. */
 	public static final Version VERSION = new VersionExt("6.0.0");
+	
+	/**
+	 * Application icon.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public static Image imgIcon = new Image("file:src/main/resources/images/icon-32.png");
 
 	/**
 	 * Gebu event data.
@@ -153,7 +162,7 @@ public class Gebu extends Application {
         stgPrimary.setTitle("Das Gebu-Programm");
 
         // set icon
-        this.stgPrimary.getIcons().add(new Image("file:src/main/resources/images/icon-32.png"));
+        this.stgPrimary.getIcons().add(imgIcon);
 
         initAppLayout();
 
@@ -269,7 +278,10 @@ public class Gebu extends Application {
 			
 			// legacy files?
 			if (dtaGebu.getInfo() == null) {
-				System.out.println("legacy");
+				openLegacyData(theFilename);
+				if (dtaGebu == null) {
+					throw new EdgeUtilsException("Die Daten konnten nicht korrekt eingelesen werden.");
+				}
 			}
 			
 			setFilename(theFilename);
@@ -278,9 +290,13 @@ public class Gebu extends Application {
 			
 	        Alert alert = new Alert(AlertType.ERROR);
 	        alert.initOwner(stgPrimary);
+	        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(imgIcon);
+	        alert.setResizable(true);
+	        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+
 	        alert.setTitle("Datenfehler");
 	        alert.setHeaderText("Ein Fehler ist beim Laden der Gebu-Daten aufgetreten.");
-	        alert.setContentText(MessageFormat.format("{0}\nDas Programm wird ohne Daten gestartet.", e.getMessage()));
+	        alert.setContentText(MessageFormat.format("{0}\nDas Programm wird ohne Daten fortgeführt.", e.getMessage()));
 
 	        alert.showAndWait();
 	        
@@ -294,27 +310,45 @@ public class Gebu extends Application {
 	 * Loads and converts legacy data.
 	 * 
 	 * @param theFilename filename
-	 * @return converted data, null if not possible
 	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
-	public de.edgesoft.gebu.jaxb.Gebu openLegacyData(final String theFilename) {
+	public void openLegacyData(final String theFilename) {
 		
-		de.edgesoft.gebu.jaxb.Gebu dtaReturn = null;
-
+		dtaGebu = null;
+		
 		try {
 			
 			de.edgesoft.gebu.jaxb_legacy_5_2.Gebu dtaLegacy = JAXBFiles.unmarshal(theFilename, de.edgesoft.gebu.jaxb_legacy_5_2.Gebu.class);
 			
+			newData();
+			dtaLegacy.getData().getEvent().stream().forEach(
+					event -> {
+						Event newEvent = new ObjectFactory().createEvent();
+						newEvent.setTitle(event.getDescription());
+						newEvent.setDate(event.getDate());
+						newEvent.setEventtype(event.getEventname());
+						newEvent.setCategory(event.getCategory());
+						dtaGebu.getContent().getEvent().add(newEvent);
+					}
+					);
+			
+	        Alert alert = new Alert(AlertType.INFORMATION);
+	        alert.initOwner(stgPrimary);
+	        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(imgIcon);
+	        alert.setResizable(true);
+	        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+	        
+	        alert.setTitle("Datenkonvertierung");
+	        alert.setHeaderText(null);
+	        alert.setContentText("Die eingelesenen Daten stammen von einer alten Programmversion. Die Daten wurden eingelesen und konvertiert.\nFalls Sie die Daten speichern, werden diese im neuen Format gespeichert. Wenn Sie die Originaldatei behalten wollen, speichern Sie die Datei nicht oder unter einem anderen Namen ab.");
+
+	        alert.showAndWait();
 			
 		} catch (EdgeUtilsException e) {
-			
-			dtaReturn = null;
-			
+			dtaGebu = null;
 		}
-		
-		return dtaReturn;
 		
     }
 
@@ -340,6 +374,10 @@ public class Gebu extends Application {
 			
 	        Alert alert = new Alert(AlertType.ERROR);
 	        alert.initOwner(stgPrimary);
+	        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(imgIcon);
+	        alert.setResizable(true);
+	        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+
 	        alert.setTitle("Datenfehler");
 	        alert.setHeaderText("Ein Fehler ist beim Speichern der Gebu-Daten aufgetreten.");
 	        alert.setContentText(MessageFormat.format("{0}\nDie Daten wurden nicht gespeichert.", e.getMessage()));
