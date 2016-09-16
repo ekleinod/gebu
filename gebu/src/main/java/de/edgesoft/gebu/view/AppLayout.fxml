@@ -28,7 +28,7 @@
             </Menu>
           <Menu mnemonicParsing="false" text="Datei">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#handleFileNew" text="Neu...">
+                  <MenuItem mnemonicParsing="false" onAction="#handleFileNew" text="Neu">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
@@ -40,12 +40,12 @@
                      </accelerator>
                   </MenuItem>
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Speichern">
+                  <MenuItem mnemonicParsing="false" onAction="#handleFileSave" text="Speichern">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" text="Speichern als...">
+                  <MenuItem mnemonicParsing="false" onAction="#handleFileSaveAs" text="Speichern als...">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                      </accelerator>
@@ -57,9 +57,12 @@
               <MenuItem mnemonicParsing="false" text="Delete" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu mnemonicParsing="false" text="Hilfe">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" onAction="#handleHelpAbout" text="Über...">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="F1" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
             </items>
           </Menu>
         </menus>

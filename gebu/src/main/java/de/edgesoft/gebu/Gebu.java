@@ -73,7 +73,7 @@ public class Gebu extends Application {
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
-	public static Image imgIcon = new Image("file:src/main/resources/images/icon-32.png");
+	public static final Image ICON = new Image("file:src/main/resources/images/icon-32.png");
 
 	/**
 	 * Gebu event data.
@@ -162,7 +162,7 @@ public class Gebu extends Application {
         stgPrimary.setTitle("Das Gebu-Programm");
 
         // set icon
-        this.stgPrimary.getIcons().add(imgIcon);
+        this.stgPrimary.getIcons().add(ICON);
 
         initAppLayout();
 
@@ -290,7 +290,7 @@ public class Gebu extends Application {
 			
 	        Alert alert = new Alert(AlertType.ERROR);
 	        alert.initOwner(stgPrimary);
-	        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(imgIcon);
+	        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(ICON);
 	        alert.setResizable(true);
 	        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 
@@ -336,13 +336,13 @@ public class Gebu extends Application {
 			
 	        Alert alert = new Alert(AlertType.INFORMATION);
 	        alert.initOwner(stgPrimary);
-	        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(imgIcon);
+	        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(ICON);
 	        alert.setResizable(true);
 	        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 	        
 	        alert.setTitle("Datenkonvertierung");
 	        alert.setHeaderText(null);
-	        alert.setContentText("Die eingelesenen Daten stammen von einer alten Programmversion. Die Daten wurden eingelesen und konvertiert.\nFalls Sie die Daten speichern, werden diese im neuen Format gespeichert. Wenn Sie die Originaldatei behalten wollen, speichern Sie die Datei nicht oder unter einem anderen Namen ab.");
+	        alert.setContentText("Die eingelesenen Daten stammen von einer alten Programmversion. Die Daten wurden eingelesen und konvertiert.\n\nFalls Sie die Daten speichern, werden diese im neuen Format gespeichert. Wenn Sie die Originaldatei behalten wollen, speichern Sie die Datei nicht oder unter einem anderen Namen ab.");
 
 	        alert.showAndWait();
 			
@@ -374,7 +374,7 @@ public class Gebu extends Application {
 			
 	        Alert alert = new Alert(AlertType.ERROR);
 	        alert.initOwner(stgPrimary);
-	        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(imgIcon);
+	        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(ICON);
 	        alert.setResizable(true);
 	        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 
