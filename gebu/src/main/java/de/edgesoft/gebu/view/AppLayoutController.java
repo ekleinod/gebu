@@ -163,6 +163,17 @@ public class AppLayoutController {
     }
 
 	/**
+	 * Event menu statistics.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+    private void handleEventStatistics() {
+        appGebu.showEventStatistics();
+    }
+
+	/**
 	 * Program menu exit.
 	 *
 	 * @version 6.0.0

@@ -52,9 +52,9 @@
                   </MenuItem>
                </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+          <Menu mnemonicParsing="false" text="Ereignis">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+              <MenuItem mnemonicParsing="false" onAction="#handleEventStatistics" text="Statistik" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Hilfe">

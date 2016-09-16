@@ -22,6 +22,7 @@ import de.edgesoft.gebu.utils.Prefs;
 import de.edgesoft.gebu.view.AppLayoutController;
 import de.edgesoft.gebu.view.EventEditDialogController;
 import de.edgesoft.gebu.view.EventOverviewController;
+import de.edgesoft.gebu.view.EventStatisticsController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -434,7 +435,7 @@ public class Gebu extends Application {
 	        Scene scene = new Scene(editDialog);
 	        dialogStage.setScene(scene);
 
-	        // Set the person into the controller.
+	        // Set the event into the controller.
 	        EventEditDialogController controller = loader.getController();
 	        controller.setDialogStage(dialogStage);
 	        controller.setEvent(theEvent);
@@ -447,6 +448,43 @@ public class Gebu extends Application {
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	        return false;
+	    }
+
+	}
+
+	/**
+	 * Show the event statistics.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public void showEventStatistics() {
+
+	    try {
+
+	        // Load dialog.
+	        FXMLLoader loader = new FXMLLoader();
+	        loader.setLocation(Gebu.class.getResource("view/EventStatistics.fxml"));
+	        AnchorPane eventStatistics = (AnchorPane) loader.load();
+
+	        // Create the dialog Stage.
+	        Stage dialogStage = new Stage();
+	        dialogStage.setTitle("Ereignisstatistik");
+	        dialogStage.initModality(Modality.WINDOW_MODAL);
+	        dialogStage.initOwner(stgPrimary);
+
+	        Scene scene = new Scene(eventStatistics);
+	        dialogStage.setScene(scene);
+
+	        // Set the events into the controller.
+	        EventStatisticsController controller = loader.getController();
+	        controller.setEventData(dtaGebu.getContent().getEvent());
+
+	        // Show the dialog and wait until the user closes it
+	        dialogStage.show();
+
+	    } catch (IOException e) {
+	        e.printStackTrace();
 	    }
 
 	}
