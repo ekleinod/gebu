@@ -266,6 +266,12 @@ public class Gebu extends Application {
 		try {
 			
 			dtaGebu = JAXBFiles.unmarshal(theFilename, de.edgesoft.gebu.jaxb.Gebu.class);
+			
+			// legacy files?
+			if (dtaGebu.getInfo() == null) {
+				System.out.println("legacy");
+			}
+			
 			setFilename(theFilename);
 			
 		} catch (EdgeUtilsException e) {
@@ -281,6 +287,34 @@ public class Gebu extends Application {
 	        newData();
 			
 		}
+		
+    }
+
+	/**
+	 * Loads and converts legacy data.
+	 * 
+	 * @param theFilename filename
+	 * @return converted data, null if not possible
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public de.edgesoft.gebu.jaxb.Gebu openLegacyData(final String theFilename) {
+		
+		de.edgesoft.gebu.jaxb.Gebu dtaReturn = null;
+
+		try {
+			
+			de.edgesoft.gebu.jaxb_legacy_5_2.Gebu dtaLegacy = JAXBFiles.unmarshal(theFilename, de.edgesoft.gebu.jaxb_legacy_5_2.Gebu.class);
+			
+			
+		} catch (EdgeUtilsException e) {
+			
+			dtaReturn = null;
+			
+		}
+		
+		return dtaReturn;
 		
     }
 
