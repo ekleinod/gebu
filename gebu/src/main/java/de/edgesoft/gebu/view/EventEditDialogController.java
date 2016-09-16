@@ -1,6 +1,7 @@
 package de.edgesoft.gebu.view;
 
 import de.edgesoft.gebu.jaxb.Event;
+import de.edgesoft.gebu.utils.AlertUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -215,8 +216,9 @@ public class EventEditDialogController {
         }
 
         // Show the error message.
-        Alert alert = new Alert(AlertType.ERROR);
+        Alert alert = AlertUtils.createAlert(AlertType.ERROR);
         alert.initOwner(dialogStage);
+        
         alert.setTitle("Ungültige Eingaben");
         alert.setHeaderText("Bitte korrigieren Sie die fehlerhaften Eingaben.");
         alert.setContentText(sbErrorMessage.toString());

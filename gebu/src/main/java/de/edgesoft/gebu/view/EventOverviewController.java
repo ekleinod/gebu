@@ -7,6 +7,7 @@ import de.edgesoft.gebu.Gebu;
 import de.edgesoft.gebu.jaxb.Event;
 import de.edgesoft.gebu.model.ContentModel;
 import de.edgesoft.gebu.model.EventModel;
+import de.edgesoft.gebu.utils.AlertUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -243,8 +244,9 @@ public class EventOverviewController {
 
 	    } else {
 
-	    	Alert alert = new Alert(AlertType.WARNING);
+	    	Alert alert = AlertUtils.createAlert(AlertType.WARNING);
 	        alert.initOwner(appGebu.getPrimaryStage());
+	        
 	        alert.setTitle("Keine Auswahl");
 	        alert.setHeaderText("Kein Ereignis zum Ändern ausgewählt");
 	        alert.setContentText("Bitte wählen Sie das zu ändernde Ereignis in der Tabelle aus.");
@@ -268,8 +270,9 @@ public class EventOverviewController {
 
 	    if (selectedIndex >= 0) {
 
-	    	Alert alert = new Alert(AlertType.CONFIRMATION);
+	    	Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION);
 	        alert.initOwner(appGebu.getPrimaryStage());
+	        
 	        alert.setTitle("Bestätigung Ereignis löschen");
 	        alert.setHeaderText("Soll das ausgewählte Eregnis gelöscht werden?");
 
@@ -278,8 +281,9 @@ public class EventOverviewController {
 	        		.ifPresent(response -> tblEvents.getItems().remove(selectedIndex));
 	    } else {
 
-	    	Alert alert = new Alert(AlertType.WARNING);
+	    	Alert alert = AlertUtils.createAlert(AlertType.WARNING);
 	        alert.initOwner(appGebu.getPrimaryStage());
+	        
 	        alert.setTitle("Keine Auswahl");
 	        alert.setHeaderText("Kein Ereignis zum Löschen ausgewählt");
 	        alert.setContentText("Bitte wählen Sie das zu löschende Ereignis in der Tabelle aus.");

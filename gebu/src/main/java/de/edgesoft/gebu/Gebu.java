@@ -16,6 +16,7 @@ import de.edgesoft.edgeutils.files.JAXBFiles;
 import de.edgesoft.gebu.jaxb.Content;
 import de.edgesoft.gebu.jaxb.Event;
 import de.edgesoft.gebu.jaxb.ObjectFactory;
+import de.edgesoft.gebu.utils.AlertUtils;
 import de.edgesoft.gebu.utils.PrefKey;
 import de.edgesoft.gebu.utils.Prefs;
 import de.edgesoft.gebu.view.AppLayoutController;
@@ -29,7 +30,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -288,11 +288,8 @@ public class Gebu extends Application {
 			
 		} catch (EdgeUtilsException e) {
 			
-	        Alert alert = new Alert(AlertType.ERROR);
+	        Alert alert = AlertUtils.createAlert(AlertType.ERROR);
 	        alert.initOwner(stgPrimary);
-	        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(ICON);
-	        alert.setResizable(true);
-	        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 
 	        alert.setTitle("Datenfehler");
 	        alert.setHeaderText("Ein Fehler ist beim Laden der Gebu-Daten aufgetreten.");
@@ -334,11 +331,8 @@ public class Gebu extends Application {
 					}
 					);
 			
-	        Alert alert = new Alert(AlertType.INFORMATION);
+	        Alert alert = AlertUtils.createAlert(AlertType.INFORMATION);
 	        alert.initOwner(stgPrimary);
-	        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(ICON);
-	        alert.setResizable(true);
-	        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 	        
 	        alert.setTitle("Datenkonvertierung");
 	        alert.setHeaderText(null);
@@ -372,11 +366,8 @@ public class Gebu extends Application {
 			
 		} catch (EdgeUtilsException e) {
 			
-	        Alert alert = new Alert(AlertType.ERROR);
+	        Alert alert = AlertUtils.createAlert(AlertType.ERROR);
 	        alert.initOwner(stgPrimary);
-	        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(ICON);
-	        alert.setResizable(true);
-	        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 
 	        alert.setTitle("Datenfehler");
 	        alert.setHeaderText("Ein Fehler ist beim Speichern der Gebu-Daten aufgetreten.");

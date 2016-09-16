@@ -4,14 +4,14 @@ import java.io.File;
 import java.text.MessageFormat;
 
 import de.edgesoft.gebu.Gebu;
+import de.edgesoft.gebu.utils.AlertUtils;
 import de.edgesoft.gebu.utils.PrefKey;
 import de.edgesoft.gebu.utils.Prefs;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.Region;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 /**
  * Controller for application layout.
@@ -147,14 +147,13 @@ public class AppLayoutController {
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
+	@SuppressWarnings("static-method")
 	@FXML
     private void handleHelpAbout() {
 		
-        Alert alert = new Alert(AlertType.INFORMATION);
-        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(Gebu.ICON);
-        alert.setResizable(true);
-        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        Alert alert = AlertUtils.createAlert(AlertType.INFORMATION);
 
+        alert.setGraphic(new ImageView("file:src/main/resources/images/icon-64.png"));
         alert.setTitle("Das Gebu-Programm");
         alert.setHeaderText(MessageFormat.format("Über \"Das Gebu-Programm\" {0}", Gebu.VERSION));
         alert.setContentText("Ein Qualitätsprodukt aus dem Hause \"edge-soft\".\n\nBei Fehlern bitte eine E-Mail an ekleinod@edgesoft.de senden.");
