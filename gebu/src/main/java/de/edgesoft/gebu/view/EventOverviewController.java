@@ -221,6 +221,8 @@ public class EventOverviewController {
 		EventModel newEvent = new EventModel();
 		if (appGebu.showEventEditDialog(newEvent)) {
 			((ContentModel) appGebu.getGebuData().getContent()).getObservableEvents().add(newEvent);
+			appGebu.setModified(true);
+			appGebu.setAppTitle();
 		}
 
 	}
@@ -240,6 +242,8 @@ public class EventOverviewController {
 
 			if (appGebu.showEventEditDialog(editEvent)) {
 				showEventDetails(editEvent);
+				appGebu.setModified(true);
+				appGebu.setAppTitle();
 			}
 
 	    } else {
@@ -274,11 +278,16 @@ public class EventOverviewController {
 	        alert.initOwner(appGebu.getPrimaryStage());
 	        
 	        alert.setTitle("Bestätigung Ereignis löschen");
-	        alert.setHeaderText("Soll das ausgewählte Eregnis gelöscht werden?");
+	        alert.setHeaderText("Soll das ausgewählte Ereignis gelöscht werden?");
 
 	        alert.showAndWait()
 	        		.filter(response -> response == ButtonType.OK)
-	        		.ifPresent(response -> tblEvents.getItems().remove(selectedIndex));
+	        		.ifPresent(response -> {
+	        			tblEvents.getItems().remove(selectedIndex);
+	        			appGebu.setModified(true);
+	        			appGebu.setAppTitle();
+	        			});
+	        
 	    } else {
 
 	    	Alert alert = AlertUtils.createAlert(AlertType.WARNING);
