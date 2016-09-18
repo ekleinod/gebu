@@ -66,10 +66,10 @@ public class Gebu extends Application {
 
 	/** Central logger for all classes. */
 	public static final Logger logger = LogManager.getLogger(Gebu.class.getPackage().getName());
-	
+
 	/** Program and doc version. */
 	public static final Version VERSION = new VersionExt("6.0.0");
-	
+
 	/**
 	 * Application icon.
 	 *
@@ -101,6 +101,14 @@ public class Gebu extends Application {
 	 * @since 6.0.0
 	 */
 	private BorderPane pneAppLayout = null;
+
+	/**
+	 * Pane: event overview.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	private AnchorPane pneEventOverview = null;
 
 	/**
 	 * Flag, if data is modified.
@@ -224,10 +232,21 @@ public class Gebu extends Application {
             Scene scene = new Scene(pneAppLayout);
             stgPrimary.setScene(scene);
             stgPrimary.show();
-            
+
             // Give the controller access to the main app.
             AppLayoutController controller = loader.getController();
             controller.setGebuApp(this);
+
+            // resize to last dimensions
+            if (!Prefs.get(PrefKey.STAGE_X).isEmpty()) {
+            	stgPrimary.setX(Double.parseDouble(Prefs.get(PrefKey.STAGE_X)));
+            	stgPrimary.setY(Double.parseDouble(Prefs.get(PrefKey.STAGE_Y)));
+
+            	stgPrimary.setWidth(Double.parseDouble(Prefs.get(PrefKey.STAGE_WIDTH)));
+            	stgPrimary.setHeight(Double.parseDouble(Prefs.get(PrefKey.STAGE_HEIGHT)));
+
+            	stgPrimary.setFullScreen(Boolean.parseBoolean(Prefs.get(PrefKey.STAGE_FULLSCREEN)));
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -245,14 +264,14 @@ public class Gebu extends Application {
 		if (Prefs.get(PrefKey.FILE).isEmpty()) {
 			newData();
 		} else {
-			openData(Prefs.get(PrefKey.FILE));			
+			openData(Prefs.get(PrefKey.FILE));
 		}
-		
+
     }
 
 	/**
 	 * Sets the file name.
-	 * 
+	 *
 	 * @param theFilename filename
 	 *
 	 * @version 6.0.0
@@ -266,12 +285,12 @@ public class Gebu extends Application {
 			Prefs.put(PrefKey.FILE, theFilename);
 			Prefs.put(PrefKey.PATH, Paths.get(theFilename).getParent().toString());
 		}
-		
+
     }
 
 	/**
 	 * Sets the app title.
-	 * 
+	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
@@ -282,49 +301,49 @@ public class Gebu extends Application {
 		} else {
 			stgPrimary.setTitle(MessageFormat.format("Das Gebu-Programm - {0}", Prefs.get(PrefKey.FILE)));
 		}
-		
+
 		if (isModified()) {
 			stgPrimary.setTitle(String.format("%s *", stgPrimary.getTitle()));
 		}
-		
+
     }
 
 	/**
 	 * Creates new data.
-	 * 
+	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
 	public void newData() {
-		
+
 		if (checkModified()) {
 
 			dtaGebu = new ObjectFactory().createGebu();
-	
+
 			Info info = new de.edgesoft.edgeutils.commons.ObjectFactory().createInfo();
-	
+
 			info.setCreated(LocalDateTime.now());
 			info.setModified(LocalDateTime.now());
 			info.setAppversion(VERSION);
 			info.setDocversion(VERSION);
 			info.setCreator(Gebu.class.getCanonicalName());
-	
+
 			dtaGebu.setInfo(info);
-	
+
 			Content content = new ObjectFactory().createContent();
 			dtaGebu.setContent(content);
-			
+
 			setFilename(null);
 			setModified(false);
 			setAppTitle();
-			
+
 		}
-		
+
     }
 
 	/**
 	 * Loads the data.
-	 * 
+	 *
 	 * @param theFilename filename
 	 *
 	 * @version 6.0.0
@@ -333,9 +352,9 @@ public class Gebu extends Application {
 	public void openData(final String theFilename) {
 
 		try {
-			
+
 			dtaGebu = JAXBFiles.unmarshal(theFilename, de.edgesoft.gebu.jaxb.Gebu.class);
-			
+
 			// legacy files?
 			if (dtaGebu.getInfo() == null) {
 				openLegacyData(theFilename);
@@ -343,11 +362,11 @@ public class Gebu extends Application {
 					throw new EdgeUtilsException("Die Daten konnten nicht korrekt eingelesen werden.");
 				}
 			}
-			
+
 			setFilename(theFilename);
-			
+
 		} catch (EdgeUtilsException e) {
-			
+
 	        Alert alert = AlertUtils.createAlert(AlertType.ERROR);
 	        alert.initOwner(stgPrimary);
 
@@ -356,32 +375,32 @@ public class Gebu extends Application {
 	        alert.setContentText(MessageFormat.format("{0}\nDas Programm wird ohne Daten fortgeführt.", e.getMessage()));
 
 	        alert.showAndWait();
-	        
+
 	        newData();
-			
+
 		}
-		
+
 		setModified(false);
 		setAppTitle();
-		
+
     }
 
 	/**
 	 * Loads and converts legacy data.
-	 * 
+	 *
 	 * @param theFilename filename
 	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
 	private void openLegacyData(final String theFilename) {
-		
+
 		dtaGebu = null;
-		
+
 		try {
-			
+
 			de.edgesoft.gebu.jaxb_legacy_5_2.Gebu dtaLegacy = JAXBFiles.unmarshal(theFilename, de.edgesoft.gebu.jaxb_legacy_5_2.Gebu.class);
-			
+
 			newData();
 			dtaLegacy.getData().getEvent().stream().forEach(
 					event -> {
@@ -393,25 +412,25 @@ public class Gebu extends Application {
 						dtaGebu.getContent().getEvent().add(newEvent);
 					}
 					);
-			
+
 	        Alert alert = AlertUtils.createAlert(AlertType.INFORMATION);
 	        alert.initOwner(stgPrimary);
-	        
+
 	        alert.setTitle("Datenkonvertierung");
 	        alert.setHeaderText(null);
 	        alert.setContentText("Die eingelesenen Daten stammen von einer alten Programmversion. Die Daten wurden eingelesen und konvertiert.\n\nFalls Sie die Daten speichern, werden diese im neuen Format gespeichert. Wenn Sie die Originaldatei behalten wollen, speichern Sie die Datei nicht oder unter einem anderen Namen ab.");
 
 	        alert.showAndWait();
-			
+
 		} catch (EdgeUtilsException e) {
 			dtaGebu = null;
 		}
-		
+
     }
 
 	/**
 	 * Saves the data.
-	 * 
+	 *
 	 * @param theFilename filename
 	 *
 	 * @version 6.0.0
@@ -420,16 +439,16 @@ public class Gebu extends Application {
 	public void saveData(final String theFilename) {
 
 		try {
-			
+
 			dtaGebu.getInfo().setModified(LocalDateTime.now());
-			
+
 			JAXBFiles.marshal(new ObjectFactory().createGebu(dtaGebu), theFilename, null);
-			
+
 			setFilename(theFilename);
 			setModified(false);
-			
+
 		} catch (EdgeUtilsException e) {
-			
+
 	        Alert alert = AlertUtils.createAlert(AlertType.ERROR);
 	        alert.initOwner(stgPrimary);
 
@@ -438,11 +457,11 @@ public class Gebu extends Application {
 	        alert.setContentText(MessageFormat.format("{0}\nDie Daten wurden nicht gespeichert.", e.getMessage()));
 
 	        alert.showAndWait();
-	        
+
 		}
-		
+
 		setAppTitle();
-		
+
     }
 
 	/**
@@ -457,10 +476,10 @@ public class Gebu extends Application {
             // Load event overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Gebu.class.getResource("view/EventOverview.fxml"));
-            AnchorPane eventOverview = (AnchorPane) loader.load();
+            pneEventOverview = (AnchorPane) loader.load();
 
             // Set event overview into the center of root layout.
-            pneAppLayout.setCenter(eventOverview);
+            pneAppLayout.setCenter(pneEventOverview);
 
             // Give the controller access to the app.
             EventOverviewController controller = loader.getController();
@@ -556,22 +575,22 @@ public class Gebu extends Application {
 
 	/**
 	 * Check if data is modified, show corresponding dialog, save data if needed.
-	 * 
+	 *
 	 * @return continue?
 	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
 	public boolean checkModified() {
-		
+
 		boolean doContinue = true;
 
 		if (isModified()) {
-			
+
 	    	Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION);
 	        alert.initOwner(getPrimaryStage());
 	        alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
-	        
+
 	        alert.setTitle("Nicht gespeicherte Änderungen");
 	        alert.setHeaderText("Sie haben Änderungen durchgeführt, die noch nicht gespeichert wurden.");
 	        alert.setContentText("Wollen Sie die geänderten Daten speichern, nicht speichern oder wollen Sie den gesamten Vorgang abbrechen?");
@@ -589,10 +608,32 @@ public class Gebu extends Application {
     				doContinue = false;
     			}
 	        }
-	        
+
 		}
-		
+
 		return doContinue;
+
+	}
+
+	/**
+	 * Save preferences.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public void savePrefs() {
+
+		Prefs.put(PrefKey.STAGE_FULLSCREEN, Boolean.toString(stgPrimary.isFullScreen()));
+
+		if (!stgPrimary.isFullScreen()) {
+
+			Prefs.put(PrefKey.STAGE_X, Double.toString(stgPrimary.getX()));
+			Prefs.put(PrefKey.STAGE_Y, Double.toString(stgPrimary.getY()));
+
+			Prefs.put(PrefKey.STAGE_WIDTH, Double.toString(stgPrimary.getWidth()));
+			Prefs.put(PrefKey.STAGE_HEIGHT, Double.toString(stgPrimary.getHeight()));
+
+		}
 
 	}
 

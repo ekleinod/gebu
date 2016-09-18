@@ -79,7 +79,7 @@ public class AppLayoutController {
 	 */
 	@FXML
 	private void handleFileOpen() {
-		
+
 		FileChooser fileChooser = new FileChooser();
 
 		fileChooser.setTitle("Gebu-Datei öffnen");
@@ -96,9 +96,9 @@ public class AppLayoutController {
         if (file != null) {
             appGebu.openData(file.getPath());
         }
-        
+
 	}
-	
+
 	/**
 	 * File menu save.
 	 *
@@ -113,7 +113,7 @@ public class AppLayoutController {
         	appGebu.saveData(Prefs.get(PrefKey.FILE));
         }
     }
-	
+
 	/**
 	 * File menu save as.
 	 *
@@ -122,7 +122,7 @@ public class AppLayoutController {
 	 */
 	@FXML
     private void handleFileSaveAs() {
-		
+
 		FileChooser fileChooser = new FileChooser();
 
 		fileChooser.setTitle("Gebu-Datei speichern");
@@ -139,9 +139,9 @@ public class AppLayoutController {
         if (file != null) {
             appGebu.saveData(file.getPath());
         }
-        
+
     }
-	
+
 	/**
 	 * Help menu about.
 	 *
@@ -151,7 +151,7 @@ public class AppLayoutController {
 	@SuppressWarnings("static-method")
 	@FXML
     private void handleHelpAbout() {
-		
+
         Alert alert = AlertUtils.createAlert(AlertType.INFORMATION);
 
         alert.setGraphic(new ImageView("file:src/main/resources/images/icon-64.png"));
@@ -182,6 +182,7 @@ public class AppLayoutController {
 	 */
 	@FXML
 	private void handleProgramExit() {
+		appGebu.savePrefs();
 		Platform.exit();
 	}
 

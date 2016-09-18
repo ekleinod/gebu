@@ -4,9 +4,9 @@ import java.util.prefs.Preferences;
 
 /**
  * Central preferences class.
- * 
+ *
  * ## Legal stuff
- * 
+ *
  * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of "Das Gebu-Programm".
@@ -29,20 +29,20 @@ import java.util.prefs.Preferences;
  * @since 6.0.0
  */
 public class Prefs {
-	
+
 	/**
-	 * Preferences object. 
-	 * 
+	 * Preferences object.
+	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
 	private static Preferences preferences = null;
-	
+
 	/**
 	 * Returns preferences.
-	 * 
+	 *
 	 * @return preferences
-	 * 
+	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
@@ -55,46 +55,46 @@ public class Prefs {
 
 	/**
 	 * Get preference for key.
-	 * 
+	 *
 	 * @param theKey preference key
 	 * @return preference value
-	 * 
+	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
 	public static String get(final PrefKey theKey) {
-		
+
 		switch (theKey) {
 			case COLOR_FUTURE_BACKGROUND:
 				return getPreferences().get(theKey.value(), "#F0F8FF");
 			case COLOR_FUTURE_FOREGROUND:
 				return getPreferences().get(theKey.value(), "#6495ED");
-				
+
 			case COLOR_PAST_BACKGROUND:
 				return getPreferences().get(theKey.value(), "#F5F5F5");
 			case COLOR_PAST_FOREGROUND:
 				return getPreferences().get(theKey.value(), "#008080");
-				
+
 			case COLOR_PRESENT_BACKGROUND:
 				return getPreferences().get(theKey.value(), "#FFFFFF");
 			case COLOR_PRESENT_FOREGROUND:
 				return getPreferences().get(theKey.value(), "#D2691E");
-				
+
 			case INTERVAL:
 				return getPreferences().get(theKey.value(), "7");
-				
+
 			default:
 				return getPreferences().get(theKey.value(), "");
 		}
-		
+
 	}
 
 	/**
 	 * Set preference value for key.
-	 * 
+	 *
 	 * @param theKey preference key
 	 * @param theValue value
-	 * 
+	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
@@ -104,10 +104,10 @@ public class Prefs {
 
 	/**
 	 * Set preference value for text key.
-	 * 
+	 *
 	 * @param theKey text key
 	 * @param theValue value
-	 * 
+	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */

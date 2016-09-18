@@ -3,11 +3,11 @@ package de.edgesoft.gebu.utils;
 
 /**
  * Preference keys.
- * 
+ *
  * For enums I use the coding style of jaxb, so there will be no inconsistencies.
  *
  * ## Legal stuff
- * 
+ *
  * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of "Das Gebu-Programm".
@@ -33,20 +33,27 @@ public enum PrefKey {
 
 	COLOR_FUTURE_BACKGROUND,
 	COLOR_FUTURE_FOREGROUND,
-	
+
 	COLOR_PAST_BACKGROUND,
 	COLOR_PAST_FOREGROUND,
-	
+
 	COLOR_PRESENT_BACKGROUND,
 	COLOR_PRESENT_FOREGROUND,
-	
+
 	FILE,
-	
+
 	INTERVAL,
-	
+
 	PATH,
+
+	STAGE_FULLSCREEN,
+	STAGE_HEIGHT,
+	STAGE_SPLIT,
+	STAGE_WIDTH,
+	STAGE_X,
+	STAGE_Y,
 	;
-	
+
     private final String value;
 
     PrefKey() {
