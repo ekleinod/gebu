@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -37,6 +38,15 @@ import javafx.stage.Stage;
  * @since 6.0.0
  */
 public class EventEditDialogController {
+
+	/**
+	 * Title text field label.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private Label lblTitle;
 
 	/**
 	 * Title text field.
@@ -109,7 +119,11 @@ public class EventEditDialogController {
 	 */
 	@FXML
 	private void initialize() {
-		// nothing to do for now
+
+	    // @todo until setting labelFor is fixed in FXML and Scenebuilder; set it programmtically
+		// does not work either, strange
+        lblTitle.setLabelFor(txtTitle);
+
 	}
 
 	/**
@@ -218,7 +232,7 @@ public class EventEditDialogController {
         // Show the error message.
         Alert alert = AlertUtils.createAlert(AlertType.ERROR);
         alert.initOwner(dialogStage);
-        
+
         alert.setTitle("Ungültige Eingaben");
         alert.setHeaderText("Bitte korrigieren Sie die fehlerhaften Eingaben.");
         alert.setContentText(sbErrorMessage.toString());

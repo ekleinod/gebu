@@ -250,7 +250,7 @@ public class EventOverviewController {
 
 	    	Alert alert = AlertUtils.createAlert(AlertType.WARNING);
 	        alert.initOwner(appGebu.getPrimaryStage());
-	        
+
 	        alert.setTitle("Keine Auswahl");
 	        alert.setHeaderText("Kein Ereignis zum Ändern ausgewählt");
 	        alert.setContentText("Bitte wählen Sie das zu ändernde Ereignis in der Tabelle aus.");
@@ -276,7 +276,7 @@ public class EventOverviewController {
 
 	    	Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION);
 	        alert.initOwner(appGebu.getPrimaryStage());
-	        
+
 	        alert.setTitle("Bestätigung Ereignis löschen");
 	        alert.setHeaderText("Soll das ausgewählte Ereignis gelöscht werden?");
 
@@ -287,12 +287,12 @@ public class EventOverviewController {
 	        			appGebu.setModified(true);
 	        			appGebu.setAppTitle();
 	        			});
-	        
+
 	    } else {
 
 	    	Alert alert = AlertUtils.createAlert(AlertType.WARNING);
 	        alert.initOwner(appGebu.getPrimaryStage());
-	        
+
 	        alert.setTitle("Keine Auswahl");
 	        alert.setHeaderText("Kein Ereignis zum Löschen ausgewählt");
 	        alert.setContentText("Bitte wählen Sie das zu löschende Ereignis in der Tabelle aus.");

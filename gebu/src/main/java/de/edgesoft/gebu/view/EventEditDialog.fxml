@@ -25,7 +25,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label mnemonicParsing="true" text="_Datum" />
+            <Label fx:id="lblTitle" mnemonicParsing="true" text="_Datum" />
             <Label mnemonicParsing="true" text="_Titel" GridPane.rowIndex="1" />
             <Label mnemonicParsing="true" text="_Ereignisart" GridPane.rowIndex="2" />
             <Label mnemonicParsing="true" text="_Kategorie" GridPane.rowIndex="3" />
