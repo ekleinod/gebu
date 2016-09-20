@@ -64,9 +64,9 @@ along with "Das Gebu-Programm".  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="ModelClass">
 				<xsd:sequence>
+					<xsd:element name="date" type="xsd:date" minOccurs="1" maxOccurs="1" />
 					<xsd:element name="title" type="xsd:string" minOccurs="1" maxOccurs="1" />
 					<xsd:element name="eventtype" type="xsd:string" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="date" type="xsd:date" minOccurs="1" maxOccurs="1" />
 					<xsd:element name="category" type="xsd:string" minOccurs="0" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
