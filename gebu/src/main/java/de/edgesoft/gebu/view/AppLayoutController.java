@@ -180,6 +180,7 @@ public class AppLayoutController {
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
+	@SuppressWarnings("static-method")
 	@FXML
 	private void handleProgramExit() {
 		Platform.exit();

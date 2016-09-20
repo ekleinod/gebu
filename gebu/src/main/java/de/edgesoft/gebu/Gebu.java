@@ -25,6 +25,7 @@ import de.edgesoft.gebu.view.EventEditDialogController;
 import de.edgesoft.gebu.view.EventOverviewController;
 import de.edgesoft.gebu.view.EventStatisticsController;
 import javafx.application.Application;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -254,6 +255,20 @@ public class Gebu extends Application {
 
         	stgPrimary.setWidth(Double.parseDouble(Prefs.get(PrefKey.STAGE_WIDTH)));
         	stgPrimary.setHeight(Double.parseDouble(Prefs.get(PrefKey.STAGE_HEIGHT)));
+
+    		// if changed, save bounds to preferences
+    		stgPrimary.xProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+    			Prefs.put(PrefKey.STAGE_X, Double.toString(newValue.doubleValue()));
+    		});
+    		stgPrimary.widthProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+    			Prefs.put(PrefKey.STAGE_WIDTH, Double.toString(newValue.doubleValue()));
+    		});
+    		stgPrimary.yProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+    			Prefs.put(PrefKey.STAGE_Y, Double.toString(newValue.doubleValue()));
+    		});
+    		stgPrimary.heightProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+    			Prefs.put(PrefKey.STAGE_HEIGHT, Double.toString(newValue.doubleValue()));
+    		});
 
         } catch (IOException e) {
             e.printStackTrace();

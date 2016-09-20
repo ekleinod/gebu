@@ -10,7 +10,6 @@ import de.edgesoft.gebu.model.EventModel;
 import de.edgesoft.gebu.utils.AlertUtils;
 import de.edgesoft.gebu.utils.PrefKey;
 import de.edgesoft.gebu.utils.Prefs;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -184,8 +183,7 @@ public class EventOverviewController {
 		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.STAGE_SPLIT)));
 
 		// if changed, save divider position to preferences
-		DoubleProperty dividerPositionProperty = pneSplit.getDividers().get(0).positionProperty();
-		dividerPositionProperty.addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+		pneSplit.getDividers().get(0).positionProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
 			Prefs.put(PrefKey.STAGE_SPLIT, Double.toString(newValue.doubleValue()));
 		});
 
