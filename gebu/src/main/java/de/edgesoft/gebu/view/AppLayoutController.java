@@ -182,7 +182,6 @@ public class AppLayoutController {
 	 */
 	@FXML
 	private void handleProgramExit() {
-		appGebu.savePrefs();
 		Platform.exit();
 	}
 

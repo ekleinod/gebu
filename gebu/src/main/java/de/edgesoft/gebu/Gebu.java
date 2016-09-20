@@ -214,6 +214,17 @@ public class Gebu extends Application {
         showEventOverview();
 	}
 
+    /**
+     * This method is called when the application should stop.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+     */
+	@Override
+	public void stop() {
+		savePrefs();
+	}
+
 	/**
 	 * Initializes the application layout.
 	 *
@@ -621,7 +632,7 @@ public class Gebu extends Application {
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
-	public void savePrefs() {
+	private void savePrefs() {
 
 		Prefs.put(PrefKey.STAGE_FULLSCREEN, Boolean.toString(stgPrimary.isFullScreen()));
 
