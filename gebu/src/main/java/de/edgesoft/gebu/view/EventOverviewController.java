@@ -8,11 +8,16 @@ import de.edgesoft.gebu.jaxb.Event;
 import de.edgesoft.gebu.model.ContentModel;
 import de.edgesoft.gebu.model.EventModel;
 import de.edgesoft.gebu.utils.AlertUtils;
+import de.edgesoft.gebu.utils.PrefKey;
+import de.edgesoft.gebu.utils.Prefs;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
@@ -126,6 +131,15 @@ public class EventOverviewController {
 	private Label lblCategory;
 
 	/**
+	 * Split pane.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private SplitPane pneSplit;
+
+	/**
 	 * Reference to application.
 	 *
 	 * @version 6.0.0
@@ -165,6 +179,16 @@ public class EventOverviewController {
 
 		// listen to selection changes, show event
 		tblEvents.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showEventDetails(newValue));
+
+		// set divider position
+		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.STAGE_SPLIT)));
+
+		// if changed, save divider position to preferences
+		DoubleProperty dividerPositionProperty = pneSplit.getDividers().get(0).positionProperty();
+		dividerPositionProperty.addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+			Prefs.put(PrefKey.STAGE_SPLIT, Double.toString(newValue.doubleValue()));
+		});
+
 	}
 
 	/**

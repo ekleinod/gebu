@@ -103,12 +103,12 @@ public class Gebu extends Application {
 	private BorderPane pneAppLayout = null;
 
 	/**
-	 * Pane: event overview.
+	 * Pane: event overview controller.
 	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
-	private AnchorPane pneEventOverview = null;
+	private EventOverviewController ctlEventOverview = null;
 
 	/**
 	 * Flag, if data is modified.
@@ -222,7 +222,7 @@ public class Gebu extends Application {
      */
 	@Override
 	public void stop() {
-		savePrefs();
+		// nothing special so far
 	}
 
 	/**
@@ -249,15 +249,11 @@ public class Gebu extends Application {
             controller.setGebuApp(this);
 
             // resize to last dimensions
-            if (!Prefs.get(PrefKey.STAGE_X).isEmpty()) {
-            	stgPrimary.setX(Double.parseDouble(Prefs.get(PrefKey.STAGE_X)));
-            	stgPrimary.setY(Double.parseDouble(Prefs.get(PrefKey.STAGE_Y)));
+        	stgPrimary.setX(Double.parseDouble(Prefs.get(PrefKey.STAGE_X)));
+        	stgPrimary.setY(Double.parseDouble(Prefs.get(PrefKey.STAGE_Y)));
 
-            	stgPrimary.setWidth(Double.parseDouble(Prefs.get(PrefKey.STAGE_WIDTH)));
-            	stgPrimary.setHeight(Double.parseDouble(Prefs.get(PrefKey.STAGE_HEIGHT)));
-
-            	stgPrimary.setFullScreen(Boolean.parseBoolean(Prefs.get(PrefKey.STAGE_FULLSCREEN)));
-            }
+        	stgPrimary.setWidth(Double.parseDouble(Prefs.get(PrefKey.STAGE_WIDTH)));
+        	stgPrimary.setHeight(Double.parseDouble(Prefs.get(PrefKey.STAGE_HEIGHT)));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -487,14 +483,14 @@ public class Gebu extends Application {
             // Load event overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Gebu.class.getResource("view/EventOverview.fxml"));
-            pneEventOverview = (AnchorPane) loader.load();
+            AnchorPane eventOverrview = (AnchorPane) loader.load();
 
             // Set event overview into the center of root layout.
-            pneAppLayout.setCenter(pneEventOverview);
+            pneAppLayout.setCenter(eventOverrview);
 
             // Give the controller access to the app.
-            EventOverviewController controller = loader.getController();
-            controller.setGebuApp(this);
+            ctlEventOverview = loader.getController();
+            ctlEventOverview.setGebuApp(this);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -623,28 +619,6 @@ public class Gebu extends Application {
 		}
 
 		return doContinue;
-
-	}
-
-	/**
-	 * Save preferences.
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-	 */
-	private void savePrefs() {
-
-		Prefs.put(PrefKey.STAGE_FULLSCREEN, Boolean.toString(stgPrimary.isFullScreen()));
-
-		if (!stgPrimary.isFullScreen()) {
-
-			Prefs.put(PrefKey.STAGE_X, Double.toString(stgPrimary.getX()));
-			Prefs.put(PrefKey.STAGE_Y, Double.toString(stgPrimary.getY()));
-
-			Prefs.put(PrefKey.STAGE_WIDTH, Double.toString(stgPrimary.getWidth()));
-			Prefs.put(PrefKey.STAGE_HEIGHT, Double.toString(stgPrimary.getHeight()));
-
-		}
 
 	}
 

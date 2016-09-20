@@ -46,7 +46,6 @@ public enum PrefKey {
 
 	PATH,
 
-	STAGE_FULLSCREEN,
 	STAGE_HEIGHT,
 	STAGE_SPLIT,
 	STAGE_WIDTH,
