@@ -1,5 +1,7 @@
 package de.edgesoft.gebu.model;
 
+import javax.xml.bind.annotation.XmlTransient;
+
 import de.edgesoft.gebu.jaxb.Content;
 import de.edgesoft.gebu.jaxb.Event;
 import javafx.collections.FXCollections;
@@ -34,6 +36,15 @@ import javafx.collections.ObservableList;
 public class ContentModel extends Content {
 	
     /**
+     * Observable list of events (singleton). 
+     * 
+	 * @version 6.0.0
+	 * @since 6.0.0
+     */
+	@XmlTransient
+	private ObservableList<Event> observableEvents = null;
+	
+    /**
      * Returns observable list of events. 
      * 
      * @return observable list of events
@@ -42,7 +53,10 @@ public class ContentModel extends Content {
 	 * @since 6.0.0
      */
 	public ObservableList<Event> getObservableEvents() {
-		return FXCollections.observableArrayList(getEvent());
+		if (observableEvents == null) {
+			observableEvents = FXCollections.observableArrayList(getEvent());
+		}
+		return observableEvents;
 	}
 
 }
