@@ -3,6 +3,7 @@ package de.edgesoft.gebu.view;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.gebu.jaxb.Event;
 import de.edgesoft.gebu.utils.AlertUtils;
 import javafx.beans.property.SimpleObjectProperty;
@@ -15,6 +16,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
 /**
  * Controller for event edit dialog scene.
@@ -125,10 +127,27 @@ public class EventEditDialogController {
 	@FXML
 	private void initialize() {
 
-	    // @todo until setting labelFor is fixed in FXML and Scenebuilder; set it programmtically
+		// @todo until setting labelFor is fixed in FXML and Scenebuilder; set it programmatically
 		// does not work either, strange
-        lblTitle.setLabelFor(txtTitle);
-
+		lblTitle.setLabelFor(txtTitle);
+		
+		// set date picker date format
+		pickDate.setConverter(new StringConverter<LocalDate>() {
+			
+			@Override 
+			public String toString(LocalDate date) {
+				if (date == null) {
+					return "";
+				}
+				return DateTimeUtils.formatDate(date);
+			}
+			
+			@Override 
+			public LocalDate fromString(String string) {
+				return DateTimeUtils.parseDate(string);
+			}
+		});
+		
 	}
 
 	/**

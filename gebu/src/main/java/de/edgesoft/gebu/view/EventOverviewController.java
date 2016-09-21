@@ -17,6 +17,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
@@ -172,6 +173,22 @@ public class EventOverviewController {
 		colDate.setCellValueFactory(cellData -> cellData.getValue().getDate());
 		colEventtype.setCellValueFactory(cellData -> cellData.getValue().getEventtype());
 		colCategory.setCellValueFactory(cellData -> cellData.getValue().getCategory());
+		
+		// format date column
+		colDate.setCellFactory(column -> {
+		    return new TableCell<EventModel, LocalDate>() {
+		        @Override
+		        protected void updateItem(LocalDate item, boolean empty) {
+		            super.updateItem(item, empty);
+
+		            if (item == null || empty) {
+		                setText(null);
+		            } else {
+		                setText(DateTimeUtils.formatDate(item));
+		            }
+		        }
+		    };
+		});
 
 		// clear event details
 		showEventDetails(null);
@@ -198,9 +215,8 @@ public class EventOverviewController {
 	public void setGebuApp(final Gebu theApp) {
         appGebu = theApp;
 
-        // Add observable list data to the table
+        // Add observable list of events to the table
     	tblEvents.setItems(((ContentModel) appGebu.getGebuData().getContent()).getObservableEvents());
-        Gebu.logger.debug(String.format("Table loaded with %d items.", tblEvents.getItems().size()));
     }
 
 	/**
