@@ -5,6 +5,8 @@ import java.util.Objects;
 
 import de.edgesoft.gebu.jaxb.Event;
 import de.edgesoft.gebu.utils.AlertUtils;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -196,9 +198,24 @@ public class EventEditDialogController {
     private void handleOk() {
         if (isInputValid()) {
 
+        	if (currentEvent.getTitle() == null) {
+        		currentEvent.setTitle(new SimpleStringProperty());
+        	}
             currentEvent.getTitle().setValue(txtTitle.getText());
+        	
+            if (currentEvent.getDate() == null) {
+        		currentEvent.setDate(new SimpleObjectProperty<>());
+        	}
             currentEvent.getDate().setValue(pickDate.getValue());
+            
+        	if (currentEvent.getEventtype() == null) {
+        		currentEvent.setEventtype(new SimpleStringProperty());
+        	}
             currentEvent.getEventtype().setValue(cboEventtype.getValue());
+        	
+            if (currentEvent.getCategory() == null) {
+        		currentEvent.setCategory(new SimpleStringProperty());
+        	}
             currentEvent.getCategory().setValue(cboCategory.getValue());
 
             okClicked = true;
