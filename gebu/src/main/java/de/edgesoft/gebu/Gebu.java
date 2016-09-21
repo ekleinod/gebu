@@ -25,6 +25,8 @@ import de.edgesoft.gebu.view.EventEditDialogController;
 import de.edgesoft.gebu.view.EventOverviewController;
 import de.edgesoft.gebu.view.EventStatisticsController;
 import javafx.application.Application;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -427,10 +429,10 @@ public class Gebu extends Application {
 			dtaLegacy.getData().getEvent().stream().forEach(
 					event -> {
 						Event newEvent = new ObjectFactory().createEvent();
-						newEvent.setTitle(event.getDescription());
-						newEvent.setDate(event.getDate());
-						newEvent.setEventtype(event.getEventname());
-						newEvent.setCategory(event.getCategory());
+						newEvent.setTitle(new SimpleStringProperty(event.getDescription()));
+						newEvent.setDate(new SimpleObjectProperty<>(event.getDate()));
+						newEvent.setEventtype(new SimpleStringProperty(event.getEventname()));
+						newEvent.setCategory(new SimpleStringProperty(event.getCategory()));
 						dtaGebu.getContent().getEvent().add(newEvent);
 					}
 					);

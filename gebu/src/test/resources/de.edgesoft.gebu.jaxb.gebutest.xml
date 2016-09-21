@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <gebu>
     <info>
-        <created>2016-09-15T20:17:09.439</created>
-        <modified>2016-09-15T22:17:09.447</modified>
+        <created>2016-09-21T22:19:38.271</created>
+        <modified>2016-09-22T00:19:38.280</modified>
         <docversion>
             <major>6</major>
             <minor>0</minor>
@@ -17,32 +17,32 @@
     </info>
     <content>
         <event>
+            <date>1749-08-28</date>
             <title>Johann Wolfgang von Goethe</title>
             <eventtype>Geburtstag</eventtype>
-            <date>1749-08-28</date>
             <category>Dichter</category>
         </event>
         <event>
+            <date>1832-02-22</date>
             <title>Johann Wolfgang von Goethe</title>
             <eventtype>Todestag</eventtype>
-            <date>1832-02-22</date>
             <category>Dichter</category>
         </event>
         <event>
+            <date>1759-11-10</date>
             <title>Friedrich Schiller</title>
             <eventtype>Geburtstag</eventtype>
-            <date>1759-11-10</date>
             <category>Dichter</category>
         </event>
         <event>
+            <date>1766-11-22</date>
             <title>Charlotte von Lengefeld</title>
             <eventtype>Geburtstag</eventtype>
-            <date>1766-11-22</date>
         </event>
         <event>
+            <date>1790-02-22</date>
             <title>Die Schillers</title>
             <eventtype>Hochzeitstag</eventtype>
-            <date>1790-02-22</date>
             <category>Dichterehen</category>
         </event>
     </content>

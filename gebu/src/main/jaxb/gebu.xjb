@@ -53,36 +53,24 @@ along with "Das Gebu-Programm".  If not, see <http://www.gnu.org/licenses/>.
 		</jxb:bindings>
 
 		<jxb:bindings node="//xsd:complexType[@name='Event']//xsd:element[@name='title']">
-			<jxb:property>
-				<jxb:baseType>
-					<jxb:javaType name="javafx.beans.property.SimpleStringProperty"
-						parseMethod="de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter.unmarshal"
-						printMethod="de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter.marshal"
-					/>
-				</jxb:baseType>
-			</jxb:property>
+			<xjc:javaType
+				adapter="de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter"
+				name="javafx.beans.property.SimpleStringProperty"
+			/>
 		</jxb:bindings>
 
 		<jxb:bindings node="//xsd:complexType[@name='Event']//xsd:element[@name='eventtype']">
-			<jxb:property>
-				<jxb:baseType>
-					<jxb:javaType name="javafx.beans.property.SimpleStringProperty"
-						parseMethod="de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter.unmarshal"
-						printMethod="de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter.marshal"
-					/>
-				</jxb:baseType>
-			</jxb:property>
+			<xjc:javaType
+				adapter="de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter"
+				name="javafx.beans.property.SimpleStringProperty"
+			/>
 		</jxb:bindings>
 
 		<jxb:bindings node="//xsd:complexType[@name='Event']//xsd:element[@name='category']">
-			<jxb:property>
-				<jxb:baseType>
-					<jxb:javaType name="javafx.beans.property.SimpleStringProperty"
-						parseMethod="de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter.unmarshal"
-						printMethod="de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter.marshal"
-					/>
-				</jxb:baseType>
-			</jxb:property>
+			<xjc:javaType
+				adapter="de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter"
+				name="javafx.beans.property.SimpleStringProperty"
+			/>
 		</jxb:bindings>
 
 	</jxb:bindings>

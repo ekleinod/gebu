@@ -1,5 +1,7 @@
 package de.edgesoft.gebu.view;
 
+import java.time.LocalDate;
+
 import de.edgesoft.gebu.jaxb.Event;
 import de.edgesoft.gebu.utils.AlertUtils;
 import javafx.fxml.FXML;
@@ -148,12 +150,12 @@ public class EventEditDialogController {
 	 */
 	public void setEvent(Event theEvent) {
 
-        currentEvent = theEvent;
+        txtTitle.setText(theEvent.getTitle().getValue());
+        pickDate.setValue((LocalDate) theEvent.getDate().getValue());
+        cboEventtype.setValue(theEvent.getEventtype().getValue());
+        cboCategory.setValue(theEvent.getCategory().getValue());
 
-        txtTitle.setText(theEvent.getTitle());
-        pickDate.setValue(theEvent.getDate());
-        cboEventtype.setValue(theEvent.getEventtype());
-        cboCategory.setValue(theEvent.getCategory());
+        currentEvent = theEvent;
 
     }
 
@@ -179,10 +181,10 @@ public class EventEditDialogController {
     private void handleOk() {
         if (isInputValid()) {
 
-            currentEvent.setTitle(txtTitle.getText());
-            currentEvent.setDate(pickDate.getValue());
-            currentEvent.setEventtype(cboEventtype.getValue());
-            currentEvent.setCategory(cboCategory.getValue());
+            currentEvent.getTitle().setValue(txtTitle.getText());
+            currentEvent.getDate().setValue(pickDate.getValue());
+            currentEvent.getEventtype().setValue(cboEventtype.getValue());
+            currentEvent.getCategory().setValue(cboCategory.getValue());
 
             okClicked = true;
             dialogStage.close();

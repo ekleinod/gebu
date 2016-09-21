@@ -168,10 +168,10 @@ public class EventOverviewController {
 	private void initialize() {
 
 		// hook data to columns
-		colTitle.setCellValueFactory(cellData -> cellData.getValue().getTitleProperty());
-		colDate.setCellValueFactory(cellData -> cellData.getValue().getDateProperty());
-		colEventtype.setCellValueFactory(cellData -> cellData.getValue().getEventtypeProperty());
-		colCategory.setCellValueFactory(cellData -> cellData.getValue().getCategoryProperty());
+		colTitle.setCellValueFactory(cellData -> cellData.getValue().getTitle());
+		colDate.setCellValueFactory(cellData -> cellData.getValue().getDate());
+		colEventtype.setCellValueFactory(cellData -> cellData.getValue().getEventtype());
+		colCategory.setCellValueFactory(cellData -> cellData.getValue().getCategory());
 
 		// clear event details
 		showEventDetails(null);
@@ -222,10 +222,10 @@ public class EventOverviewController {
 
 	    } else {
 
-	        lblTitle.setText(theEvent.getTitle());
-	        lblDate.setText(DateTimeUtils.formatDate(theEvent.getDate()));
-	        lblEventtype.setText(theEvent.getEventtype());
-	        lblCategory.setText(theEvent.getCategory());
+	        lblTitle.setText(theEvent.getTitle().getValue());
+	        lblDate.setText(DateTimeUtils.formatDate((LocalDate) theEvent.getDate().getValue()));
+	        lblEventtype.setText(theEvent.getEventtype().getValue());
+	        lblCategory.setText(theEvent.getCategory().getValue());
 
 	    }
 

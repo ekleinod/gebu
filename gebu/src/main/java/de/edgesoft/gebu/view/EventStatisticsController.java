@@ -1,6 +1,7 @@
 package de.edgesoft.gebu.view;
 
 import java.text.DateFormatSymbols;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -93,7 +94,7 @@ public class EventStatisticsController {
 		// Count the number of people having their birthday in a specific month.
         int[] monthCounter = new int[12];
         for (Event event : theEvents) {
-            int month = event.getDate().getMonthValue() - 1;
+            int month = ((LocalDate) event.getDate().getValue()).getMonthValue() - 1;
             monthCounter[month]++;
         }
 

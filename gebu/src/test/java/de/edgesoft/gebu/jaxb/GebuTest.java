@@ -14,6 +14,8 @@ import org.junit.rules.ExpectedException;
 import de.edgesoft.edgeutils.commons.Info;
 import de.edgesoft.edgeutils.commons.ext.VersionExt;
 import de.edgesoft.edgeutils.files.JAXBFiles;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 /**
  * Unit test for Gebu.
@@ -89,37 +91,37 @@ public class GebuTest {
 		gebu.setContent(content);
 
 		Event event = factory.createEvent();
-		event.setTitle("Johann Wolfgang von Goethe");
-		event.setEventtype("Geburtstag");
-		event.setDate(LocalDate.of(1749, 8, 28));
-		event.setCategory("Dichter");
+		event.setTitle(new SimpleStringProperty("Johann Wolfgang von Goethe"));
+		event.setEventtype(new SimpleStringProperty("Geburtstag"));
+		event.setDate(new SimpleObjectProperty<>(LocalDate.of(1749, 8, 28)));
+		event.setCategory(new SimpleStringProperty("Dichter"));
 		content.getEvent().add(event);
 
 		event = factory.createEvent();
-		event.setTitle("Johann Wolfgang von Goethe");
-		event.setEventtype("Todestag");
-		event.setDate(LocalDate.of(1832, 2, 22));
-		event.setCategory("Dichter");
+		event.setTitle(new SimpleStringProperty("Johann Wolfgang von Goethe"));
+		event.setEventtype(new SimpleStringProperty("Todestag"));
+		event.setDate(new SimpleObjectProperty<>(LocalDate.of(1832, 2, 22)));
+		event.setCategory(new SimpleStringProperty("Dichter"));
 		content.getEvent().add(event);
 
 		event = factory.createEvent();
-		event.setTitle("Friedrich Schiller");
-		event.setEventtype("Geburtstag");
-		event.setDate(LocalDate.of(1759, 11, 10));
-		event.setCategory("Dichter");
+		event.setTitle(new SimpleStringProperty("Friedrich Schiller"));
+		event.setEventtype(new SimpleStringProperty("Geburtstag"));
+		event.setDate(new SimpleObjectProperty<>(LocalDate.of(1759, 11, 10)));
+		event.setCategory(new SimpleStringProperty("Dichter"));
 		content.getEvent().add(event);
 
 		event = factory.createEvent();
-		event.setTitle("Charlotte von Lengefeld");
-		event.setEventtype("Geburtstag");
-		event.setDate(LocalDate.of(1766, 11, 22));
+		event.setTitle(new SimpleStringProperty("Charlotte von Lengefeld"));
+		event.setEventtype(new SimpleStringProperty("Geburtstag"));
+		event.setDate(new SimpleObjectProperty<>(LocalDate.of(1766, 11, 22)));
 		content.getEvent().add(event);
 
 		event = factory.createEvent();
-		event.setTitle("Die Schillers");
-		event.setEventtype("Hochzeitstag");
-		event.setDate(LocalDate.of(1790, 2, 22));
-		event.setCategory("Dichterehen");
+		event.setTitle(new SimpleStringProperty("Die Schillers"));
+		event.setEventtype(new SimpleStringProperty("Hochzeitstag"));
+		event.setDate(new SimpleObjectProperty<>(LocalDate.of(1790, 2, 22)));
+		event.setCategory(new SimpleStringProperty("Dichterehen"));
 		content.getEvent().add(event);
 
 		JAXBFiles.marshal(factory.createGebu(gebu), FILENAME, null);
@@ -129,7 +131,7 @@ public class GebuTest {
 		Gebu readGebu = JAXBFiles.unmarshal(FILENAME, Gebu.class);
 
 		Assert.assertEquals(5, readGebu.getContent().getEvent().size());
-		Assert.assertEquals(LocalDate.of(1749, 8, 28), readGebu.getContent().getEvent().stream().findFirst().get().getDate());
+		Assert.assertEquals(LocalDate.of(1749, 8, 28), readGebu.getContent().getEvent().stream().findFirst().get().getDate().getValue());
 
 	}
 
