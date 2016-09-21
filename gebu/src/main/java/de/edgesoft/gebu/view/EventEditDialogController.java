@@ -1,6 +1,7 @@
 package de.edgesoft.gebu.view;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 import de.edgesoft.gebu.jaxb.Event;
 import de.edgesoft.gebu.utils.AlertUtils;
@@ -149,11 +150,25 @@ public class EventEditDialogController {
 	 * @since 6.0.0
 	 */
 	public void setEvent(Event theEvent) {
+		
+		Objects.requireNonNull(theEvent);
 
-        txtTitle.setText(theEvent.getTitle().getValue());
-        pickDate.setValue((LocalDate) theEvent.getDate().getValue());
-        cboEventtype.setValue(theEvent.getEventtype().getValue());
-        cboCategory.setValue(theEvent.getCategory().getValue());
+        txtTitle.setText(
+        		(theEvent.getTitle() == null) ?
+        				null :
+        				theEvent.getTitle().getValue());
+        pickDate.setValue(
+        		(theEvent.getDate() == null) ?
+        				null :
+        				(LocalDate) theEvent.getDate().getValue());
+        cboEventtype.setValue(
+        		(theEvent.getEventtype() == null) ?
+        				null :
+        				theEvent.getEventtype().getValue());
+        cboCategory.setValue(
+        		(theEvent.getCategory() == null) ?
+        				null :
+        				theEvent.getCategory().getValue());
 
         currentEvent = theEvent;
 

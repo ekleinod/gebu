@@ -222,10 +222,22 @@ public class EventOverviewController {
 
 	    } else {
 
-	        lblTitle.setText(theEvent.getTitle().getValue());
-	        lblDate.setText(DateTimeUtils.formatDate((LocalDate) theEvent.getDate().getValue()));
-	        lblEventtype.setText(theEvent.getEventtype().getValue());
-	        lblCategory.setText(theEvent.getCategory().getValue());
+	        lblTitle.setText(
+	        		(theEvent.getTitle() == null) ?
+	        				null :
+	        				theEvent.getTitle().getValue());
+	        lblDate.setText(
+	        		(theEvent.getDate() == null) ?
+	        				null :
+	        				DateTimeUtils.formatDate((LocalDate) theEvent.getDate().getValue()));
+	        lblEventtype.setText(
+	        		(theEvent.getEventtype() == null) ?
+	        				null :
+	        				theEvent.getEventtype().getValue());
+	        lblCategory.setText(
+	        		(theEvent.getCategory() == null) ?
+	        				null :
+	        				theEvent.getCategory().getValue());
 
 	    }
 
