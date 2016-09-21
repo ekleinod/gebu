@@ -27,9 +27,10 @@ along with "Das Gebu-Programm".  If not, see <http://www.gnu.org/licenses/>.
 @since 6.0.0
 -->
 
-<jxb:bindings xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
-	jxb:version="2.1">
+<jxb:bindings	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+							xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+							xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+							jxb:version="2.1">
 
 	<!-- bindings -->
 	<jxb:bindings schemaLocation="gebu.xsd">
@@ -45,14 +46,10 @@ along with "Das Gebu-Programm".  If not, see <http://www.gnu.org/licenses/>.
 
 		<!-- property bindings -->
 		<jxb:bindings node="//xsd:complexType[@name='Event']//xsd:element[@name='date']">
-			<jxb:property>
-				<jxb:baseType>
-					<jxb:javaType name="javafx.beans.property.SimpleObjectProperty"
-						parseMethod="de.edgesoft.edgeutils.javafx.SimpleObjectPropertyLocalDateAdapter.unmarshal"
-						printMethod="de.edgesoft.edgeutils.javafx.SimpleObjectPropertyLocalDateAdapter.marshal"
-					/>
-				</jxb:baseType>
-			</jxb:property>
+			<xjc:javaType
+				adapter="de.edgesoft.edgeutils.javafx.SimpleObjectPropertyLocalDateAdapter"
+				name="javafx.beans.property.SimpleObjectProperty"
+			/>
 		</jxb:bindings>
 
 		<jxb:bindings node="//xsd:complexType[@name='Event']//xsd:element[@name='title']">
