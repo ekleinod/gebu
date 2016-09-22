@@ -16,6 +16,7 @@ import de.edgesoft.edgeutils.files.JAXBFiles;
 import de.edgesoft.gebu.jaxb.Content;
 import de.edgesoft.gebu.jaxb.Event;
 import de.edgesoft.gebu.jaxb.ObjectFactory;
+import de.edgesoft.gebu.model.ContentModel;
 import de.edgesoft.gebu.utils.AlertUtils;
 import de.edgesoft.gebu.utils.PrefKey;
 import de.edgesoft.gebu.utils.Prefs;
@@ -341,6 +342,10 @@ public class Gebu extends Application {
 
 		Content content = new ObjectFactory().createContent();
 		dtaGebu.setContent(content);
+		
+		if (ctlEventOverview != null) {
+			ctlEventOverview.setTableItems();
+		}
 
 		setFilename(null);
 		setModified(false);
@@ -370,7 +375,13 @@ public class Gebu extends Application {
 				}
 			}
 
+			if (ctlEventOverview != null) {
+				ctlEventOverview.setTableItems();
+			}
+			
 			setFilename(theFilename);
+			setModified(false);
+			setAppTitle();
 
 		} catch (EdgeUtilsException e) {
 
@@ -386,9 +397,6 @@ public class Gebu extends Application {
 	        newData();
 
 		}
-
-		setModified(false);
-		setAppTitle();
 
     }
 
@@ -448,6 +456,8 @@ public class Gebu extends Application {
 		try {
 
 			dtaGebu.getInfo().setModified(LocalDateTime.now());
+			
+			((ContentModel) dtaGebu.getContent()).sortEvents();
 
 			JAXBFiles.marshal(new ObjectFactory().createGebu(dtaGebu), theFilename, null);
 
@@ -491,6 +501,7 @@ public class Gebu extends Application {
             // Give the controller access to the app.
             ctlEventOverview = loader.getController();
             ctlEventOverview.setGebuApp(this);
+            ctlEventOverview.setTableItems();
 
         } catch (IOException e) {
             e.printStackTrace();

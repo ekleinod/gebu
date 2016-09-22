@@ -208,15 +208,24 @@ public class EventOverviewController {
 
 	/**
 	 * Called by main application for reference to itself.
+	 * 
+	 * @param theApp reference to application
 	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
 	public void setGebuApp(final Gebu theApp) {
         appGebu = theApp;
+    }
 
-        // Add observable list of events to the table
-    	tblEvents.setItems(((ContentModel) appGebu.getGebuData().getContent()).getObservableEvents());
+	/**
+	 * Sets events as table items.
+	 * 
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public void setTableItems() {
+		tblEvents.setItems(((ContentModel) appGebu.getGebuData().getContent()).getObservableEvents());
     }
 
 	/**

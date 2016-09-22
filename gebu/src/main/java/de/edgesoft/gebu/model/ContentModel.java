@@ -1,5 +1,8 @@
 package de.edgesoft.gebu.model;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.xml.bind.annotation.XmlTransient;
 
 import de.edgesoft.gebu.jaxb.Content;
@@ -57,6 +60,18 @@ public class ContentModel extends Content {
 			observableEvents = FXCollections.observableArrayList(getEvent());
 		}
 		return observableEvents;
+	}
+
+    /**
+     * Sorts events. 
+     * 
+	 * @version 6.0.0
+	 * @since 6.0.0
+     */
+	public void sortEvents() {
+		List<Event> lstSorted = getEvent().stream().sorted(EventModel.DATE_TITLE).collect(Collectors.toList());
+		getEvent().clear();
+		getEvent().addAll(lstSorted);
 	}
 
 }
