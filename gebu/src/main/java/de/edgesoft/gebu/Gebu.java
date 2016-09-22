@@ -3,6 +3,7 @@ package de.edgesoft.gebu;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.apache.logging.log4j.LogManager;
@@ -21,6 +22,7 @@ import de.edgesoft.gebu.utils.AlertUtils;
 import de.edgesoft.gebu.utils.PrefKey;
 import de.edgesoft.gebu.utils.Prefs;
 import de.edgesoft.gebu.view.AppLayoutController;
+import de.edgesoft.gebu.view.EventDisplayController;
 import de.edgesoft.gebu.view.EventEditDialogController;
 import de.edgesoft.gebu.view.EventOverviewController;
 import de.edgesoft.gebu.view.EventStatisticsController;
@@ -213,7 +215,7 @@ public class Gebu extends Application {
 
         initData();
 
-        showEventOverview();
+        showEventDisplay();
 	}
 
 	/**
@@ -493,15 +495,42 @@ public class Gebu extends Application {
             // Load event overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Gebu.class.getResource("view/EventOverview.fxml"));
-            AnchorPane eventOverrview = (AnchorPane) loader.load();
+            AnchorPane eventOverview = (AnchorPane) loader.load();
 
             // Set event overview into the center of root layout.
-            pneAppLayout.setCenter(eventOverrview);
+            pneAppLayout.setCenter(eventOverview);
 
             // Give the controller access to the app.
             ctlEventOverview = loader.getController();
             ctlEventOverview.setGebuApp(this);
             ctlEventOverview.setTableItems();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+	/**
+	 * Shows the event display.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public void showEventDisplay() {
+        try {
+
+            // Load event overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Gebu.class.getResource("view/EventDisplay.fxml"));
+            AnchorPane eventDisplay = (AnchorPane) loader.load();
+
+            // Set event overview into the center of root layout.
+            pneAppLayout.setCenter(eventDisplay);
+
+            // Give the controller access to the app.
+            EventDisplayController ctlEventDisplay = loader.getController();
+            ctlEventDisplay.setGebuApp(this);
+            ctlEventDisplay.displayEvents(LocalDate.now());
 
         } catch (IOException e) {
             e.printStackTrace();
