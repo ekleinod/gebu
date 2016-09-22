@@ -2,6 +2,7 @@ package de.edgesoft.gebu.model;
 
 import java.text.Collator;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.Comparator;
 
 import de.edgesoft.gebu.jaxb.Event;
@@ -38,7 +39,7 @@ import de.edgesoft.gebu.jaxb.Event;
 public class EventModel extends Event {
 
 	/** 
-	 * Comparator date. 
+	 * Comparator date.
 	 * 
 	 * @version 6.0.0
 	 * @since 6.0.0
@@ -69,6 +70,50 @@ public class EventModel extends Event {
 	 * @since 6.0.0
 	 */
 	public static final Comparator<Event> DATE_TITLE = DATE.thenComparing(event -> event.getTitle().getValue(), Collator.getInstance());
+
+	/** 
+	 * Comparator date interval mode, i.e. december dates < january dates.
+	 * 
+	 * @todo interval mode with a parameter in order to avoid redundant code?
+	 * 
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public static final Comparator<Event> DATE_INTERVAL = new Comparator<Event>() {
+
+		/**
+		 * (non-Javadoc)
+		 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+		 * 
+		 * Creates new dates in year 1996 and compares them - easiest solution.
+		 * 
+		 * @todo is this an elegant solution?
+		 */
+		@Override
+		public int compare(Event e1, Event e2) {
+			LocalDate d1 = LocalDate.of(1996, ((LocalDate) e1.getDate().getValue()).getMonth(), ((LocalDate) e1.getDate().getValue()).getDayOfMonth());
+			LocalDate d2 = LocalDate.of(1996, ((LocalDate) e2.getDate().getValue()).getMonth(), ((LocalDate) e2.getDate().getValue()).getDayOfMonth());
+			
+			// special interval rules
+			if ((d1.getMonth() == Month.DECEMBER) && (d2.getMonth() == Month.JANUARY)) {
+				return -1;
+			}
+			if ((d1.getMonth() == Month.JANUARY) && (d2.getMonth() == Month.DECEMBER)) {
+				return 1;
+			}
+			
+			return d1.compareTo(d2);
+		}
+
+	};
+	
+	/** 
+	 * Comparator date interval mode, then title. 
+	 * 
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public static final Comparator<Event> DATE_INTERVAL_TITLE = DATE_INTERVAL.thenComparing(event -> event.getTitle().getValue(), Collator.getInstance());
 
 }
 

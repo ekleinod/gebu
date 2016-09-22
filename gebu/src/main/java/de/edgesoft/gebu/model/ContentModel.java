@@ -1,5 +1,7 @@
 package de.edgesoft.gebu.model;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,6 +74,73 @@ public class ContentModel extends Content {
 		List<Event> lstSorted = getEvent().stream().sorted(EventModel.DATE_TITLE).collect(Collectors.toList());
 		getEvent().clear();
 		getEvent().addAll(lstSorted);
+	}
+
+    /**
+     * Returns filtered list of events.
+     * 
+     * Filters all events within the boundaries, including the boundaries.
+     * 
+     * @param theDate base date
+     * @param theLowerBound lower bound
+     * @param theUpperBound upper bound
+     * 
+     * @return list of events within boundaries, empty if there are none
+     * 
+	 * @version 6.0.0
+	 * @since 6.0.0
+     */
+	public List<Event> getSortedFilterEvents(final LocalDate theDate, final int theLowerBound, final int theUpperBound) {
+		return getEvent().stream()
+				.filter(ev -> {
+					LocalDate dteEvent = ((LocalDate) ev.getDate().getValue());					
+					
+					int iDateDayOfYear = theDate.getDayOfYear();
+					int iEventDayOfYear = dteEvent.getDayOfYear();
+					
+					int iLowerBound = iDateDayOfYear + theLowerBound;
+					int iUpperBound = iDateDayOfYear + theUpperBound;
+					
+					// year change, date is january, event is december
+					if ((theDate.getMonth() == Month.JANUARY) && (dteEvent.getMonth() == Month.DECEMBER)) {
+						if ((iEventDayOfYear >= 1) && (iEventDayOfYear <= iUpperBound)) {
+							return true;
+						}
+						iLowerBound = dteEvent.lengthOfYear() + iLowerBound;
+						if ((iEventDayOfYear >= iLowerBound) && (iEventDayOfYear <= dteEvent.lengthOfYear())) {
+							return true;
+						}
+						return false;
+					}
+					
+					// year change, date is december, event is january
+					if ((theDate.getMonth() == Month.DECEMBER) && (dteEvent.getMonth() == Month.JANUARY)) {
+						if ((iEventDayOfYear >= iLowerBound) && (iEventDayOfYear <= theDate.lengthOfYear())) {
+							return true;
+						}
+						iUpperBound = iUpperBound - theDate.lengthOfYear();
+						if ((iEventDayOfYear >= 1) && (iEventDayOfYear <= iUpperBound)) {
+							return true;
+						}
+						return false;
+					}
+					
+					// no year change
+					if (theDate.isLeapYear() != dteEvent.isLeapYear()) {
+						if (theDate.isLeapYear() && (dteEvent.getMonth().ordinal() >= Month.MARCH.ordinal())) {
+							iEventDayOfYear++;
+						}
+						if (dteEvent.isLeapYear() && (theDate.getMonth().ordinal() >= Month.MARCH.ordinal())) {
+							iLowerBound++;
+							iUpperBound++;
+						}
+					}
+					
+					return ((iEventDayOfYear >= iLowerBound) && (iEventDayOfYear <= iUpperBound));
+					
+				})
+				.sorted(EventModel.DATE_INTERVAL_TITLE)
+				.collect(Collectors.toList());
 	}
 
 }
