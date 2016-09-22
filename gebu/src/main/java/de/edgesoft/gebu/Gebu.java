@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,7 +31,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -208,24 +206,13 @@ public class Gebu extends Application {
         stgPrimary.setTitle("Das Gebu-Programm");
 
         // set icon
-        this.stgPrimary.getIcons().add(ICON);
+        stgPrimary.getIcons().add(ICON);
 
         initAppLayout();
 
         initData();
 
         showEventOverview();
-	}
-
-    /**
-     * This method is called when the application should stop.
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-     */
-	@Override
-	public void stop() {
-		// nothing special so far
 	}
 
 	/**
@@ -340,28 +327,24 @@ public class Gebu extends Application {
 	 */
 	public void newData() {
 
-		if (checkModified()) {
+		dtaGebu = new ObjectFactory().createGebu();
 
-			dtaGebu = new ObjectFactory().createGebu();
+		Info info = new de.edgesoft.edgeutils.commons.ObjectFactory().createInfo();
 
-			Info info = new de.edgesoft.edgeutils.commons.ObjectFactory().createInfo();
+		info.setCreated(LocalDateTime.now());
+		info.setModified(LocalDateTime.now());
+		info.setAppversion(VERSION);
+		info.setDocversion(VERSION);
+		info.setCreator(Gebu.class.getCanonicalName());
 
-			info.setCreated(LocalDateTime.now());
-			info.setModified(LocalDateTime.now());
-			info.setAppversion(VERSION);
-			info.setDocversion(VERSION);
-			info.setCreator(Gebu.class.getCanonicalName());
+		dtaGebu.setInfo(info);
 
-			dtaGebu.setInfo(info);
+		Content content = new ObjectFactory().createContent();
+		dtaGebu.setContent(content);
 
-			Content content = new ObjectFactory().createContent();
-			dtaGebu.setContent(content);
-
-			setFilename(null);
-			setModified(false);
-			setAppTitle();
-
-		}
+		setFilename(null);
+		setModified(false);
+		setAppTitle();
 
     }
 
@@ -594,48 +577,6 @@ public class Gebu extends Application {
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }
-
-	}
-
-	/**
-	 * Check if data is modified, show corresponding dialog, save data if needed.
-	 *
-	 * @return continue?
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-	 */
-	public boolean checkModified() {
-
-		boolean doContinue = true;
-
-		if (isModified()) {
-
-	    	Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION);
-	        alert.initOwner(getPrimaryStage());
-	        alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
-
-	        alert.setTitle("Nicht gespeicherte Änderungen");
-	        alert.setHeaderText("Sie haben Änderungen durchgeführt, die noch nicht gespeichert wurden.");
-	        alert.setContentText("Wollen Sie die geänderten Daten speichern, nicht speichern oder wollen Sie den gesamten Vorgang abbrechen?");
-
-	        Optional<ButtonType> result = alert.showAndWait();
-	        if (result.isPresent()) {
-    			if (result.get() == ButtonType.YES) {
-    				System.err.println("todo");
-    				doContinue = true;
-    			}
-    			if (result.get() == ButtonType.NO) {
-    				doContinue = true;
-    			}
-    			if (result.get() == ButtonType.CANCEL) {
-    				doContinue = false;
-    			}
-	        }
-
-		}
-
-		return doContinue;
 
 	}
 

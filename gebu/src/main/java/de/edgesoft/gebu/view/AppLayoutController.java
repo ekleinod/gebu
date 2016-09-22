@@ -2,6 +2,7 @@ package de.edgesoft.gebu.view;
 
 import java.io.File;
 import java.text.MessageFormat;
+import java.util.Optional;
 
 import de.edgesoft.gebu.Gebu;
 import de.edgesoft.gebu.utils.AlertUtils;
@@ -10,6 +11,7 @@ import de.edgesoft.gebu.utils.Prefs;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
@@ -58,6 +60,14 @@ public class AppLayoutController {
 	 */
 	public void setGebuApp(final Gebu theApp) {
         appGebu = theApp;
+
+        // set handler for close requests (x-button of window)
+        appGebu.getPrimaryStage().setOnCloseRequest(event -> {
+        	event.consume();
+        	handleProgramExit();
+        });
+
+
     }
 
 	/**
@@ -68,7 +78,9 @@ public class AppLayoutController {
 	 */
 	@FXML
 	private void handleFileNew() {
-		appGebu.newData();
+		if (checkModified()) {
+			appGebu.newData();
+		}
 	}
 
 	/**
@@ -80,22 +92,26 @@ public class AppLayoutController {
 	@FXML
 	private void handleFileOpen() {
 
-		FileChooser fileChooser = new FileChooser();
+		if (checkModified()) {
 
-		fileChooser.setTitle("Gebu-Datei öffnen");
-        fileChooser.getExtensionFilters().addAll(
-        		new FileChooser.ExtensionFilter("Gebu-Dateien (*.esx)", "*.esx"),
-        		new FileChooser.ExtensionFilter("Alle Dateien (*.*)", "*.*")
-        		);
-        if (!Prefs.get(PrefKey.PATH).isEmpty()) {
-        	fileChooser.setInitialDirectory(new File(Prefs.get(PrefKey.PATH)));
-        }
+			FileChooser fileChooser = new FileChooser();
 
-        File file = fileChooser.showOpenDialog(appGebu.getPrimaryStage());
+			fileChooser.setTitle("Gebu-Datei öffnen");
+	        fileChooser.getExtensionFilters().addAll(
+	        		new FileChooser.ExtensionFilter("Gebu-Dateien (*.esx)", "*.esx"),
+	        		new FileChooser.ExtensionFilter("Alle Dateien (*.*)", "*.*")
+	        		);
+	        if (!Prefs.get(PrefKey.PATH).isEmpty()) {
+	        	fileChooser.setInitialDirectory(new File(Prefs.get(PrefKey.PATH)));
+	        }
 
-        if (file != null) {
-            appGebu.openData(file.getPath());
-        }
+	        File file = fileChooser.showOpenDialog(appGebu.getPrimaryStage());
+
+	        if (file != null) {
+	            appGebu.openData(file.getPath());
+	        }
+
+		}
 
 	}
 
@@ -183,7 +199,51 @@ public class AppLayoutController {
 	@SuppressWarnings("static-method")
 	@FXML
 	private void handleProgramExit() {
-		Platform.exit();
+		if (checkModified()) {
+			Platform.exit();
+		}
+	}
+
+	/**
+	 * Check if data is modified, show corresponding dialog, save data if needed.
+	 *
+	 * @return continue?
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	private boolean checkModified() {
+
+		boolean doContinue = true;
+
+		if (appGebu.isModified()) {
+
+	    	Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION);
+//	        alert.initOwner(getPrimaryStage());
+	        alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+
+	        alert.setTitle("Nicht gespeicherte Änderungen");
+	        alert.setHeaderText("Sie haben Änderungen durchgeführt, die noch nicht gespeichert wurden.");
+	        alert.setContentText("Wollen Sie die geänderten Daten speichern, nicht speichern oder wollen Sie den gesamten Vorgang abbrechen?");
+
+	        Optional<ButtonType> result = alert.showAndWait();
+	        if (result.isPresent()) {
+    			if (result.get() == ButtonType.YES) {
+    				handleFileSave();
+    				doContinue = true;
+    			}
+    			if (result.get() == ButtonType.NO) {
+    				doContinue = true;
+    			}
+    			if (result.get() == ButtonType.CANCEL) {
+    				doContinue = false;
+    			}
+	        }
+
+		}
+
+		return doContinue;
+
 	}
 
 }
