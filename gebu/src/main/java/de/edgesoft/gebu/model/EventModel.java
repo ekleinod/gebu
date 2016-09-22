@@ -1,5 +1,9 @@
 package de.edgesoft.gebu.model;
 
+import java.text.Collator;
+import java.time.LocalDate;
+import java.util.Comparator;
+
 import de.edgesoft.gebu.jaxb.Event;
 
 /**
@@ -33,7 +37,38 @@ import de.edgesoft.gebu.jaxb.Event;
  */
 public class EventModel extends Event {
 
-	// nothing so far
+	/** 
+	 * Comparator date. 
+	 * 
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public static final Comparator<Event> DATE = new Comparator<Event>() {
+
+		/**
+		 * (non-Javadoc)
+		 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+		 * 
+		 * Creates new dates in year 1996 and compares them - easiest solution.
+		 * 
+		 * @todo is this an elegant solution?
+		 */
+		@Override
+		public int compare(Event e1, Event e2) {
+			LocalDate d1 = LocalDate.of(1996, ((LocalDate) e1.getDate().getValue()).getMonth(), ((LocalDate) e1.getDate().getValue()).getDayOfMonth());
+			LocalDate d2 = LocalDate.of(1996, ((LocalDate) e2.getDate().getValue()).getMonth(), ((LocalDate) e2.getDate().getValue()).getDayOfMonth());
+			return d1.compareTo(d2);
+		}
+
+	};
+	
+	/** 
+	 * Comparator date, then title. 
+	 * 
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public static final Comparator<Event> DATE_TITLE = DATE.thenComparing(event -> event.getTitle().getValue(), Collator.getInstance());
 
 }
 

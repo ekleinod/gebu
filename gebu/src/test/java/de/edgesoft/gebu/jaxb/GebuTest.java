@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,6 +15,7 @@ import org.junit.rules.ExpectedException;
 import de.edgesoft.edgeutils.commons.Info;
 import de.edgesoft.edgeutils.commons.ext.VersionExt;
 import de.edgesoft.edgeutils.files.JAXBFiles;
+import de.edgesoft.gebu.model.EventModel;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -45,12 +47,27 @@ import javafx.beans.property.SimpleStringProperty;
  */
 public class GebuTest {
 
-	/** File name. */
+	/** 
+	 * File name. 
+	 * 
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
 	private static final String FILENAME = String.format("src/test/resources/%s.%s.xml", GebuTest.class.getPackage().getName(), GebuTest.class.getSimpleName().toLowerCase());
+
+	/** 
+	 * Gebu data. 
+	 * 
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	private static Gebu testData = null;
 
 	/**
 	 * Delete files.
-	 * @throws Exception
+	 * 
+	 * @version 6.0.0
+	 * @since 6.0.0
 	 */
 	@Before
 	public void deleteFiles() {
@@ -62,20 +79,17 @@ public class GebuTest {
 	}
 
 	/**
-	 * Rule for expected exception
+	 * Create test data.
+	 * 
+	 * @version 6.0.0
+	 * @since 6.0.0
 	 */
-	@Rule
-	public ExpectedException exception = ExpectedException.none();
-
-	/**
-	 * Tests marshalling and unmarshalling.
-	 */
-	@Test
-	public void testMarshalFile() throws Exception {
+	@Before
+	public void createTestData() {
 		
 		ObjectFactory factory = new ObjectFactory();
 
-		Gebu gebu = factory.createGebu();
+		testData = factory.createGebu();
 
 		Info info = new de.edgesoft.edgeutils.commons.ObjectFactory().createInfo();
 
@@ -85,10 +99,10 @@ public class GebuTest {
 		info.setDocversion(new VersionExt("6.0.0"));
 		info.setCreator(GebuTest.class.getCanonicalName());
 
-		gebu.setInfo(info);
+		testData.setInfo(info);
 
 		Content content = factory.createContent();
-		gebu.setContent(content);
+		testData.setContent(content);
 
 		Event event = factory.createEvent();
 		event.setTitle(new SimpleStringProperty("Johann Wolfgang von Goethe"));
@@ -123,15 +137,114 @@ public class GebuTest {
 		event.setDate(new SimpleObjectProperty<>(LocalDate.of(1790, 2, 22)));
 		event.setCategory(new SimpleStringProperty("Dichterehen"));
 		content.getEvent().add(event);
+		
+		event = factory.createEvent();
+		event.setTitle(new SimpleStringProperty("Test 1"));
+		event.setEventtype(new SimpleStringProperty("Geburtstag"));
+		event.setDate(new SimpleObjectProperty<>(LocalDate.of(1990, 12, 28)));
+		event.setCategory(new SimpleStringProperty("Tests"));
+		content.getEvent().add(event);
 
-		JAXBFiles.marshal(factory.createGebu(gebu), FILENAME, null);
+		event = factory.createEvent();
+		event.setTitle(new SimpleStringProperty("Test 2"));
+		event.setEventtype(new SimpleStringProperty("Geburtstag"));
+		event.setDate(new SimpleObjectProperty<>(LocalDate.of(1991, 12, 31)));
+		event.setCategory(new SimpleStringProperty("Tests"));
+		content.getEvent().add(event);
 
+		event = factory.createEvent();
+		event.setTitle(new SimpleStringProperty("Test 3"));
+		event.setEventtype(new SimpleStringProperty("Geburtstag"));
+		event.setDate(new SimpleObjectProperty<>(LocalDate.of(1995, 1, 3)));
+		event.setCategory(new SimpleStringProperty("Tests"));
+		content.getEvent().add(event);
 
+		event = factory.createEvent();
+		event.setTitle(new SimpleStringProperty("Test 4"));
+		event.setEventtype(new SimpleStringProperty("Geburtstag"));
+		event.setDate(new SimpleObjectProperty<>(LocalDate.of(1996, 3, 1)));
+		event.setCategory(new SimpleStringProperty("Tests"));
+		content.getEvent().add(event);
+
+		event = factory.createEvent();
+		event.setTitle(new SimpleStringProperty("Test 5"));
+		event.setEventtype(new SimpleStringProperty("Geburtstag"));
+		event.setDate(new SimpleObjectProperty<>(LocalDate.of(1996, 2, 29)));
+		event.setCategory(new SimpleStringProperty("Tests"));
+		content.getEvent().add(event);
+
+		event = factory.createEvent();
+		event.setTitle(new SimpleStringProperty("Test 6"));
+		event.setEventtype(new SimpleStringProperty("Geburtstag"));
+		event.setDate(new SimpleObjectProperty<>(LocalDate.of(1996, 2, 28)));
+		event.setCategory(new SimpleStringProperty("Tests"));
+		content.getEvent().add(event);
+
+		event = factory.createEvent();
+		event.setTitle(new SimpleStringProperty("Test 17"));
+		event.setEventtype(new SimpleStringProperty("Geburtstag"));
+		event.setDate(new SimpleObjectProperty<>(LocalDate.of(1995, 3, 1)));
+		event.setCategory(new SimpleStringProperty("Tests"));
+		content.getEvent().add(event);
+
+	}
+
+	/**
+	 * Rule for expected exception
+	 * 
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
+
+	/**
+	 * Tests marshalling and unmarshalling.
+	 * 
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@Test
+	public void testMarshalFile() throws Exception {
+		
+		JAXBFiles.marshal(new ObjectFactory().createGebu(testData), FILENAME, null);
 
 		Gebu readGebu = JAXBFiles.unmarshal(FILENAME, Gebu.class);
 
-		Assert.assertEquals(5, readGebu.getContent().getEvent().size());
+		Assert.assertEquals(12, readGebu.getContent().getEvent().size());
 		Assert.assertEquals(LocalDate.of(1749, 8, 28), readGebu.getContent().getEvent().stream().findFirst().get().getDate().getValue());
+
+	}
+
+	/**
+	 * Tests sorting.
+	 * 
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@Test
+	public void testSorting() {
+		
+		// unsorted
+		System.out.println("unsorted");
+		testData.getContent().getEvent().stream()
+				.map(Event::getDate)
+				.forEach(System.out::println);
+		System.out.println();
+
+		// sorted
+		System.out.println("sorted");
+		testData.getContent().getEvent().stream()
+				.sorted(EventModel.DATE_TITLE)
+				.map(Event::getDate)
+				.forEach(System.out::println);
+		System.out.println();
+
+		// first element
+		Assert.assertEquals(LocalDate.of(1995, 1, 3), testData.getContent().getEvent().stream().sorted(EventModel.DATE_TITLE).findFirst().get().getDate().getValue());
+		
+		// last element
+		Assert.assertEquals(LocalDate.of(1991, 12, 31), ((Event) Arrays.asList(testData.getContent().getEvent().stream().sorted(EventModel.DATE_TITLE).toArray()).get(11)).getDate().getValue());
 
 	}
 
