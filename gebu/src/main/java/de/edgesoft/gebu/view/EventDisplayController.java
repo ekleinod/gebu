@@ -1,9 +1,11 @@
 package de.edgesoft.gebu.view;
 
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
 
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
+import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.gebu.Gebu;
 import de.edgesoft.gebu.jaxb.Event;
 import de.edgesoft.gebu.model.ContentModel;
@@ -66,31 +68,51 @@ public class EventDisplayController {
 	public void displayEvents(final LocalDate theDate) {
 		
 		int iInterval = Integer.parseInt(Prefs.get(PrefKey.INTERVAL));
-
-		StringBuilder sbReturn = new StringBuilder();
-		sbReturn.append("<html><head><title>Gebu-Ausgabe</title>");
-		sbReturn.append("</head><body><center><table>");
 		
-		sbReturn.append(getTableLines(
+		StringBuilder sbEvents = new StringBuilder();
+		
+		sbEvents.append(getTableLines(
 				theDate,
 				((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, -iInterval, -1),
 				"past"));
-		sbReturn.append("<tr class=\"empty\" />");
+		sbEvents.append("<tr class=\"empty\" />");
 		
-		sbReturn.append(getTableLines(
+		sbEvents.append(getTableLines(
 				theDate,
 				((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, 0, 0),
 				"present"));
-		sbReturn.append("<tr class=\"empty\" />");
+		sbEvents.append("<tr class=\"empty\" />");
 		
-		sbReturn.append(getTableLines(
+		sbEvents.append(getTableLines(
 				theDate,
 				((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, 1, iInterval),
 				"future"));
 		
-		sbReturn.append("</table></center></body></html>");
+		String sContent;
+		try {
+			sContent = FileAccess.readFile(Paths.get("src/main/resources/event_display.html")).toString();
+		} catch (Exception e) {
+			sContent = "**events**";
+			e.printStackTrace();
+		}
 		
-		dspEvents.getEngine().loadContent(sbReturn.toString());
+		sContent = sContent
+				.replace("**past foreground**", Prefs.get(PrefKey.PAST_FOREGROUND))
+				.replace("**past fontsize**", Prefs.get(PrefKey.PAST_FONTSIZE))
+				.replace("**past background**", Prefs.get(PrefKey.PAST_BACKGROUND))
+				
+				.replace("**present foreground**", Prefs.get(PrefKey.PRESENT_FOREGROUND))
+				.replace("**present fontsize**", Prefs.get(PrefKey.PRESENT_FONTSIZE))
+				.replace("**present background**", Prefs.get(PrefKey.PRESENT_BACKGROUND))
+				
+				.replace("**future foreground**", Prefs.get(PrefKey.FUTURE_FOREGROUND))
+				.replace("**future fontsize**", Prefs.get(PrefKey.FUTURE_FONTSIZE))
+				.replace("**future background**", Prefs.get(PrefKey.FUTURE_BACKGROUND))
+				
+				.replace("**events**", sbEvents)
+				;
+		
+		dspEvents.getEngine().loadContent(sContent);
 
 	}
 

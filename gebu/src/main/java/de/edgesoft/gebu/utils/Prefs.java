@@ -68,23 +68,29 @@ public class Prefs {
 	public static String get(final PrefKey theKey) {
 
 		switch (theKey) {
-			case COLOR_FUTURE_BACKGROUND:
+			case FUTURE_BACKGROUND:
 				return getPreferences().get(theKey.value(), "#F0F8FF");
-			case COLOR_FUTURE_FOREGROUND:
+			case FUTURE_FONTSIZE:
+				return getPreferences().get(theKey.value(), "10");
+			case FUTURE_FOREGROUND:
 				return getPreferences().get(theKey.value(), "#6495ED");
-
-			case COLOR_PAST_BACKGROUND:
-				return getPreferences().get(theKey.value(), "#F5F5F5");
-			case COLOR_PAST_FOREGROUND:
-				return getPreferences().get(theKey.value(), "#008080");
-
-			case COLOR_PRESENT_BACKGROUND:
-				return getPreferences().get(theKey.value(), "#FFFFFF");
-			case COLOR_PRESENT_FOREGROUND:
-				return getPreferences().get(theKey.value(), "#D2691E");
 
 			case INTERVAL:
 				return getPreferences().get(theKey.value(), "7");
+
+			case PAST_BACKGROUND:
+				return getPreferences().get(theKey.value(), "#F5F5F5");
+			case PAST_FONTSIZE:
+				return getPreferences().get(theKey.value(), "10");
+			case PAST_FOREGROUND:
+				return getPreferences().get(theKey.value(), "#008080");
+
+			case PRESENT_BACKGROUND:
+				return getPreferences().get(theKey.value(), "#FFFFFF");
+			case PRESENT_FONTSIZE:
+				return getPreferences().get(theKey.value(), "12");
+			case PRESENT_FOREGROUND:
+				return getPreferences().get(theKey.value(), "#D2691E");
 
 			case STAGE_WIDTH:
 				return getPreferences().get(theKey.value(), "800");
