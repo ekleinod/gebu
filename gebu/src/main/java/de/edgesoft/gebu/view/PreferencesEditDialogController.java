@@ -139,6 +139,14 @@ public class PreferencesEditDialogController {
 	 */
 	private Stage dialogStage;
 
+	/**
+	 * OK clicked?.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	private boolean okClicked;
+
 
 	/**
 	 * Initializes the controller class.
@@ -180,6 +188,18 @@ public class PreferencesEditDialogController {
     }
 
 	/**
+	 * Returns if user clicked ok.
+	 *
+	 * @return did user click ok?
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public boolean isOkClicked() {
+        return okClicked;
+    }
+
+	/**
 	 * Validates input, stores ok click, and closes dialog; does nothing for invalid input.
 	 *
 	 * @version 6.0.0
@@ -187,6 +207,7 @@ public class PreferencesEditDialogController {
 	 */
 	@FXML
     private void handleOk() {
+        okClicked = false;
         if (isInputValid()) {
 
         	Prefs.put(PrefKey.INTERVAL, spnInterval.getValue().toString());
@@ -203,6 +224,7 @@ public class PreferencesEditDialogController {
         	Prefs.put(PrefKey.FUTURE_FOREGROUND, ColorUtils.formatWebHex(pckFutureForeground.getValue()));
         	Prefs.put(PrefKey.FUTURE_BACKGROUND, ColorUtils.formatWebHex(pckFutureBackground.getValue()));
 
+            okClicked = true;
             dialogStage.close();
         }
     }
@@ -215,6 +237,7 @@ public class PreferencesEditDialogController {
 	 */
 	@FXML
     private void handleCancel() {
+        okClicked = false;
         dialogStage.close();
     }
 

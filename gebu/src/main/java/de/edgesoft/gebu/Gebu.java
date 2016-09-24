@@ -124,6 +124,14 @@ public class Gebu extends Application {
 	private boolean isModified = false;
 
 	/**
+	 * Flag, if display (true) or editor (false) is shown.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	private boolean isDisplay = false;
+
+	/**
      * Returns the main stage.
      *
      * @return primary stage
@@ -485,6 +493,35 @@ public class Gebu extends Application {
     }
 
 	/**
+	 * Shows the event display.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public void showEventDisplay() {
+        try {
+
+            // Load event overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Gebu.class.getResource("view/EventDisplay.fxml"));
+            AnchorPane eventDisplay = (AnchorPane) loader.load();
+
+            // Set event overview into the center of root layout.
+            pneAppLayout.setCenter(eventDisplay);
+
+            // Give the controller access to the app.
+            EventDisplayController ctlEventDisplay = loader.getController();
+            ctlEventDisplay.setGebuApp(this);
+            ctlEventDisplay.displayEvents(LocalDate.now());
+
+            isDisplay = true;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+	/**
 	 * Shows the event overview.
 	 *
 	 * @version 6.0.0
@@ -506,32 +543,7 @@ public class Gebu extends Application {
             ctlEventOverview.setGebuApp(this);
             ctlEventOverview.setTableItems();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-	/**
-	 * Shows the event display.
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-	 */
-	public void showEventDisplay() {
-        try {
-
-            // Load event overview.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Gebu.class.getResource("view/EventDisplay.fxml"));
-            AnchorPane eventDisplay = (AnchorPane) loader.load();
-
-            // Set event overview into the center of root layout.
-            pneAppLayout.setCenter(eventDisplay);
-
-            // Give the controller access to the app.
-            EventDisplayController ctlEventDisplay = loader.getController();
-            ctlEventDisplay.setGebuApp(this);
-            ctlEventDisplay.displayEvents(LocalDate.now());
+            isDisplay = false;
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -616,6 +628,10 @@ public class Gebu extends Application {
 
 	        // Show the dialog and wait until the user closes it
 	        dialogStage.showAndWait();
+
+	        if (isDisplay && controller.isOkClicked()) {
+	        	showEventDisplay();
+	        }
 
 	    } catch (IOException e) {
 	        e.printStackTrace();

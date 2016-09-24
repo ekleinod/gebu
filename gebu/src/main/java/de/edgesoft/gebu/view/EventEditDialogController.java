@@ -130,24 +130,24 @@ public class EventEditDialogController {
 		// @todo until setting labelFor is fixed in FXML and Scenebuilder; set it programmatically
 		// does not work either, strange
 		lblTitle.setLabelFor(txtTitle);
-		
+
 		// set date picker date format
 		pickDate.setConverter(new StringConverter<LocalDate>() {
-			
-			@Override 
+
+			@Override
 			public String toString(LocalDate date) {
 				if (date == null) {
 					return "";
 				}
 				return DateTimeUtils.formatDate(date);
 			}
-			
-			@Override 
+
+			@Override
 			public LocalDate fromString(String string) {
 				return DateTimeUtils.parseDate(string);
 			}
 		});
-		
+
 	}
 
 	/**
@@ -171,7 +171,7 @@ public class EventEditDialogController {
 	 * @since 6.0.0
 	 */
 	public void setEvent(Event theEvent) {
-		
+
 		Objects.requireNonNull(theEvent);
 
         txtTitle.setText(
@@ -215,23 +215,24 @@ public class EventEditDialogController {
 	 */
 	@FXML
     private void handleOk() {
+        okClicked = false;
         if (isInputValid()) {
 
         	if (currentEvent.getTitle() == null) {
         		currentEvent.setTitle(new SimpleStringProperty());
         	}
             currentEvent.getTitle().setValue(txtTitle.getText());
-        	
+
             if (currentEvent.getDate() == null) {
         		currentEvent.setDate(new SimpleObjectProperty<>());
         	}
             currentEvent.getDate().setValue(pickDate.getValue());
-            
+
         	if (currentEvent.getEventtype() == null) {
         		currentEvent.setEventtype(new SimpleStringProperty());
         	}
             currentEvent.getEventtype().setValue(cboEventtype.getValue());
-        	
+
             if (currentEvent.getCategory() == null) {
         		currentEvent.setCategory(new SimpleStringProperty());
         	}
