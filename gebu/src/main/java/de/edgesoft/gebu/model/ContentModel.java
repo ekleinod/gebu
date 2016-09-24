@@ -39,21 +39,21 @@ import javafx.collections.ObservableList;
  * @since 6.0.0
  */
 public class ContentModel extends Content {
-	
+
     /**
-     * Observable list of events (singleton). 
-     * 
+     * Observable list of events (singleton).
+     *
 	 * @version 6.0.0
 	 * @since 6.0.0
      */
 	@XmlTransient
 	private ObservableList<Event> observableEvents = null;
-	
+
     /**
-     * Returns observable list of events. 
-     * 
+     * Returns observable list of events.
+     *
      * @return observable list of events
-	 * 	
+	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
      */
@@ -65,8 +65,8 @@ public class ContentModel extends Content {
 	}
 
     /**
-     * Sorts events. 
-     * 
+     * Sorts events.
+     *
 	 * @version 6.0.0
 	 * @since 6.0.0
      */
@@ -78,29 +78,29 @@ public class ContentModel extends Content {
 
     /**
      * Returns filtered list of events.
-     * 
+     *
      * Filters all events within the boundaries, including the boundaries.
-     * 
+     *
      * @param theDate base date
      * @param theLowerBound lower bound
      * @param theUpperBound upper bound
-     * 
+     *
      * @return list of events within boundaries, empty if there are none
-     * 
+     *
 	 * @version 6.0.0
 	 * @since 6.0.0
      */
 	public List<Event> getSortedFilterEvents(final LocalDate theDate, final int theLowerBound, final int theUpperBound) {
 		return getEvent().stream()
 				.filter(ev -> {
-					LocalDate dteEvent = ((LocalDate) ev.getDate().getValue());					
-					
+					LocalDate dteEvent = ((LocalDate) ev.getDate().getValue());
+
 					int iDateDayOfYear = theDate.getDayOfYear();
 					int iEventDayOfYear = dteEvent.getDayOfYear();
-					
+
 					int iLowerBound = iDateDayOfYear + theLowerBound;
 					int iUpperBound = iDateDayOfYear + theUpperBound;
-					
+
 					// year change, date is january, event is december
 					if ((theDate.getMonth() == Month.JANUARY) && (dteEvent.getMonth() == Month.DECEMBER)) {
 						if ((iEventDayOfYear >= 1) && (iEventDayOfYear <= iUpperBound)) {
@@ -112,7 +112,7 @@ public class ContentModel extends Content {
 						}
 						return false;
 					}
-					
+
 					// year change, date is december, event is january
 					if ((theDate.getMonth() == Month.DECEMBER) && (dteEvent.getMonth() == Month.JANUARY)) {
 						if ((iEventDayOfYear >= iLowerBound) && (iEventDayOfYear <= theDate.lengthOfYear())) {
@@ -124,7 +124,7 @@ public class ContentModel extends Content {
 						}
 						return false;
 					}
-					
+
 					// no year change
 					if (theDate.isLeapYear() != dteEvent.isLeapYear()) {
 						if (theDate.isLeapYear() && (dteEvent.getMonth().ordinal() >= Month.MARCH.ordinal())) {
@@ -135,9 +135,9 @@ public class ContentModel extends Content {
 							iUpperBound++;
 						}
 					}
-					
+
 					return ((iEventDayOfYear >= iLowerBound) && (iEventDayOfYear <= iUpperBound));
-					
+
 				})
 				.sorted(EventModel.DATE_INTERVAL_TITLE)
 				.collect(Collectors.toList());

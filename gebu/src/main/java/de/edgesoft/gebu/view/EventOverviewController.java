@@ -173,7 +173,7 @@ public class EventOverviewController {
 		colDate.setCellValueFactory(cellData -> cellData.getValue().getDate());
 		colEventtype.setCellValueFactory(cellData -> cellData.getValue().getEventtype());
 		colCategory.setCellValueFactory(cellData -> cellData.getValue().getCategory());
-		
+
 		// format date column
 		colDate.setCellFactory(column -> {
 		    return new TableCell<EventModel, LocalDate>() {
@@ -189,6 +189,9 @@ public class EventOverviewController {
 		        }
 		    };
 		});
+
+		// set sorting of date column
+		colDate.setComparator(EventModel.LOCALDATE);
 
 		// clear event details
 		showEventDetails(null);
@@ -208,7 +211,7 @@ public class EventOverviewController {
 
 	/**
 	 * Called by main application for reference to itself.
-	 * 
+	 *
 	 * @param theApp reference to application
 	 *
 	 * @version 6.0.0
@@ -220,12 +223,13 @@ public class EventOverviewController {
 
 	/**
 	 * Sets events as table items.
-	 * 
+	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
 	public void setTableItems() {
 		tblEvents.setItems(((ContentModel) appGebu.getGebuData().getContent()).getObservableEvents());
+//		tblEvents.getSortOrder().setAll(colDate);
     }
 
 	/**
