@@ -66,28 +66,49 @@ public class EventDisplayController {
 	 * @since 6.0.0
 	 */
 	public void displayEvents(final LocalDate theDate) {
-		
+
 		int iInterval = Integer.parseInt(Prefs.get(PrefKey.INTERVAL));
-		
+
 		StringBuilder sbEvents = new StringBuilder();
-		
-		sbEvents.append(getTableLines(
+
+		String sTemp = getTableLines(
 				theDate,
 				((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, -iInterval, -1),
-				"past"));
-		sbEvents.append("<tr class=\"empty\" />");
-		
-		sbEvents.append(getTableLines(
+				"past");
+
+		if (!sTemp.isEmpty()) {
+			sbEvents.append(getTableLines(
+					theDate,
+					((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, -iInterval, -1),
+					"past"));
+			sbEvents.append("<tr class=\"empty\" />");
+		}
+
+		sTemp = getTableLines(
 				theDate,
-				((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, 0, 0),
-				"present"));
-		sbEvents.append("<tr class=\"empty\" />");
-		
-		sbEvents.append(getTableLines(
-				theDate,
-				((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, 1, iInterval),
-				"future"));
-		
+				((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, -iInterval, -1),
+				"past");
+
+		if (!sTemp.isEmpty()) {
+			sbEvents.append(getTableLines(
+					theDate,
+					((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, 0, 0),
+					"present"));
+			sbEvents.append("<tr class=\"empty\" />");
+		}
+
+		if (!sTemp.isEmpty()) {
+			sbEvents.append(getTableLines(
+					theDate,
+					((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, 1, iInterval),
+					"future"));
+		}
+
+		if (sbEvents.length() == 0) {
+			sbEvents.append(String.format("<tr><td colspan=\"4\">%s</td></tr>", "Keine Ereignisse anzuzeigen."));
+		}
+
+
 		String sContent;
 		try {
 			sContent = FileAccess.readFile(Paths.get("src/main/resources/event_display.html")).toString();
@@ -95,43 +116,43 @@ public class EventDisplayController {
 			sContent = "**events**";
 			e.printStackTrace();
 		}
-		
+
 		sContent = sContent
 				.replace("**past foreground**", Prefs.get(PrefKey.PAST_FOREGROUND))
 				.replace("**past fontsize**", Prefs.get(PrefKey.PAST_FONTSIZE))
 				.replace("**past background**", Prefs.get(PrefKey.PAST_BACKGROUND))
-				
+
 				.replace("**present foreground**", Prefs.get(PrefKey.PRESENT_FOREGROUND))
 				.replace("**present fontsize**", Prefs.get(PrefKey.PRESENT_FONTSIZE))
 				.replace("**present background**", Prefs.get(PrefKey.PRESENT_BACKGROUND))
-				
+
 				.replace("**future foreground**", Prefs.get(PrefKey.FUTURE_FOREGROUND))
 				.replace("**future fontsize**", Prefs.get(PrefKey.FUTURE_FONTSIZE))
 				.replace("**future background**", Prefs.get(PrefKey.FUTURE_BACKGROUND))
-				
+
 				.replace("**events**", sbEvents)
 				;
-		
+
 		dspEvents.getEngine().loadContent(sContent);
 
 	}
 
 	/**
 	 * Returns table lines for a time.
-	 * 
+	 *
 	 * @param theDate date (for age computation)
 	 * @param theEvents list of events
 	 * @param theTime kind of time (past, present, future)
-	 * 
+	 *
 	 * @return table lines for time
 	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
 	private static String getTableLines(final LocalDate theDate, final List<Event> theEvents, final String theTime) {
-		
+
 		StringBuilder sbReturn = new StringBuilder();
-		
+
 		theEvents.stream()
 				.forEach(event -> {
 					sbReturn.append(String.format("<tr class=\"%s\">", theTime));
@@ -142,13 +163,13 @@ public class EventDisplayController {
 					sbReturn.append(String.format("<td>%s</td>", event.getTitle().getValue()));
 					sbReturn.append("</tr>");
 				});
-		
+
 		return sbReturn.toString();
 	}
-		
+
 	/**
 	 * Called by main application for reference to itself.
-	 * 
+	 *
 	 * @param theApp reference to application
 	 *
 	 * @version 6.0.0
