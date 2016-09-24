@@ -71,6 +71,28 @@ public class AppLayoutController {
     }
 
 	/**
+	 * Program menu display.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private void handleProgramDisplay() {
+		appGebu.showEventDisplay();
+	}
+
+	/**
+	 * Program menu editor.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private void handleProgramEditor() {
+		appGebu.showEventOverview();
+	}
+
+	/**
 	 * File menu new.
 	 *
 	 * @version 6.0.0

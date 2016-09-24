@@ -344,7 +344,7 @@ public class Gebu extends Application {
 
 		Content content = new ObjectFactory().createContent();
 		dtaGebu.setContent(content);
-		
+
 		if (ctlEventOverview != null) {
 			ctlEventOverview.setTableItems();
 		}
@@ -380,7 +380,7 @@ public class Gebu extends Application {
 			if (ctlEventOverview != null) {
 				ctlEventOverview.setTableItems();
 			}
-			
+
 			setFilename(theFilename);
 			setModified(false);
 			setAppTitle();
@@ -458,7 +458,7 @@ public class Gebu extends Application {
 		try {
 
 			dtaGebu.getInfo().setModified(LocalDateTime.now());
-			
+
 			((ContentModel) dtaGebu.getContent()).sortEvents();
 
 			JAXBFiles.marshal(new ObjectFactory().createGebu(dtaGebu), theFilename, null);
