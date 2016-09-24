@@ -20,6 +20,8 @@
                      </accelerator>
                   </MenuItem>
                   <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem onAction="#handleProgramPreferences" text="E_instellungen" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
               <MenuItem onAction="#handleProgramExit" text="_Schließen">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />

@@ -5,6 +5,8 @@ import java.text.MessageFormat;
 import java.util.Optional;
 
 import de.edgesoft.gebu.Gebu;
+import de.edgesoft.gebu.model.ContentModel;
+import de.edgesoft.gebu.model.EventModel;
 import de.edgesoft.gebu.utils.AlertUtils;
 import de.edgesoft.gebu.utils.PrefKey;
 import de.edgesoft.gebu.utils.Prefs;
@@ -90,6 +92,49 @@ public class AppLayoutController {
 	@FXML
 	private void handleProgramEditor() {
 		appGebu.showEventOverview();
+	}
+
+	/**
+	 * Program menu preferences.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private void handleProgramPreferences() {
+		appGebu.showPreferencesEditDialog();
+	}
+
+	/**
+	 * Program menu exit.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@SuppressWarnings("static-method")
+	@FXML
+	private void handleProgramExit() {
+		if (checkModified()) {
+			Platform.exit();
+		}
+	}
+
+	/**
+	 * Opens edit dialog for new event.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private void handleNewEvent() {
+
+		EventModel newEvent = new EventModel();
+		if (appGebu.showEventEditDialog(newEvent)) {
+			((ContentModel) appGebu.getGebuData().getContent()).getObservableEvents().add(newEvent);
+			appGebu.setModified(true);
+			appGebu.setAppTitle();
+		}
+
 	}
 
 	/**
@@ -211,20 +256,6 @@ public class AppLayoutController {
     private void handleEventStatistics() {
         appGebu.showEventStatistics();
     }
-
-	/**
-	 * Program menu exit.
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-	 */
-	@SuppressWarnings("static-method")
-	@FXML
-	private void handleProgramExit() {
-		if (checkModified()) {
-			Platform.exit();
-		}
-	}
 
 	/**
 	 * Check if data is modified, show corresponding dialog, save data if needed.

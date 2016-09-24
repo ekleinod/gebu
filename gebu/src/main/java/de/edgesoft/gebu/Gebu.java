@@ -26,6 +26,7 @@ import de.edgesoft.gebu.view.EventDisplayController;
 import de.edgesoft.gebu.view.EventEditDialogController;
 import de.edgesoft.gebu.view.EventOverviewController;
 import de.edgesoft.gebu.view.EventStatisticsController;
+import de.edgesoft.gebu.view.PreferencesEditDialogController;
 import javafx.application.Application;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -579,6 +580,45 @@ public class Gebu extends Application {
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	        return false;
+	    }
+
+	}
+
+	/**
+	 * Opens the event edit dialog.
+	 *
+	 * If the user clicks OK, the changes are saved into the provided event object and true is returned.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public void showPreferencesEditDialog() {
+
+	    try {
+
+	        // Load dialog.
+	        FXMLLoader loader = new FXMLLoader();
+	        loader.setLocation(Gebu.class.getResource("view/PreferencesEditDialog.fxml"));
+	        AnchorPane preferencesDialog = (AnchorPane) loader.load();
+
+	        // Create the dialog Stage.
+	        Stage dialogStage = new Stage();
+	        dialogStage.setTitle("Einstellungen");
+	        dialogStage.initModality(Modality.WINDOW_MODAL);
+	        dialogStage.initOwner(stgPrimary);
+
+	        Scene scene = new Scene(preferencesDialog);
+	        dialogStage.setScene(scene);
+
+	        // Set the event into the controller.
+	        PreferencesEditDialogController controller = loader.getController();
+	        controller.setDialogStage(dialogStage);
+
+	        // Show the dialog and wait until the user closes it
+	        dialogStage.showAndWait();
+
+	    } catch (IOException e) {
+	        e.printStackTrace();
 	    }
 
 	}
