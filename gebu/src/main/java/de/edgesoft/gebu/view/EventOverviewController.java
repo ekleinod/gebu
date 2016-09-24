@@ -147,15 +147,6 @@ public class EventOverviewController {
 	 */
 	private Gebu appGebu;
 
-	/**
-	 * Default constructor, called before initialize.
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-	 */
-	public EventOverviewController() {
-		// nothing special yet
-	}
 
 	/**
 	 * Initializes the controller class.

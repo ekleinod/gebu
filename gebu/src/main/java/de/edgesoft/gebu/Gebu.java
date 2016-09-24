@@ -28,6 +28,8 @@ import de.edgesoft.gebu.view.EventOverviewController;
 import de.edgesoft.gebu.view.EventStatisticsController;
 import de.edgesoft.gebu.view.PreferencesEditDialogController;
 import javafx.application.Application;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -129,7 +131,7 @@ public class Gebu extends Application {
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
-	private boolean isDisplay = false;
+	private BooleanProperty isDisplay = null;
 
 	/**
      * Returns the main stage.
@@ -198,7 +200,7 @@ public class Gebu extends Application {
 	 * @since 6.0.0
 	 */
 	public Gebu() {
-		// nothing to do so far
+		isDisplay = new SimpleBooleanProperty();
 	}
 
     /**
@@ -514,7 +516,7 @@ public class Gebu extends Application {
             ctlEventDisplay.setGebuApp(this);
             ctlEventDisplay.displayEvents(LocalDate.now());
 
-            isDisplay = true;
+            isDisplay.setValue(true);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -543,7 +545,7 @@ public class Gebu extends Application {
             ctlEventOverview.setGebuApp(this);
             ctlEventOverview.setTableItems();
 
-            isDisplay = false;
+            isDisplay.setValue(false);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -629,7 +631,7 @@ public class Gebu extends Application {
 	        // Show the dialog and wait until the user closes it
 	        dialogStage.showAndWait();
 
-	        if (isDisplay && controller.isOkClicked()) {
+	        if (isDisplay.getValue() && controller.isOkClicked()) {
 	        	showEventDisplay();
 	        }
 
@@ -674,6 +676,18 @@ public class Gebu extends Application {
 	        e.printStackTrace();
 	    }
 
+	}
+
+	/**
+	 * Is app in display mode?
+	 *
+	 * @return display mode (true) or editor mode (false)
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public BooleanProperty isDisplay() {
+		return isDisplay;
 	}
 
 }

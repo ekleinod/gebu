@@ -13,8 +13,8 @@
         <menus>
             <Menu text="_Programm">
               <items>
-                <MenuItem onAction="#handleProgramDisplay" text="_Anzeige" />
-                  <MenuItem onAction="#handleProgramEditor" text="_Editor">
+                <MenuItem fx:id="mnuProgramDisplay" onAction="#handleProgramDisplay" text="_Anzeige" />
+                  <MenuItem fx:id="mnuProgramEditor" onAction="#handleProgramEditor" text="_Editor">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>

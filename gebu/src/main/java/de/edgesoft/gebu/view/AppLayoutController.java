@@ -13,8 +13,9 @@ import de.edgesoft.gebu.utils.Prefs;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
@@ -47,12 +48,31 @@ import javafx.stage.FileChooser;
 public class AppLayoutController {
 
 	/**
+	 * Menu item program -> display.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private MenuItem mnuProgramDisplay;
+
+	/**
+	 * Menu item program -> editor.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private MenuItem mnuProgramEditor;
+
+	/**
 	 * Reference to application.
 	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
 	private Gebu appGebu;
+
 
 	/**
 	 * Called by main application for reference to itself.
@@ -69,6 +89,9 @@ public class AppLayoutController {
         	handleProgramExit();
         });
 
+        // initialize menu
+		mnuProgramDisplay.disableProperty().bind(appGebu.isDisplay());
+		mnuProgramEditor.disableProperty().bind(appGebu.isDisplay().not());
 
     }
 
