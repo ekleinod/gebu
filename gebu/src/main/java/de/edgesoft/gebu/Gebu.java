@@ -436,7 +436,7 @@ public class Gebu extends Application {
 						newEvent.setTitle(new SimpleStringProperty(event.getDescription()));
 						newEvent.setDate(new SimpleObjectProperty<>(event.getDate()));
 						newEvent.setEventtype(new SimpleStringProperty(event.getEventname()));
-						newEvent.setCategory(new SimpleStringProperty(event.getCategory()));
+						newEvent.setCategory(new SimpleStringProperty((event.getCategory().equals("Keine") ? null : event.getCategory())));
 						dtaGebu.getContent().getEvent().add(newEvent);
 					}
 					);
