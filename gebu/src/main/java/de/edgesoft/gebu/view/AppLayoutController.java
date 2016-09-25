@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
@@ -46,6 +47,24 @@ import javafx.stage.FileChooser;
  * @since 6.0.0
  */
 public class AppLayoutController {
+
+	/**
+	 * Menu file.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private Menu mnuFile;
+
+	/**
+	 * Menu statistics.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private Menu mnuStatistics;
 
 	/**
 	 * Menu item program -> display.
@@ -92,6 +111,9 @@ public class AppLayoutController {
         // initialize menu
 		mnuProgramDisplay.disableProperty().bind(appGebu.isDisplay());
 		mnuProgramEditor.disableProperty().bind(appGebu.isDisplay().not());
+
+		mnuFile.visibleProperty().bind(appGebu.isDisplay().not());
+		mnuStatistics.visibleProperty().bind(appGebu.isDisplay().not());
 
     }
 

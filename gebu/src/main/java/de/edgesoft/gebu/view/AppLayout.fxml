@@ -28,7 +28,7 @@
                      </accelerator></MenuItem>
               </items>
             </Menu>
-          <Menu text="_Datei">
+          <Menu fx:id="mnuFile" text="_Datei">
                <items>
                   <MenuItem onAction="#handleFileNew" text="_Neu">
                      <accelerator>
@@ -54,7 +54,7 @@
                   </MenuItem>
                </items>
           </Menu>
-          <Menu text="_Statistik">
+          <Menu fx:id="mnuStatistics" text="_Statistik">
             <items>
               <MenuItem onAction="#handleEventStatistics" text="_Daten" />
             </items>
