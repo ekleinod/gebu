@@ -1,8 +1,11 @@
 package de.edgesoft.gebu.model;
 
+import java.text.Collator;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlTransient;
@@ -141,6 +144,56 @@ public class ContentModel extends Content {
 				})
 				.sorted(EventModel.DATE_INTERVAL_TITLE)
 				.collect(Collectors.toList());
+	}
+
+    /**
+     * Returns list of used event types.
+     *
+     * @return list of used event types
+     *
+	 * @version 6.0.0
+	 * @since 6.0.0
+     */
+	public List<String> getEventtypes() {
+
+		Set<String> setReturn = new HashSet<>();
+
+		getEvent().stream()
+				.forEach(event -> {
+					if ((event.getEventtype() != null) && (event.getEventtype().getValue() != null) && !event.getEventtype().getValue().isEmpty()) {
+						setReturn.add(event.getEventtype().getValue());
+					}
+				});
+
+		return setReturn.stream()
+				.sorted(Collator.getInstance())
+				.collect(Collectors.toList());
+
+	}
+
+    /**
+     * Returns list of used categories.
+     *
+     * @return list of used categories
+     *
+	 * @version 6.0.0
+	 * @since 6.0.0
+     */
+	public List<String> getCategories() {
+
+		Set<String> setReturn = new HashSet<>();
+
+		getEvent().stream()
+				.forEach(event -> {
+					if ((event.getCategory() != null) && (event.getCategory().getValue() != null) && !event.getCategory().getValue().isEmpty()) {
+						setReturn.add(event.getCategory().getValue());
+					}
+				});
+
+		return setReturn.stream()
+				.sorted(Collator.getInstance())
+				.collect(Collectors.toList());
+
 	}
 
 }

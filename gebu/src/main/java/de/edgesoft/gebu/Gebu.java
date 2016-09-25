@@ -583,6 +583,7 @@ public class Gebu extends Application {
 
 	        // Set the event into the controller.
 	        EventEditDialogController controller = loader.getController();
+	        controller.setGebuApp(this);
 	        controller.setDialogStage(dialogStage);
 	        controller.setEvent(theEvent);
 
