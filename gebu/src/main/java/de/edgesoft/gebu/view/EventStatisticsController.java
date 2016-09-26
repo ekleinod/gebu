@@ -2,8 +2,12 @@ package de.edgesoft.gebu.view;
 
 import java.text.DateFormatSymbols;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import de.edgesoft.gebu.jaxb.Event;
 import javafx.collections.FXCollections;
@@ -80,7 +84,7 @@ public class EventStatisticsController {
 
         monthNames.addAll(Arrays.asList(DateFormatSymbols.getInstance().getMonths()));
         xAxis.setCategories(monthNames);
-        
+
 	}
 
 	/**
@@ -90,23 +94,34 @@ public class EventStatisticsController {
 	 * @since 6.0.0
 	 */
 	public void setEventData(final List<Event> theEvents) {
-		
-		// Count the number of people having their birthday in a specific month.
-        int[] monthCounter = new int[12];
-        for (Event event : theEvents) {
-            int month = ((LocalDate) event.getDate().getValue()).getMonthValue() - 1;
-            monthCounter[month]++;
-        }
 
-        XYChart.Series<String, Integer> series = new XYChart.Series<>();
+		Map<String, Map<Month, AtomicInteger>> mapCounts = new HashMap<>();
 
-        // Create a XYChart.Data object for each month. Add it to the series.
-        for (int i = 0; i < monthCounter.length; i++) {
-            series.getData().add(new XYChart.Data<>(monthNames.get(i), monthCounter[i]));
-        }
+		theEvents.forEach(event -> {
+			mapCounts.putIfAbsent(event.getEventtype().getValue(), new HashMap<>());
+			mapCounts.get(event.getEventtype().getValue()).putIfAbsent(((LocalDate) event.getDate().getValue()).getMonth(), new AtomicInteger());
+			mapCounts.get(event.getEventtype().getValue()).get(((LocalDate) event.getDate().getValue()).getMonth()).addAndGet(1);
+		});
 
-        chartStatistics.getData().add(series);
-        
+		mapCounts.entrySet().stream()
+//				.sorted(typemap -> typemap.getKey(), Collator.getInstance())
+				.forEach(typemap -> {
+
+					XYChart.Series<String, Integer> series = new XYChart.Series<>();
+					series.setName(typemap.getKey());
+
+					typemap.getValue().entrySet().stream()
+//							.sorted(monthcount -> monthcount.getKey())
+							.forEach(monthcount -> {
+								series.getData().add(new XYChart.Data<>(monthcount.getKey().name(), monthcount.getValue().get()));
+							});
+
+					series.getData().add(new XYChart.Data<>("test", 5));
+
+					chartStatistics.getData().add(series);
+
+				});
+
     }
 
 }
