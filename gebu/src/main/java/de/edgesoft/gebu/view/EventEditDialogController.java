@@ -7,13 +7,11 @@ import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.gebu.Gebu;
 import de.edgesoft.gebu.jaxb.Event;
 import de.edgesoft.gebu.model.ContentModel;
-import de.edgesoft.gebu.utils.AlertUtils;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -95,6 +93,15 @@ public class EventEditDialogController {
 	private ComboBox<String> cboCategory;
 
 	/**
+	 * OK button.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private Button btnOK;
+
+	/**
 	 * Reference to dialog stage.
 	 *
 	 * @version 6.0.0
@@ -158,6 +165,14 @@ public class EventEditDialogController {
 				return DateTimeUtils.parseDate(string);
 			}
 		});
+
+		// enable ok button for valid entries only
+		btnOK.disableProperty().bind(
+				pickDate.valueProperty().isNull()
+				.or(txtTitle.textProperty().isEmpty())
+				.or(cboEventtype.valueProperty().isNull())
+				.or(cboEventtype.valueProperty().asString().isEmpty())
+				);
 
 	}
 
@@ -243,31 +258,30 @@ public class EventEditDialogController {
 	@FXML
     private void handleOk() {
         okClicked = false;
-        if (isInputValid()) {
 
-        	if (currentEvent.getTitle() == null) {
-        		currentEvent.setTitle(new SimpleStringProperty());
-        	}
-            currentEvent.getTitle().setValue(txtTitle.getText());
+    	if (currentEvent.getTitle() == null) {
+    		currentEvent.setTitle(new SimpleStringProperty());
+    	}
+        currentEvent.getTitle().setValue(txtTitle.getText());
 
-            if (currentEvent.getDate() == null) {
-        		currentEvent.setDate(new SimpleObjectProperty<>());
-        	}
-            currentEvent.getDate().setValue(pickDate.getValue());
+        if (currentEvent.getDate() == null) {
+    		currentEvent.setDate(new SimpleObjectProperty<>());
+    	}
+        currentEvent.getDate().setValue(pickDate.getValue());
 
-        	if (currentEvent.getEventtype() == null) {
-        		currentEvent.setEventtype(new SimpleStringProperty());
-        	}
-            currentEvent.getEventtype().setValue(cboEventtype.getValue());
+    	if (currentEvent.getEventtype() == null) {
+    		currentEvent.setEventtype(new SimpleStringProperty());
+    	}
+        currentEvent.getEventtype().setValue(cboEventtype.getValue());
 
-            if (currentEvent.getCategory() == null) {
-        		currentEvent.setCategory(new SimpleStringProperty());
-        	}
-            currentEvent.getCategory().setValue(cboCategory.getValue());
+        if (currentEvent.getCategory() == null) {
+    		currentEvent.setCategory(new SimpleStringProperty());
+    	}
+        currentEvent.getCategory().setValue(cboCategory.getValue());
 
-            okClicked = true;
-            dialogStage.close();
-        }
+        okClicked = true;
+        dialogStage.close();
+
     }
 
 	/**
@@ -280,48 +294,6 @@ public class EventEditDialogController {
     private void handleCancel() {
 		okClicked = false;
         dialogStage.close();
-    }
-
-	/**
-	 * Validates input, shows error message for invalid input.
-	 *
-	 * @return is input valid?
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-	 */
-	private boolean isInputValid() {
-
-        StringBuilder sbErrorMessage = new StringBuilder();
-
-        if ((txtTitle.getText() == null) || txtTitle.getText().trim().isEmpty()) {
-            sbErrorMessage.append("Kein gültiger Titel!\n");
-        }
-
-        if (pickDate.getValue() == null) {
-            sbErrorMessage.append("Kein gültiges Datum!\n");
-        }
-
-        if ((cboEventtype.getValue() == null) || cboEventtype.getValue().trim().isEmpty()) {
-            sbErrorMessage.append("Keine gültige Ereignisart!\n");
-        }
-
-        if (sbErrorMessage.length() == 0) {
-            return true;
-        }
-
-        // Show the error message.
-        Alert alert = AlertUtils.createAlert(AlertType.ERROR);
-        alert.initOwner(dialogStage);
-
-        alert.setTitle("Ungültige Eingaben");
-        alert.setHeaderText("Bitte korrigieren Sie die fehlerhaften Eingaben.");
-        alert.setContentText(sbErrorMessage.toString());
-
-        alert.showAndWait();
-
-        return false;
-
     }
 
 }
