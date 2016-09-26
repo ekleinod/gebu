@@ -130,10 +130,10 @@ public class ContentModel extends Content {
 
 					// no year change
 					if (theDate.isLeapYear() != dteEvent.isLeapYear()) {
-						if (theDate.isLeapYear() && (dteEvent.getMonth().ordinal() >= Month.MARCH.ordinal())) {
+						if (theDate.isLeapYear() && (dteEvent.getMonth().getValue() >= Month.MARCH.getValue())) {
 							iEventDayOfYear++;
 						}
-						if (dteEvent.isLeapYear() && (theDate.getMonth().ordinal() >= Month.MARCH.ordinal())) {
+						if (dteEvent.isLeapYear() && (theDate.getMonth().getValue() >= Month.MARCH.getValue())) {
 							iLowerBound++;
 							iUpperBound++;
 						}
