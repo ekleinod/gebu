@@ -3,9 +3,11 @@ package de.edgesoft.gebu.view;
 import java.text.DateFormatSymbols;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.format.TextStyle;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -113,7 +115,7 @@ public class EventStatisticsController {
 					typemap.getValue().entrySet().stream()
 //							.sorted(monthcount -> monthcount.getKey())
 							.forEach(monthcount -> {
-								series.getData().add(new XYChart.Data<>(monthcount.getKey().name(), monthcount.getValue().get()));
+								series.getData().add(new XYChart.Data<>(monthcount.getKey().getDisplayName(TextStyle.FULL, Locale.getDefault()), monthcount.getValue().get()));
 							});
 
 					series.getData().add(new XYChart.Data<>("test", 5));

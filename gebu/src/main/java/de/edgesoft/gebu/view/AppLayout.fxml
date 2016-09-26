@@ -7,7 +7,7 @@
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.gebu.view.AppLayoutController">
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.gebu.view.AppLayoutController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -56,7 +56,10 @@
           </Menu>
           <Menu fx:id="mnuStatistics" text="_Statistik">
             <items>
-              <MenuItem onAction="#handleEventStatistics" text="_Daten" />
+              <MenuItem onAction="#handleEventStatistics" text="_Daten">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="I" control="ANY" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
             </items>
           </Menu>
           <Menu text="_Hilfe">
