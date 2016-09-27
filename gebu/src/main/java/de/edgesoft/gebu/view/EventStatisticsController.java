@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
 
 /**
@@ -54,7 +55,16 @@ public class EventStatisticsController {
 	 * @since 6.0.0
 	 */
 	@FXML
-	private BarChart<String, Integer> chartStatistics;
+	private BarChart<String, Integer> chartOverview;
+
+	/**
+	 * Bar chart.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private StackedBarChart<String, Integer> chartStacked;
 
 	/**
 	 * Event axis.
@@ -97,6 +107,7 @@ public class EventStatisticsController {
 	 */
 	public void setEventData(final List<Event> theEvents) {
 
+		// compute statistics data
 		Map<String, Map<Month, AtomicInteger>> mapCounts = new HashMap<>();
 
 		theEvents.forEach(event -> {
@@ -105,22 +116,26 @@ public class EventStatisticsController {
 			mapCounts.get(event.getEventtype().getValue()).get(((LocalDate) event.getDate().getValue()).getMonth()).addAndGet(1);
 		});
 
+		// output data
 		mapCounts.entrySet().stream()
 //				.sorted(typemap -> typemap.getKey(), Collator.getInstance())
 				.forEach(typemap -> {
 
-					XYChart.Series<String, Integer> series = new XYChart.Series<>();
-					series.setName(typemap.getKey());
+					XYChart.Series<String, Integer> seriesOverview = new XYChart.Series<>();
+					seriesOverview.setName(typemap.getKey());
+
+					XYChart.Series<String, Integer> seriesStacked = new XYChart.Series<>();
+					seriesStacked.setName(typemap.getKey());
 
 					typemap.getValue().entrySet().stream()
 //							.sorted(monthcount -> monthcount.getKey())
 							.forEach(monthcount -> {
-								series.getData().add(new XYChart.Data<>(monthcount.getKey().getDisplayName(TextStyle.FULL, Locale.getDefault()), monthcount.getValue().get()));
+								seriesOverview.getData().add(new XYChart.Data<>(monthcount.getKey().getDisplayName(TextStyle.FULL, Locale.getDefault()), monthcount.getValue().get()));
+								seriesStacked.getData().add(new XYChart.Data<>(monthcount.getKey().getDisplayName(TextStyle.FULL, Locale.getDefault()), monthcount.getValue().get()));
 							});
 
-					series.getData().add(new XYChart.Data<>("test", 5));
-
-					chartStatistics.getData().add(series);
+					chartOverview.getData().add(seriesOverview);
+					chartStacked.getData().add(seriesStacked);
 
 				});
 
