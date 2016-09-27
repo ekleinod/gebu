@@ -14,7 +14,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import de.edgesoft.gebu.jaxb.Event;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
 
@@ -65,21 +64,27 @@ public class EventStatisticsController {
 	private StackedBarChart<String, Integer> chartStacked;
 
 	/**
-	 * Event axis.
+	 * Initializes the controller class.
+	 *
+	 * This method is automatically called after the fxml file has been loaded.
 	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
 	@FXML
-	private CategoryAxis xAxis;
+	private void initialize() {
+		// nothing to do
+	}
 
 	/**
-	 * Sets events to show statistics for.
+	 * Fills statistics with event data.
+	 * 
+	 * @param theEvents event data
 	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
-	public void setEventData(final List<Event> theEvents) {
+	public void fillStatistics(final List<Event> theEvents) {
 
 		// compute statistics data
 		Map<String, Map<Month, AtomicInteger>> mapCounts = new HashMap<>();
