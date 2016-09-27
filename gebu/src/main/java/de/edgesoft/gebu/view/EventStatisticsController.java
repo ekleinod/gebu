@@ -1,10 +1,10 @@
 package de.edgesoft.gebu.view;
 
-import java.text.DateFormatSymbols;
+import java.text.Collator;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.TextStyle;
-import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -12,8 +12,6 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import de.edgesoft.gebu.jaxb.Event;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
@@ -76,30 +74,6 @@ public class EventStatisticsController {
 	private CategoryAxis xAxis;
 
 	/**
-	 * Names of months.
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-	 */
-	private ObservableList<String> monthNames = FXCollections.observableArrayList();
-
-	/**
-	 * Initializes the controller class.
-	 *
-	 * This method is automatically called after the fxml file has been loaded.
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-	 */
-	@FXML
-	private void initialize() {
-
-        monthNames.addAll(Arrays.asList(DateFormatSymbols.getInstance().getMonths()));
-        xAxis.setCategories(monthNames);
-
-	}
-
-	/**
 	 * Sets events to show statistics for.
 	 *
 	 * @version 6.0.0
@@ -111,34 +85,39 @@ public class EventStatisticsController {
 		Map<String, Map<Month, AtomicInteger>> mapCounts = new HashMap<>();
 
 		theEvents.forEach(event -> {
-			mapCounts.putIfAbsent(event.getEventtype().getValue(), new HashMap<>());
-			mapCounts.get(event.getEventtype().getValue()).putIfAbsent(((LocalDate) event.getDate().getValue()).getMonth(), new AtomicInteger());
+			mapCounts.computeIfAbsent(event.getEventtype().getValue(), eventtype -> {
+				Map<Month, AtomicInteger> mapMonthCounts = new HashMap<>();
+				for (Month month : Month.values()) {
+					mapMonthCounts.put(month, new AtomicInteger());
+				}
+				return mapMonthCounts;
+			});
 			mapCounts.get(event.getEventtype().getValue()).get(((LocalDate) event.getDate().getValue()).getMonth()).addAndGet(1);
 		});
 
 		// output data
 		mapCounts.entrySet().stream()
-//				.sorted(typemap -> typemap.getKey(), Collator.getInstance())
+				.sorted(Comparator.comparing(typemap -> typemap.getKey(), Collator.getInstance()))
 				.forEach(typemap -> {
-
+		
 					XYChart.Series<String, Integer> seriesOverview = new XYChart.Series<>();
 					seriesOverview.setName(typemap.getKey());
-
+		
 					XYChart.Series<String, Integer> seriesStacked = new XYChart.Series<>();
 					seriesStacked.setName(typemap.getKey());
-
+		
 					typemap.getValue().entrySet().stream()
-//							.sorted(monthcount -> monthcount.getKey())
-							.forEach(monthcount -> {
-								seriesOverview.getData().add(new XYChart.Data<>(monthcount.getKey().getDisplayName(TextStyle.FULL, Locale.getDefault()), monthcount.getValue().get()));
-								seriesStacked.getData().add(new XYChart.Data<>(monthcount.getKey().getDisplayName(TextStyle.FULL, Locale.getDefault()), monthcount.getValue().get()));
-							});
-
+							.sorted(Comparator.comparing(monthcount -> monthcount.getKey()))
+									.forEach(monthcount -> {
+										seriesOverview.getData().add(new XYChart.Data<>(monthcount.getKey().getDisplayName(TextStyle.FULL, Locale.getDefault()), monthcount.getValue().get()));
+										seriesStacked.getData().add(new XYChart.Data<>(monthcount.getKey().getDisplayName(TextStyle.FULL, Locale.getDefault()), monthcount.getValue().get()));
+									});
+		
 					chartOverview.getData().add(seriesOverview);
 					chartStacked.getData().add(seriesStacked);
-
+		
 				});
-
+				
     }
 
 }
