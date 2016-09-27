@@ -14,6 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import de.edgesoft.gebu.jaxb.Event;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.PieChart;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
 
@@ -46,7 +47,7 @@ import javafx.scene.chart.XYChart;
 public class EventStatisticsController {
 
 	/**
-	 * Bar chart.
+	 * Bar chart overview.
 	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
@@ -55,13 +56,22 @@ public class EventStatisticsController {
 	private BarChart<String, Integer> chartOverview;
 
 	/**
-	 * Bar chart.
+	 * Stacked bar chart overview.
 	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
 	@FXML
 	private StackedBarChart<String, Integer> chartStacked;
+
+	/**
+	 * Pie chart event types.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private PieChart chartEventtypes;
 
 	/**
 	 * Initializes the controller class.
@@ -97,13 +107,15 @@ public class EventStatisticsController {
 				}
 				return mapMonthCounts;
 			});
-			mapCounts.get(event.getEventtype().getValue()).get(((LocalDate) event.getDate().getValue()).getMonth()).addAndGet(1);
+			mapCounts.get(event.getEventtype().getValue()).get(((LocalDate) event.getDate().getValue()).getMonth()).incrementAndGet();
 		});
 
 		// output data
 		mapCounts.entrySet().stream()
 				.sorted(Comparator.comparing(typemap -> typemap.getKey(), Collator.getInstance()))
 				.forEach(typemap -> {
+					
+					AtomicInteger iEventCount = new AtomicInteger();
 		
 					XYChart.Series<String, Integer> seriesOverview = new XYChart.Series<>();
 					seriesOverview.setName(typemap.getKey());
@@ -116,10 +128,12 @@ public class EventStatisticsController {
 									.forEach(monthcount -> {
 										seriesOverview.getData().add(new XYChart.Data<>(monthcount.getKey().getDisplayName(TextStyle.FULL, Locale.getDefault()), monthcount.getValue().get()));
 										seriesStacked.getData().add(new XYChart.Data<>(monthcount.getKey().getDisplayName(TextStyle.FULL, Locale.getDefault()), monthcount.getValue().get()));
+										iEventCount.addAndGet(monthcount.getValue().get());
 									});
 		
 					chartOverview.getData().add(seriesOverview);
 					chartStacked.getData().add(seriesStacked);
+					chartEventtypes.getData().add(new PieChart.Data(String.format("%s (%d)", typemap.getKey(), iEventCount.get()), iEventCount.get()));
 		
 				});
 				
