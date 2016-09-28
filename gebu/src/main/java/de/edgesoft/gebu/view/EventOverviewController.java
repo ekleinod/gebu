@@ -178,6 +178,9 @@ public class EventOverviewController {
 	@FXML
 	private void initialize() {
 
+		// set "empty data" text
+		tblEvents.setPlaceholder(new Label("Es wurden noch keine Ereignisse eingegeben."));
+
 		// hook data to columns
 		colTitle.setCellValueFactory(cellData -> cellData.getValue().getTitle());
 		colDate.setCellValueFactory(cellData -> cellData.getValue().getDate());
@@ -209,6 +212,10 @@ public class EventOverviewController {
 		// listen to selection changes, show event
 		tblEvents.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showEventDetails(newValue));
 
+		// enabling edit/delete buttons only with selection
+		btnEdit.disableProperty().bind(tblEvents.getSelectionModel().selectedItemProperty().isNull());
+		btnDelete.disableProperty().bind(tblEvents.getSelectionModel().selectedItemProperty().isNull());
+
 		// set divider position
 		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.STAGE_SPLIT)));
 
@@ -216,10 +223,6 @@ public class EventOverviewController {
 		pneSplit.getDividers().get(0).positionProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
 			Prefs.put(PrefKey.STAGE_SPLIT, Double.toString(newValue.doubleValue()));
 		});
-
-		// enabling edit/delete buttons only with selection
-		btnEdit.disableProperty().bind(tblEvents.getSelectionModel().selectedItemProperty().isNull());
-		btnDelete.disableProperty().bind(tblEvents.getSelectionModel().selectedItemProperty().isNull());
 
 	}
 
