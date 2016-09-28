@@ -40,8 +40,10 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * Gebu application.
@@ -215,6 +217,8 @@ public class Gebu extends Application {
      */
 	@Override
 	public void start(Stage primaryStage) {
+		
+		showSplashScreen();
 
 		stgPrimary = primaryStage;
         stgPrimary.setTitle("Das Gebu-Programm");
@@ -694,6 +698,38 @@ public class Gebu extends Application {
 	 */
 	public BooleanProperty isDisplay() {
 		return isDisplay;
+	}
+
+	/**
+	 * Shows splash screen.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public void showSplashScreen() {
+	    try {
+
+	        // Load dialog.
+	        FXMLLoader loader = new FXMLLoader();
+	        loader.setLocation(Gebu.class.getResource("view/SplashScreen.fxml"));
+	        AnchorPane splashScreen = (AnchorPane) loader.load();
+	        
+	        // Create the dialog Stage.
+	        Stage dialogStage = new Stage();
+	        dialogStage.initModality(Modality.NONE);
+	        dialogStage.setAlwaysOnTop(true);
+	        dialogStage.initStyle(StageStyle.TRANSPARENT);
+
+	        Scene scene = new Scene(splashScreen, Color.TRANSPARENT);
+	        dialogStage.setScene(scene);
+
+	        // Show the dialog and wait until the user closes it
+	        dialogStage.show();
+
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+
 	}
 
 }
