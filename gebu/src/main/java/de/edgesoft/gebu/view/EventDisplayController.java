@@ -120,7 +120,7 @@ public class EventDisplayController {
 		try {
 			sContent = FileAccess.readFile(Paths.get("src/main/resources/event_display.html")).toString();
 		} catch (Exception e) {
-			sContent = "**events**";
+			sContent = "**content**";
 			e.printStackTrace();
 		}
 
@@ -137,7 +137,7 @@ public class EventDisplayController {
 				.replace("**future fontsize**", Prefs.get(PrefKey.FUTURE_FONTSIZE))
 				.replace("**future background**", Prefs.get(PrefKey.FUTURE_BACKGROUND))
 
-				.replace("**events**", sbEvents)
+				.replace("**content**", String.format("<table>%s</table>", sbEvents))
 				;
 
 		dspEvents.getEngine().loadContent(sContent);
