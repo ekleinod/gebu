@@ -73,11 +73,7 @@ Additionally, the following branches my occur:
 - date in the border
 - icons for menu items
 - icon bar
-- no data -> start with editor
-	- special text in display
-- text in display for "no events to be shown"
 - do not show events of categories/eventtypes
-- text in empty table
 
 ## Copyright
 
