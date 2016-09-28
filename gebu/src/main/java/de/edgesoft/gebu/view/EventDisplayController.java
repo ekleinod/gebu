@@ -1,6 +1,7 @@
 package de.edgesoft.gebu.view;
 
 import java.nio.file.Paths;
+import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -71,41 +72,47 @@ public class EventDisplayController {
 
 		StringBuilder sbEvents = new StringBuilder();
 
-		String sTemp = getTableLines(
-				theDate,
-				((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, -iInterval, -1),
-				"past");
+		if (appGebu.getGebuData().getContent().getEvent().isEmpty()) {
+			sbEvents.append(String.format("<tr><td colspan=\"4\">%s</td></tr>", "Es wurden noch keine Ereignisse eingegeben."));
+		} else {
 
-		if (!sTemp.isEmpty()) {
-			sbEvents.append(getTableLines(
+			String sTemp = getTableLines(
 					theDate,
 					((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, -iInterval, -1),
-					"past"));
-			sbEvents.append("<tr class=\"empty\" />");
-		}
+					"past");
 
-		sTemp = getTableLines(
-				theDate,
-				((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, -iInterval, -1),
-				"past");
+			if (!sTemp.isEmpty()) {
+				sbEvents.append(getTableLines(
+						theDate,
+						((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, -iInterval, -1),
+						"past"));
+				sbEvents.append("<tr class=\"empty\" />");
+			}
 
-		if (!sTemp.isEmpty()) {
-			sbEvents.append(getTableLines(
+			sTemp = getTableLines(
 					theDate,
-					((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, 0, 0),
-					"present"));
-			sbEvents.append("<tr class=\"empty\" />");
-		}
+					((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, -iInterval, -1),
+					"past");
 
-		if (!sTemp.isEmpty()) {
-			sbEvents.append(getTableLines(
-					theDate,
-					((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, 1, iInterval),
-					"future"));
-		}
+			if (!sTemp.isEmpty()) {
+				sbEvents.append(getTableLines(
+						theDate,
+						((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, 0, 0),
+						"present"));
+				sbEvents.append("<tr class=\"empty\" />");
+			}
 
-		if (sbEvents.length() == 0) {
-			sbEvents.append(String.format("<tr><td colspan=\"4\">%s</td></tr>", "Keine Ereignisse anzuzeigen."));
+			if (!sTemp.isEmpty()) {
+				sbEvents.append(getTableLines(
+						theDate,
+						((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, 1, iInterval),
+						"future"));
+			}
+
+			if (sbEvents.length() == 0) {
+				sbEvents.append(String.format("<tr><td colspan=\"4\">%s</td></tr>",
+						MessageFormat.format("Im Intervall von &pm; {0} Tagen liegen keine Ereignisse.", Integer.parseInt(Prefs.get(PrefKey.INTERVAL)))));
+			}
 		}
 
 

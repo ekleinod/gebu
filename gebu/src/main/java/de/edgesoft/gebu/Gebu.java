@@ -226,7 +226,12 @@ public class Gebu extends Application {
 
         initData();
 
-        showEventDisplay();
+        if (dtaGebu.getContent().getEvent().isEmpty()) {
+        	showEventOverview();
+        } else {
+        	showEventDisplay();
+        }
+
 	}
 
 	/**
