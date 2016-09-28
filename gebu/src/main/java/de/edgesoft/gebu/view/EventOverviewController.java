@@ -14,6 +14,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
@@ -131,6 +132,24 @@ public class EventOverviewController {
 	private Label lblCategory;
 
 	/**
+	 * Edit button.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private Button btnEdit;
+
+	/**
+	 * Delete button.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private Button btnDelete;
+
+	/**
 	 * Split pane.
 	 *
 	 * @version 6.0.0
@@ -197,6 +216,9 @@ public class EventOverviewController {
 		pneSplit.getDividers().get(0).positionProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
 			Prefs.put(PrefKey.STAGE_SPLIT, Double.toString(newValue.doubleValue()));
 		});
+
+		// enabling edit/delete buttons only with selection
+//		btnEdit.disableProperty().bind(tblEvents.);
 
 	}
 

@@ -77,7 +77,7 @@ Additionally, the following branches my occur:
 	- special text in display
 - text in display for "no events to be shown"
 - do not show events of categories/eventtypes
-- tett in empty table
+- text in empty table
 
 ## Copyright
 
