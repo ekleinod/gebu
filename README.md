@@ -58,13 +58,26 @@ Additionally, the following branches my occur:
 - `release/*` - Release-Synchronisierung (synchronizing release versions between `develop` and `master`)
 - `hotfix/*` - Fehlerbehebung (fast bugfixes)
 
-## Fertige Versionsn/Released Versions
+## Fertige Versionen/Released Versions
 
 ### Version 5
 
 - die bisher gültige Version, leider derzeit offline
 - current version, unfortunately offline for now
 
+## To Do
+
+- ESC function
+- textual statistics
+- logo and splashscreen
+- date in the border
+- icons for menu items
+- icon bar
+- no data -> start with editor
+	- special text in display
+- text in display for "no events to be shown"
+- do not show events of categories/eventtypes
+- tett in empty table
 
 ## Copyright
 
