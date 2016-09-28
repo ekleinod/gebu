@@ -118,7 +118,7 @@ public class EventDisplayController {
 
 		String sContent;
 		try {
-			sContent = FileAccess.readFile(Paths.get("src/main/resources/event_display.html")).toString();
+			sContent = FileAccess.readFile(Paths.get("src/main/resources/webview.html")).toString();
 		} catch (Exception e) {
 			sContent = "**content**";
 			e.printStackTrace();
