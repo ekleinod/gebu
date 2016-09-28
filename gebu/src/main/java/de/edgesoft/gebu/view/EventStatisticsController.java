@@ -17,6 +17,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.web.WebView;
 
 /**
  * Controller for event statistics scene.
@@ -74,21 +75,17 @@ public class EventStatisticsController {
 	private PieChart chartEventtypes;
 
 	/**
-	 * Initializes the controller class.
-	 *
-	 * This method is automatically called after the fxml file has been loaded.
+	 * Details view.
 	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
 	@FXML
-	private void initialize() {
-		// nothing to do
-	}
+	private WebView viewDetails;
 
 	/**
 	 * Fills statistics with event data.
-	 * 
+	 *
 	 * @param theEvents event data
 	 *
 	 * @version 6.0.0
@@ -110,19 +107,23 @@ public class EventStatisticsController {
 			mapCounts.get(event.getEventtype().getValue()).get(((LocalDate) event.getDate().getValue()).getMonth()).incrementAndGet();
 		});
 
+		AtomicInteger iWholeCount = new AtomicInteger();
+		StringBuilder sbDetails = new StringBuilder();
+		sbDetails.append("<table>");
+
 		// output data
 		mapCounts.entrySet().stream()
 				.sorted(Comparator.comparing(typemap -> typemap.getKey(), Collator.getInstance()))
 				.forEach(typemap -> {
-					
+
 					AtomicInteger iEventCount = new AtomicInteger();
-		
+
 					XYChart.Series<String, Integer> seriesOverview = new XYChart.Series<>();
 					seriesOverview.setName(typemap.getKey());
-		
+
 					XYChart.Series<String, Integer> seriesStacked = new XYChart.Series<>();
 					seriesStacked.setName(typemap.getKey());
-		
+
 					typemap.getValue().entrySet().stream()
 							.sorted(Comparator.comparing(monthcount -> monthcount.getKey()))
 									.forEach(monthcount -> {
@@ -130,13 +131,27 @@ public class EventStatisticsController {
 										seriesStacked.getData().add(new XYChart.Data<>(monthcount.getKey().getDisplayName(TextStyle.FULL, Locale.getDefault()), monthcount.getValue().get()));
 										iEventCount.addAndGet(monthcount.getValue().get());
 									});
-		
+
 					chartOverview.getData().add(seriesOverview);
 					chartStacked.getData().add(seriesStacked);
 					chartEventtypes.getData().add(new PieChart.Data(String.format("%s (%d)", typemap.getKey(), iEventCount.get()), iEventCount.get()));
-		
+
+					sbDetails.append("<tr>");
+					sbDetails.append(String.format("<th>%s</th>", typemap.getKey()));
+					sbDetails.append(String.format("<td>%d</td>", iEventCount.get()));
+					sbDetails.append("</tr>");
+					iWholeCount.addAndGet(iEventCount.get());
+
 				});
-				
+
+		sbDetails.append("<tr>");
+		sbDetails.append(String.format("<th>%s</th>", "Summe"));
+		sbDetails.append(String.format("<td>%d</td>", iWholeCount.get()));
+		sbDetails.append("</tr>");
+
+		sbDetails.append("</table>");
+		viewDetails.getEngine().loadContent(sbDetails.toString());
+
     }
 
 }
