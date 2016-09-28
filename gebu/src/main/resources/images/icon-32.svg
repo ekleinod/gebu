@@ -15,7 +15,7 @@
    id="svg2"
    sodipodi:version="0.32"
    inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="icon.svg"
+   sodipodi:docname="icon-32.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
    version="1.0"
    inkscape:export-filename="C:\Users\kek\Documents\working\git\gebu\gebu\src\main\resources\images\icon.png"
@@ -72,16 +72,16 @@
      pagecolor="#ffffff"
      bordercolor="#666666"
      borderopacity="1.0"
-     inkscape:pageopacity="0.0"
+     inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="29.4375"
      inkscape:cx="16"
      inkscape:cy="16"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
-     inkscape:window-width="1920"
-     inkscape:window-height="1153"
-     inkscape:window-x="1916"
+     inkscape:window-width="1366"
+     inkscape:window-height="721"
+     inkscape:window-x="-4"
      inkscape:window-y="-4"
      width="20px"
      height="20px"
@@ -99,7 +99,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
