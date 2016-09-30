@@ -179,7 +179,9 @@ public class EventOverviewController {
 	private void initialize() {
 
 		// set "empty data" text
-		tblEvents.setPlaceholder(new Label("Es wurden noch keine Ereignisse eingegeben."));
+		Label lblPlaceholder = new Label("Es wurden noch keine Ereignisse eingegeben. Geben Sie Ereignisse ein oder öffnen Sie eine vorhandene Datei über \"Datei->öffnen\"");
+		lblPlaceholder.setWrapText(true);
+		tblEvents.setPlaceholder(lblPlaceholder);
 
 		// hook data to columns
 		colTitle.setCellValueFactory(cellData -> cellData.getValue().getTitle());
