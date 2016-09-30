@@ -1,17 +1,16 @@
 package de.edgesoft.gebu.view;
 
-import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.List;
 
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
-import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.gebu.Gebu;
 import de.edgesoft.gebu.jaxb.Event;
 import de.edgesoft.gebu.model.ContentModel;
 import de.edgesoft.gebu.utils.PrefKey;
 import de.edgesoft.gebu.utils.Prefs;
+import de.edgesoft.gebu.utils.Resources;
 import javafx.fxml.FXML;
 import javafx.scene.web.WebView;
 
@@ -115,32 +114,7 @@ public class EventDisplayController {
 			}
 		}
 
-
-		String sContent;
-		try {
-			sContent = FileAccess.readFile(Paths.get("src/main/resources/webview.html")).toString();
-		} catch (Exception e) {
-			sContent = "**content**";
-			e.printStackTrace();
-		}
-
-		sContent = sContent
-				.replace("**past foreground**", Prefs.get(PrefKey.PAST_FOREGROUND))
-				.replace("**past fontsize**", Prefs.get(PrefKey.PAST_FONTSIZE))
-				.replace("**past background**", Prefs.get(PrefKey.PAST_BACKGROUND))
-
-				.replace("**present foreground**", Prefs.get(PrefKey.PRESENT_FOREGROUND))
-				.replace("**present fontsize**", Prefs.get(PrefKey.PRESENT_FONTSIZE))
-				.replace("**present background**", Prefs.get(PrefKey.PRESENT_BACKGROUND))
-
-				.replace("**future foreground**", Prefs.get(PrefKey.FUTURE_FOREGROUND))
-				.replace("**future fontsize**", Prefs.get(PrefKey.FUTURE_FONTSIZE))
-				.replace("**future background**", Prefs.get(PrefKey.FUTURE_BACKGROUND))
-
-				.replace("**content**", String.format("<table>%s</table>", sbEvents))
-				;
-
-		dspEvents.getEngine().loadContent(sContent);
+		dspEvents.getEngine().loadContent(Resources.loadWebView().replace("**content**", String.format("<table>%s</table>", sbEvents)));
 
 	}
 

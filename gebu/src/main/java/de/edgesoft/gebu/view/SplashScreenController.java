@@ -1,7 +1,7 @@
 package de.edgesoft.gebu.view;
 
+import de.edgesoft.gebu.utils.Resources;
 import javafx.fxml.FXML;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
@@ -51,7 +51,7 @@ public class SplashScreenController {
 	 */
 	@FXML
 	private void initialize() {
-		imageView.setImage(new Image("file:src/main/resources/images/logo.png"));
+		imageView.setImage(Resources.loadImage("images/logo.png"));
 	}
 
 }

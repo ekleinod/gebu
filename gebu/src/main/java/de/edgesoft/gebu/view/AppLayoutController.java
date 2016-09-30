@@ -10,6 +10,7 @@ import de.edgesoft.gebu.model.EventModel;
 import de.edgesoft.gebu.utils.AlertUtils;
 import de.edgesoft.gebu.utils.PrefKey;
 import de.edgesoft.gebu.utils.Prefs;
+import de.edgesoft.gebu.utils.Resources;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -281,7 +282,7 @@ public class AppLayoutController {
 
         Alert alert = AlertUtils.createAlert(AlertType.INFORMATION);
 
-        alert.setGraphic(new ImageView("file:src/main/resources/images/icon-64.png"));
+        alert.setGraphic(new ImageView(Resources.loadImage("images/icon-64.png")));
         alert.setTitle("Das Gebu-Programm");
         alert.setHeaderText(MessageFormat.format("Über \"Das Gebu-Programm\" {0}", Gebu.VERSION));
         alert.setContentText("Ein Qualitätsprodukt aus dem Hause \"edge-soft\".\n\nBei Fehlern bitte eine E-Mail an ekleinod@edgesoft.de senden.");

@@ -1,10 +1,10 @@
 package de.edgesoft.gebu;
 
-import java.io.IOException;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,6 +21,7 @@ import de.edgesoft.gebu.model.ContentModel;
 import de.edgesoft.gebu.utils.AlertUtils;
 import de.edgesoft.gebu.utils.PrefKey;
 import de.edgesoft.gebu.utils.Prefs;
+import de.edgesoft.gebu.utils.Resources;
 import de.edgesoft.gebu.view.AppLayoutController;
 import de.edgesoft.gebu.view.EventDisplayController;
 import de.edgesoft.gebu.view.EventEditDialogController;
@@ -40,6 +41,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -85,7 +87,7 @@ public class Gebu extends Application {
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
-	public static final Image ICON = new Image("file:src/main/resources/images/icon-32.png");
+	public static final Image ICON = Resources.loadImage("images/icon-32.png");
 
 	/**
 	 * Gebu event data.
@@ -246,45 +248,39 @@ public class Gebu extends Application {
 	 */
 	public void initAppLayout() {
 
-        try {
-            // Load app layout from fxml file.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Gebu.class.getResource("view/AppLayout.fxml"));
-            pneAppLayout = (BorderPane) loader.load();
+    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("AppLayout");
+        pneAppLayout = (BorderPane) pneLoad.getKey();
 
-            // Show the scene containing the root layout.
-            Scene scene = new Scene(pneAppLayout);
-            stgPrimary.setScene(scene);
-            stgPrimary.show();
+        // Show the scene containing the root layout.
+        Scene scene = new Scene(pneAppLayout);
+        stgPrimary.setScene(scene);
+        stgPrimary.show();
 
-            // Give the controller access to the main app.
-            AppLayoutController controller = loader.getController();
-            controller.setGebuApp(this);
+        // Give the controller access to the main app.
+        AppLayoutController controller = pneLoad.getValue().getController();
+        controller.setGebuApp(this);
 
-            // resize to last dimensions
-        	stgPrimary.setX(Double.parseDouble(Prefs.get(PrefKey.STAGE_X)));
-        	stgPrimary.setY(Double.parseDouble(Prefs.get(PrefKey.STAGE_Y)));
+        // resize to last dimensions
+    	stgPrimary.setX(Double.parseDouble(Prefs.get(PrefKey.STAGE_X)));
+    	stgPrimary.setY(Double.parseDouble(Prefs.get(PrefKey.STAGE_Y)));
 
-        	stgPrimary.setWidth(Double.parseDouble(Prefs.get(PrefKey.STAGE_WIDTH)));
-        	stgPrimary.setHeight(Double.parseDouble(Prefs.get(PrefKey.STAGE_HEIGHT)));
+    	stgPrimary.setWidth(Double.parseDouble(Prefs.get(PrefKey.STAGE_WIDTH)));
+    	stgPrimary.setHeight(Double.parseDouble(Prefs.get(PrefKey.STAGE_HEIGHT)));
 
-    		// if changed, save bounds to preferences
-    		stgPrimary.xProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-    			Prefs.put(PrefKey.STAGE_X, Double.toString(newValue.doubleValue()));
-    		});
-    		stgPrimary.widthProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-    			Prefs.put(PrefKey.STAGE_WIDTH, Double.toString(newValue.doubleValue()));
-    		});
-    		stgPrimary.yProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-    			Prefs.put(PrefKey.STAGE_Y, Double.toString(newValue.doubleValue()));
-    		});
-    		stgPrimary.heightProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-    			Prefs.put(PrefKey.STAGE_HEIGHT, Double.toString(newValue.doubleValue()));
-    		});
+		// if changed, save bounds to preferences
+		stgPrimary.xProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+			Prefs.put(PrefKey.STAGE_X, Double.toString(newValue.doubleValue()));
+		});
+		stgPrimary.widthProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+			Prefs.put(PrefKey.STAGE_WIDTH, Double.toString(newValue.doubleValue()));
+		});
+		stgPrimary.yProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+			Prefs.put(PrefKey.STAGE_Y, Double.toString(newValue.doubleValue()));
+		});
+		stgPrimary.heightProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+			Prefs.put(PrefKey.STAGE_HEIGHT, Double.toString(newValue.doubleValue()));
+		});
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 	/**
@@ -510,26 +506,20 @@ public class Gebu extends Application {
 	 * @since 6.0.0
 	 */
 	public void showEventDisplay() {
-        try {
 
-            // Load event overview.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Gebu.class.getResource("view/EventDisplay.fxml"));
-            AnchorPane eventDisplay = (AnchorPane) loader.load();
+    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("EventDisplay");
+    	AnchorPane eventDisplay = (AnchorPane) pneLoad.getKey();
 
-            // Set event overview into the center of root layout.
-            pneAppLayout.setCenter(eventDisplay);
+        // Set event overview into the center of root layout.
+        pneAppLayout.setCenter(eventDisplay);
 
-            // Give the controller access to the app.
-            EventDisplayController ctlEventDisplay = loader.getController();
-            ctlEventDisplay.setGebuApp(this);
-            ctlEventDisplay.displayEvents(LocalDate.now());
+        // Give the controller access to the app.
+        EventDisplayController ctlEventDisplay = pneLoad.getValue().getController();
+        ctlEventDisplay.setGebuApp(this);
+        ctlEventDisplay.displayEvents(LocalDate.now());
 
-            isDisplay.setValue(true);
+        isDisplay.setValue(true);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 	/**
@@ -539,26 +529,20 @@ public class Gebu extends Application {
 	 * @since 6.0.0
 	 */
 	public void showEventOverview() {
-        try {
 
-            // Load event overview.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Gebu.class.getResource("view/EventOverview.fxml"));
-            AnchorPane eventOverview = (AnchorPane) loader.load();
+    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("EventOverview");
+    	AnchorPane eventOverview = (AnchorPane) pneLoad.getKey();
 
-            // Set event overview into the center of root layout.
-            pneAppLayout.setCenter(eventOverview);
+        // Set event overview into the center of root layout.
+        pneAppLayout.setCenter(eventOverview);
 
-            // Give the controller access to the app.
-            ctlEventOverview = loader.getController();
-            ctlEventOverview.setGebuApp(this);
-            ctlEventOverview.setTableItems();
+        // Give the controller access to the app.
+        ctlEventOverview = pneLoad.getValue().getController();
+        ctlEventOverview.setGebuApp(this);
+        ctlEventOverview.setTableItems();
 
-            isDisplay.setValue(false);
+        isDisplay.setValue(false);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 	/**
@@ -574,42 +558,33 @@ public class Gebu extends Application {
 	 */
 	public boolean showEventEditDialog(Event theEvent) {
 
-	    try {
+    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("EventEditDialog");
+    	AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
 
-	        // Load dialog.
-	        FXMLLoader loader = new FXMLLoader();
-	        loader.setLocation(Gebu.class.getResource("view/EventEditDialog.fxml"));
-	        AnchorPane editDialog = (AnchorPane) loader.load();
+        // Create the dialog Stage.
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("Ereignis editieren");
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.initOwner(stgPrimary);
 
-	        // Create the dialog Stage.
-	        Stage dialogStage = new Stage();
-	        dialogStage.setTitle("Ereignis editieren");
-	        dialogStage.initModality(Modality.WINDOW_MODAL);
-	        dialogStage.initOwner(stgPrimary);
+        Scene scene = new Scene(editDialog);
+        dialogStage.setScene(scene);
 
-	        Scene scene = new Scene(editDialog);
-	        dialogStage.setScene(scene);
+        // Set the event into the controller.
+        EventEditDialogController controller = pneLoad.getValue().getController();
+        controller.setGebuApp(this);
+        controller.setDialogStage(dialogStage);
+        controller.setEvent(theEvent);
 
-	        // Set the event into the controller.
-	        EventEditDialogController controller = loader.getController();
-	        controller.setGebuApp(this);
-	        controller.setDialogStage(dialogStage);
-	        controller.setEvent(theEvent);
+        // Show the dialog and wait until the user closes it
+        dialogStage.showAndWait();
 
-	        // Show the dialog and wait until the user closes it
-	        dialogStage.showAndWait();
-
-	        return controller.isOkClicked();
-
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	        return false;
-	    }
+        return controller.isOkClicked();
 
 	}
 
 	/**
-	 * Opens the event edit dialog.
+	 * Opens the preferences edit dialog.
 	 *
 	 * If the user clicks OK, the changes are saved into the provided event object and true is returned.
 	 *
@@ -618,36 +593,28 @@ public class Gebu extends Application {
 	 */
 	public void showPreferencesEditDialog() {
 
-	    try {
+    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("PreferencesEditDialog");
+    	AnchorPane preferencesDialog = (AnchorPane) pneLoad.getKey();
 
-	        // Load dialog.
-	        FXMLLoader loader = new FXMLLoader();
-	        loader.setLocation(Gebu.class.getResource("view/PreferencesEditDialog.fxml"));
-	        AnchorPane preferencesDialog = (AnchorPane) loader.load();
+        // Create the dialog Stage.
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("Einstellungen");
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.initOwner(stgPrimary);
 
-	        // Create the dialog Stage.
-	        Stage dialogStage = new Stage();
-	        dialogStage.setTitle("Einstellungen");
-	        dialogStage.initModality(Modality.WINDOW_MODAL);
-	        dialogStage.initOwner(stgPrimary);
+        Scene scene = new Scene(preferencesDialog);
+        dialogStage.setScene(scene);
 
-	        Scene scene = new Scene(preferencesDialog);
-	        dialogStage.setScene(scene);
+        // Set the event into the controller.
+        PreferencesEditDialogController controller = pneLoad.getValue().getController();
+        controller.setDialogStage(dialogStage);
 
-	        // Set the event into the controller.
-	        PreferencesEditDialogController controller = loader.getController();
-	        controller.setDialogStage(dialogStage);
+        // Show the dialog and wait until the user closes it
+        dialogStage.showAndWait();
 
-	        // Show the dialog and wait until the user closes it
-	        dialogStage.showAndWait();
-
-	        if (isDisplay.getValue() && controller.isOkClicked()) {
-	        	showEventDisplay();
-	        }
-
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
+        if (isDisplay.getValue() && controller.isOkClicked()) {
+        	showEventDisplay();
+        }
 
 	}
 
@@ -659,32 +626,24 @@ public class Gebu extends Application {
 	 */
 	public void showEventStatistics() {
 
-	    try {
+    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("EventStatistics");
+    	AnchorPane eventStatistics = (AnchorPane) pneLoad.getKey();
 
-	        // Load dialog.
-	        FXMLLoader loader = new FXMLLoader();
-	        loader.setLocation(Gebu.class.getResource("view/EventStatistics.fxml"));
-	        AnchorPane eventStatistics = (AnchorPane) loader.load();
+        // Create the dialog Stage.
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("Ereignisstatistik");
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.initOwner(stgPrimary);
 
-	        // Create the dialog Stage.
-	        Stage dialogStage = new Stage();
-	        dialogStage.setTitle("Ereignisstatistik");
-	        dialogStage.initModality(Modality.WINDOW_MODAL);
-	        dialogStage.initOwner(stgPrimary);
+        Scene scene = new Scene(eventStatistics);
+        dialogStage.setScene(scene);
 
-	        Scene scene = new Scene(eventStatistics);
-	        dialogStage.setScene(scene);
+        // Set the events into the controller.
+        EventStatisticsController controller = pneLoad.getValue().getController();
+        controller.fillStatistics(dtaGebu.getContent().getEvent());
 
-	        // Set the events into the controller.
-	        EventStatisticsController controller = loader.getController();
-	        controller.fillStatistics(dtaGebu.getContent().getEvent());
-
-	        // Show the dialog and wait until the user closes it
-	        dialogStage.show();
-
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
+        // Show the dialog and wait until the user closes it
+        dialogStage.show();
 
 	}
 
@@ -707,28 +666,22 @@ public class Gebu extends Application {
 	 * @since 6.0.0
 	 */
 	public void showSplashScreen() {
-	    try {
 
-	        // Load dialog.
-	        FXMLLoader loader = new FXMLLoader();
-	        loader.setLocation(Gebu.class.getResource("view/SplashScreen.fxml"));
-	        AnchorPane splashScreen = (AnchorPane) loader.load();
-	        
-	        // Create the dialog Stage.
-	        Stage dialogStage = new Stage();
-	        dialogStage.initModality(Modality.NONE);
-	        dialogStage.setAlwaysOnTop(true);
-	        dialogStage.initStyle(StageStyle.TRANSPARENT);
+        // Load dialog.
+    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("SplashScreen");
+    	AnchorPane splashScreen = (AnchorPane) pneLoad.getKey();
+        
+        // Create the dialog Stage.
+        Stage dialogStage = new Stage();
+        dialogStage.initModality(Modality.NONE);
+        dialogStage.setAlwaysOnTop(true);
+        dialogStage.initStyle(StageStyle.TRANSPARENT);
 
-	        Scene scene = new Scene(splashScreen, Color.TRANSPARENT);
-	        dialogStage.setScene(scene);
+        Scene scene = new Scene(splashScreen, Color.TRANSPARENT);
+        dialogStage.setScene(scene);
 
-	        // Show the dialog and wait until the user closes it
-	        dialogStage.show();
-
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
+        // Show the dialog and wait until the user closes it
+        dialogStage.show();
 
 	}
 
