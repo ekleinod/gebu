@@ -114,7 +114,7 @@ public class EventDisplayController {
 			}
 		}
 
-		dspEvents.getEngine().loadContent(Resources.loadWebView().replace("**content**", String.format("<table>%s</table>", sbEvents)));
+		dspEvents.getEngine().loadContent(Resources.loadWebView().replace("**content**", String.format("<table class=\"display\">%s</table>", sbEvents)));
 
 	}
 
