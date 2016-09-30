@@ -28,12 +28,15 @@ import de.edgesoft.gebu.view.EventEditDialogController;
 import de.edgesoft.gebu.view.EventOverviewController;
 import de.edgesoft.gebu.view.EventStatisticsController;
 import de.edgesoft.gebu.view.PreferencesEditDialogController;
+import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
+import javafx.concurrent.Worker;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -46,6 +49,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 /**
  * Gebu application.
@@ -104,7 +108,7 @@ public class Gebu extends Application {
 	 * @since 6.0.0
 	 */
 	private Stage stgPrimary = null;
-
+	
 	/**
 	 * Pane: main application layout container.
 	 *
@@ -219,7 +223,7 @@ public class Gebu extends Application {
      */
 	@Override
 	public void start(Stage primaryStage) {
-		
+
 		showSplashScreen();
 
 		stgPrimary = primaryStage;
@@ -661,27 +665,51 @@ public class Gebu extends Application {
 
 	/**
 	 * Shows splash screen.
+	 * 
+	 * Inspired by https://gist.github.com/jewelsea/2305098
 	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
 	public void showSplashScreen() {
+		
+		// Load splash screen.
+		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("SplashScreen");
+		final AnchorPane pane = (AnchorPane) pneLoad.getKey();
+		
+		// Create and fill splash screen stage.
+		Stage stage = new Stage();
+		stage.initModality(Modality.NONE);
+		stage.setAlwaysOnTop(true);
+		stage.initStyle(StageStyle.TRANSPARENT);
+		
+		Scene scene = new Scene(pane, new Color(1, 1, 1, .5));
+		stage.setScene(scene);
 
-        // Load dialog.
-    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("SplashScreen");
-    	AnchorPane splashScreen = (AnchorPane) pneLoad.getKey();
-        
-        // Create the dialog Stage.
-        Stage dialogStage = new Stage();
-        dialogStage.initModality(Modality.NONE);
-        dialogStage.setAlwaysOnTop(true);
-        dialogStage.initStyle(StageStyle.TRANSPARENT);
-
-        Scene scene = new Scene(splashScreen, Color.TRANSPARENT);
-        dialogStage.setScene(scene);
-
-        // Show the dialog and wait until the user closes it
-        dialogStage.show();
+		// define task, that waits 4 seconds, then returns null, i.e. succeeds
+		// if needed, some progress bar output could be defined here
+		final Task<Void> splashTask = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				Thread.sleep(4000);
+				return null;
+			}
+		};
+		
+		// add listener to succeed state of task, then fade out
+		splashTask.stateProperty().addListener((observableValue, oldState, newState) -> {
+            if (newState == Worker.State.SUCCEEDED) {
+                FadeTransition fadeSplash = new FadeTransition(Duration.seconds(1.2), pane);
+                fadeSplash.setFromValue(1.0);
+                fadeSplash.setToValue(0.0);
+                fadeSplash.setOnFinished(actionEvent -> stage.hide());
+                fadeSplash.play();
+            }
+        });
+		
+		// show splash screen, then start fading task
+		stage.show();
+		new Thread(splashTask).start();
 
 	}
 

@@ -53,7 +53,7 @@ public class SplashScreenController {
 	private void initialize() {
 		imageView.setImage(Resources.loadImage("images/logo.png"));
 	}
-
+	
 }
 
 /* EOF */
