@@ -50,6 +50,24 @@ import javafx.stage.FileChooser;
 public class AppLayoutController {
 
 	/**
+	 * Menu item program -> display.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private MenuItem mnuProgramDisplay;
+	
+	/**
+	 * Menu item program -> editor.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private MenuItem mnuProgramEditor;
+	
+	/**
 	 * Menu file.
 	 *
 	 * @version 6.0.0
@@ -66,24 +84,6 @@ public class AppLayoutController {
 	 */
 	@FXML
 	private Menu mnuStatistics;
-
-	/**
-	 * Menu item program -> display.
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-	 */
-	@FXML
-	private MenuItem mnuProgramDisplay;
-
-	/**
-	 * Menu item program -> editor.
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-	 */
-	@FXML
-	private MenuItem mnuProgramEditor;
 
 	/**
 	 * Reference to application.
@@ -113,8 +113,14 @@ public class AppLayoutController {
 		mnuProgramDisplay.disableProperty().bind(appGebu.isDisplay());
 		mnuProgramEditor.disableProperty().bind(appGebu.isDisplay().not());
 
+		// hide unneeded menus, disable menu items, so they cannot be used in display mode
 		mnuFile.visibleProperty().bind(appGebu.isDisplay().not());
+		mnuFile.getItems().stream()
+				.forEach(menuitem -> menuitem.disableProperty().bind(appGebu.isDisplay()));
+		
 		mnuStatistics.visibleProperty().bind(appGebu.isDisplay().not());
+		mnuStatistics.getItems().stream()
+				.forEach(menuitem -> menuitem.disableProperty().bind(appGebu.isDisplay()));
 
     }
 
