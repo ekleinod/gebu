@@ -159,9 +159,9 @@ public class ContentModel extends Content {
 		Set<String> setReturn = new HashSet<>();
 
 		getEvent().stream()
-				.forEach(event -> {
-					if ((event.getEventtype() != null) && (event.getEventtype().getValue() != null) && !event.getEventtype().getValue().isEmpty()) {
-						setReturn.add(event.getEventtype().getValue());
+				.forEach(theEvent -> {
+					if ((theEvent.getEventtype() != null) && (theEvent.getEventtype().getValue() != null) && !theEvent.getEventtype().getValue().isEmpty()) {
+						setReturn.add(theEvent.getEventtype().getValue());
 					}
 				});
 
@@ -184,9 +184,9 @@ public class ContentModel extends Content {
 		Set<String> setReturn = new HashSet<>();
 
 		getEvent().stream()
-				.forEach(event -> {
-					if ((event.getCategory() != null) && (event.getCategory().getValue() != null) && !event.getCategory().getValue().isEmpty()) {
-						setReturn.add(event.getCategory().getValue());
+				.forEach(theEvent -> {
+					if ((theEvent.getCategory() != null) && (theEvent.getCategory().getValue() != null) && !theEvent.getCategory().getValue().isEmpty()) {
+						setReturn.add(theEvent.getCategory().getValue());
 					}
 				});
 
