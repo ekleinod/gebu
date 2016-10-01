@@ -1,15 +1,20 @@
 package de.edgesoft.gebu.view;
 
 import de.edgesoft.edgeutils.javafx.ColorUtils;
+import de.edgesoft.gebu.Gebu;
+import de.edgesoft.gebu.model.ContentModel;
 import de.edgesoft.gebu.utils.AlertUtils;
 import de.edgesoft.gebu.utils.PrefKey;
 import de.edgesoft.gebu.utils.Prefs;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -132,6 +137,24 @@ public class PreferencesEditDialogController {
 	private ColorPicker pckFutureBackground;
 
 	/**
+	 * VBox for categories.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private VBox boxCategories;
+
+	/**
+	 * VBox for eventtypes.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private VBox boxEventtypes;
+
+	/**
 	 * Reference to dialog stage.
 	 *
 	 * @version 6.0.0
@@ -146,6 +169,14 @@ public class PreferencesEditDialogController {
 	 * @since 6.0.0
 	 */
 	private boolean okClicked;
+
+	/**
+	 * Reference to application.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	private Gebu appGebu;
 
 
 	/**
@@ -174,6 +205,31 @@ public class PreferencesEditDialogController {
 		pckFutureBackground.setValue(Color.web(Prefs.get(PrefKey.FUTURE_BACKGROUND)));
 
 	}
+
+	/**
+	 * Called by main application for reference to itself.
+	 *
+	 * @param theApp reference to application
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public void setGebuApp(final Gebu theApp) {
+        appGebu = theApp;
+        
+        ((ContentModel) appGebu.getGebuData().getContent()).getCategories().stream()
+        		.forEach(category -> {
+        			CheckBox chkTemp = new CheckBox(category);
+        			chkTemp.selectedProperty().addListener((ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
+        				if (new_val) {
+        					Prefs.put(String.format("disable.category.%s", category), new_val.toString());
+        				} else {
+        					Prefs.remove(String.format("disable.category.%s", category));
+        				}
+        			});
+        			boxCategories.getChildren().add(chkTemp);
+        		});
+    }
 
 	/**
 	 * Sets dialog stage.

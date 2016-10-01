@@ -68,11 +68,11 @@ Additionally, the following branches my occur:
 ## To Do
 
 - ESC function
-- date in the border
 - icons for menu items
 - icon bar
 - do not show events of categories/eventtypes
 - resize statistics or hide border
+- export statistics as graphics
 
 ## Copyright
 

@@ -609,9 +609,10 @@ public class Gebu extends Application {
         Scene scene = new Scene(preferencesDialog);
         dialogStage.setScene(scene);
 
-        // Set the event into the controller.
+        // initialize controller
         PreferencesEditDialogController controller = pneLoad.getValue().getController();
         controller.setDialogStage(dialogStage);
+        controller.setGebuApp(this);
 
         // Show the dialog and wait until the user closes it
         dialogStage.showAndWait();

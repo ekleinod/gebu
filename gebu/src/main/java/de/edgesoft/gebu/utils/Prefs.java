@@ -133,8 +133,20 @@ public class Prefs {
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
-	private static void put(final String theKey, final String theValue) {
+	public static void put(final String theKey, final String theValue) {
 		getPreferences().put(theKey, theValue);
+	}
+
+	/**
+	 * Removes key.
+	 *
+	 * @param theKey text key
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public static void remove(final String theKey) {
+		getPreferences().remove(theKey);
 	}
 
 }
