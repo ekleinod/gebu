@@ -112,6 +112,19 @@ public class Prefs {
 	}
 
 	/**
+	 * Get preference for key.
+	 *
+	 * @param theKey preference key
+	 * @return preference value
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public static String get(final String theKey) {
+		return getPreferences().get(theKey, "");
+	}
+
+	/**
 	 * Set preference value for key.
 	 *
 	 * @param theKey preference key

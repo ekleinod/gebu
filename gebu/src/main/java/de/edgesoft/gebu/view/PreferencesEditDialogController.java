@@ -6,7 +6,6 @@ import de.edgesoft.gebu.model.ContentModel;
 import de.edgesoft.gebu.utils.AlertUtils;
 import de.edgesoft.gebu.utils.PrefKey;
 import de.edgesoft.gebu.utils.Prefs;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -218,17 +217,17 @@ public class PreferencesEditDialogController {
         appGebu = theApp;
         
         ((ContentModel) appGebu.getGebuData().getContent()).getCategories().stream()
-        		.forEach(category -> {
-        			CheckBox chkTemp = new CheckBox(category);
-        			chkTemp.selectedProperty().addListener((ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
-        				if (new_val) {
-        					Prefs.put(String.format("disable.category.%s", category), new_val.toString());
-        				} else {
-        					Prefs.remove(String.format("disable.category.%s", category));
-        				}
-        			});
-        			boxCategories.getChildren().add(chkTemp);
-        		});
+				.forEach(category -> {
+					CheckBox chkTemp = new CheckBox(category);
+					chkTemp.setSelected(Boolean.parseBoolean(Prefs.get(String.format("disable.category.%s", category))));
+					boxCategories.getChildren().add(chkTemp);
+				});
+        ((ContentModel) appGebu.getGebuData().getContent()).getEventtypes().stream()
+				.forEach(eventtypes -> {
+					CheckBox chkTemp = new CheckBox(eventtypes);
+					chkTemp.setSelected(Boolean.parseBoolean(Prefs.get(String.format("disable.eventtype.%s", eventtypes))));
+					boxEventtypes.getChildren().add(chkTemp);
+				});
     }
 
 	/**
@@ -280,6 +279,24 @@ public class PreferencesEditDialogController {
         	Prefs.put(PrefKey.FUTURE_FOREGROUND, ColorUtils.formatWebHex(pckFutureForeground.getValue()));
         	Prefs.put(PrefKey.FUTURE_BACKGROUND, ColorUtils.formatWebHex(pckFutureBackground.getValue()));
 
+        	boxCategories.getChildren()
+					.forEach(checkbox -> {
+						if (((CheckBox) checkbox).isSelected()) {
+							Prefs.put(String.format("disable.category.%s", ((CheckBox) checkbox).getText()), "true");
+						} else {
+							Prefs.remove(String.format("disable.category.%s", ((CheckBox) checkbox).getText()));
+						}
+					});
+	
+        	boxEventtypes.getChildren()
+					.forEach(checkbox -> {
+						if (((CheckBox) checkbox).isSelected()) {
+							Prefs.put(String.format("disable.eventtype.%s", ((CheckBox) checkbox).getText()), "true");
+						} else {
+							Prefs.remove(String.format("disable.eventtype.%s", ((CheckBox) checkbox).getText()));
+						}
+					});
+	
             okClicked = true;
             dialogStage.close();
         }
