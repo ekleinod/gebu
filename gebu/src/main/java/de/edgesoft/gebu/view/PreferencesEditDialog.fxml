@@ -19,6 +19,44 @@
    <children>
       <TabPane prefHeight="550.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
+          <Tab text="Ausblendungen">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <GridPane layoutX="52.0" layoutY="44.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints valignment="TOP" vgrow="NEVER" />
+                            <RowConstraints prefHeight="5.0" valignment="CENTER" vgrow="SOMETIMES" />
+                            <RowConstraints valignment="TOP" vgrow="NEVER" />
+                              <RowConstraints prefHeight="5.0" vgrow="SOMETIMES" />
+                              <RowConstraints valignment="TOP" vgrow="NEVER" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Die angekreuzten Ereignistypen bzw. Kategorien werden aus der Anzeige entfernt, im Editor sind unabhängig davon alle Ereignisse zu sehen." wrapText="true" GridPane.columnSpan="2" />
+                              <Label text="Kategorien" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font name="System Bold" size="11.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Ereignistypen" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font name="System Bold" size="11.0" />
+                                 </font>
+                              </Label>
+                              <VBox fx:id="boxCategories" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                              <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                              <VBox fx:id="boxEventtypes" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
           <Tab text="Ereignisanzeige">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -97,44 +135,6 @@
                               <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="11" />
                               <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="17" />
                               <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="5" />
-                           </children>
-                        </GridPane>
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-          <Tab text="Ausblendungen">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <GridPane layoutX="52.0" layoutY="44.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints valignment="TOP" vgrow="NEVER" />
-                            <RowConstraints prefHeight="5.0" valignment="CENTER" vgrow="SOMETIMES" />
-                            <RowConstraints valignment="TOP" vgrow="NEVER" />
-                              <RowConstraints prefHeight="5.0" vgrow="SOMETIMES" />
-                              <RowConstraints valignment="TOP" vgrow="NEVER" />
-                          </rowConstraints>
-                           <children>
-                              <Label text="Die angekreuzten Ereignistypen bzw. Kategorien werden aus der Anzeige entfernt, im Editor sind unabhängig davon alle Ereignisse zu sehen." wrapText="true" GridPane.columnSpan="2" />
-                              <Label text="Kategorien" GridPane.rowIndex="2">
-                                 <font>
-                                    <Font name="System Bold" size="11.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Ereignistypen" GridPane.rowIndex="4">
-                                 <font>
-                                    <Font name="System Bold" size="11.0" />
-                                 </font>
-                              </Label>
-                              <VBox fx:id="boxCategories" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-                              <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                              <VBox fx:id="boxEventtypes" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                            </children>
                         </GridPane>
                      </children>
