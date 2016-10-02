@@ -1,11 +1,11 @@
 package de.edgesoft.gebu.utils;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.io.InputStreamReader;
 import java.util.AbstractMap;
 import java.util.Map;
 
-import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.gebu.Gebu;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
@@ -49,7 +49,7 @@ public class Resources {
 	 * @since 6.0.0
 	 */
 	public static Image loadImage(final String theImagePath) {
-		return new Image(String.format("file:src/main/resources/%s", theImagePath));
+		return new Image(Gebu.class.getClassLoader().getResourceAsStream(theImagePath));
 	}
 
 	/**
@@ -64,11 +64,11 @@ public class Resources {
 	public static Map.Entry<Pane, FXMLLoader> loadPane(final String thePaneName) {
 
         try {
-        	
+
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Gebu.class.getResource(String.format("view/%s.fxml", thePaneName)));
             return new AbstractMap.SimpleImmutableEntry<>((Pane) loader.load(), loader);
-            
+
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -86,13 +86,22 @@ public class Resources {
 	 */
 	public static String loadFile(final String theFileName) {
 
-		try {
-			return FileAccess.readFile(Paths.get(String.format("src/main/resources/%s", theFileName))).toString();
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(Gebu.class.getClassLoader().getResourceAsStream(theFileName)))) {
+
+			StringBuilder sbReturn = new StringBuilder();
+			String sLine = null;
+
+			while ((sLine = reader.readLine()) != null) {
+			    sbReturn.append(sLine);
+			}
+
+			return sbReturn.toString();
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return "";
 		}
-		
+
     }
 
 	/**
@@ -125,7 +134,7 @@ public class Resources {
 				;
 
 		return sReturn;
-		
+
     }
 
 }
