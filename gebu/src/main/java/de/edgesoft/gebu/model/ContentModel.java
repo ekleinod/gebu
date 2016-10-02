@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import de.edgesoft.gebu.jaxb.Content;
 import de.edgesoft.gebu.jaxb.Event;
+import de.edgesoft.gebu.utils.Prefs;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -83,6 +84,7 @@ public class ContentModel extends Content {
      * Returns filtered list of events.
      *
      * Filters all events within the boundaries, including the boundaries.
+     * Filters disabling of categories/eventtypes too.
      *
      * @param theDate base date
      * @param theLowerBound lower bound
@@ -95,6 +97,8 @@ public class ContentModel extends Content {
      */
 	public List<Event> getSortedFilterEvents(final LocalDate theDate, final int theLowerBound, final int theUpperBound) {
 		return getEvent().stream()
+				.filter(ev -> !Boolean.parseBoolean(Prefs.get(String.format("disable.category.%s", ev.getCategory().get()))))
+				.filter(ev -> !Boolean.parseBoolean(Prefs.get(String.format("disable.eventtype.%s", ev.getEventtype().get()))))
 				.filter(ev -> {
 					LocalDate dteEvent = ((LocalDate) ev.getDate().getValue());
 
