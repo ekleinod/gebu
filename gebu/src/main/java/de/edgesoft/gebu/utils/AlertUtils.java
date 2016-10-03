@@ -3,6 +3,7 @@ package de.edgesoft.gebu.utils;
 import de.edgesoft.gebu.Gebu;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
@@ -54,8 +55,29 @@ public class AlertUtils {
         alert.setResizable(true);
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         
-        // set icon
+        // set alert icon
+        switch (theAlertType) {
+			case CONFIRMATION:
+				alert.setGraphic(new ImageView(Resources.loadImage("icons/status/dialog-question.png")));
+				break;
+			case ERROR:
+				alert.setGraphic(new ImageView(Resources.loadImage("icons/status/dialog-error.png")));
+				break;
+			case INFORMATION:
+				alert.setGraphic(new ImageView(Resources.loadImage("icons/status/dialog-information.png")));
+				break;
+			case NONE:
+				alert.setGraphic(new ImageView(Resources.loadImage("icons/status/image-missing.png")));
+				break;
+			case WARNING:
+				alert.setGraphic(new ImageView(Resources.loadImage("icons/status/dialog-warning.png")));
+				break;
+		}
+        
+        // set window icon
         ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(Gebu.ICON);
+        
+        System.out.println(alert.getButtonTypes());
         
         return alert;
         
