@@ -60,6 +60,10 @@ Additionally, the following branches my occur:
 
 ## Fertige Versionen/Released Versions
 
+### Version 6.0.0 beta 1
+
+- erste komplett neu programmierte Beta
+
 ### Version 5
 
 - die bisher gültige Version, leider derzeit offline
