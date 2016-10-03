@@ -15,9 +15,11 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ToolBar;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
@@ -158,6 +160,69 @@ public class AppLayoutController {
 	private MenuItem mnuHelpAbout;
 
 	/**
+	 * Main toolbar.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private ToolBar barMain;
+
+	/**
+	 * Button program -> quit.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private Button btnProgramQuit;
+
+	/**
+	 * Button file -> new.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private Button btnFileNew;
+
+	/**
+	 * Button file -> open.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private Button btnFileOpen;
+
+	/**
+	 * Button file -> save.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private Button btnFileSave;
+
+	/**
+	 * Button file -> save as.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private Button btnFileSaveAs;
+
+	/**
+	 * Button statistics -> data.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private Button btnStatisticsData;
+
+	/**
 	 * Reference to application.
 	 *
 	 * @version 6.0.0
@@ -191,6 +256,17 @@ public class AppLayoutController {
 		mnuStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/actions/office-chart-bar.png")));
 		
 		mnuHelpAbout.setGraphic(new ImageView(Resources.loadImage("icons/actions/help-about.png")));
+		
+		// toolbar
+		btnProgramQuit.setGraphic(new ImageView(Resources.loadImage("icons/actions/application-exit.png")));
+		
+		btnFileNew.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-new.png")));
+		btnFileOpen.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-open.png")));
+		btnFileSave.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-save.png")));
+		btnFileSaveAs.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-save-as.png")));
+		
+		btnStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/actions/office-chart-bar.png")));
+		
 	}
 	
 	/**
@@ -208,11 +284,11 @@ public class AppLayoutController {
         	handleProgramExit();
         });
 
-        // bind menu to data
+        // bind menu/toolbar enabling to display kind
 		mnuProgramDisplay.disableProperty().bind(appGebu.isDisplay());
 		mnuProgramEditor.disableProperty().bind(appGebu.isDisplay().not());
 
-		// hide unneeded menus, disable menu items, so they cannot be used in display mode
+		// hide unneeded menus/toolbars, disable menu items, so they cannot be used in display mode
 		mnuFile.visibleProperty().bind(appGebu.isDisplay().not());
 		mnuFile.getItems().stream()
 				.forEach(menuitem -> menuitem.disableProperty().bind(appGebu.isDisplay()));
@@ -221,6 +297,11 @@ public class AppLayoutController {
 		mnuStatistics.getItems().stream()
 				.forEach(menuitem -> menuitem.disableProperty().bind(appGebu.isDisplay()));
 
+		barMain.visibleProperty().bind(appGebu.isDisplay().not());
+		barMain.managedProperty().bind(barMain.visibleProperty());
+		barMain.getItems().stream()
+				.forEach(button -> button.disableProperty().bind(appGebu.isDisplay()));
+		
     }
 
 	/**

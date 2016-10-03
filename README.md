@@ -68,8 +68,6 @@ Additionally, the following branches my occur:
 ## To Do
 
 - ESC function
-- icons for menu items
-- icon bar
 - resize statistics or hide border
 - export statistics as graphics
 
