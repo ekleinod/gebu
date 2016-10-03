@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Bindings for "Das Gebu-Programm".
+
+## Legal stuff
+
+Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+
+This file is part of "Das Gebu-Programm".
+
+"Das Gebu-Programm" is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+"Das Gebu-Programm" is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with "Das Gebu-Programm".  If not, see <http://www.gnu.org/licenses/>.
+
+@author Ekkart Kleinod
+@version 6.0.0
+@since 6.0.0
+-->
+
+<jxb:bindings xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+							xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+							xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+							jxb:version="2.1">
+
+	<!-- bindings -->
+	<jxb:bindings schemaLocation="gebu-legacy-5.2.xsd">
+
+		<!-- date adapter with special format -->
+		<jxb:bindings node="//xsd:element[@name='date']">
+			<jxb:property>
+				<jxb:baseType>
+					<jxb:javaType name="java.time.LocalDate"
+						parseMethod="de.edgesoft.edgeutils.datetime.DateTimeUtils.parseDate"
+						printMethod="de.edgesoft.edgeutils.datetime.DateTimeUtils.formatDate"
+					/>
+				</jxb:baseType>
+			</jxb:property>
+		</jxb:bindings>
+
+	</jxb:bindings>
+
+</jxb:bindings>
+
+<!-- EOF -->
+

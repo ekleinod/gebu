@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+Ant script for jaxb creation.
+
+## Legal stuff
+
+Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+
+This file is part of "Das Gebu-Programm".
+
+"Das Gebu-Programm" is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+"Das Gebu-Programm" is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with "Das Gebu-Programm".  If not, see <http://www.gnu.org/licenses/>.
+
+@author Ekkart Kleinod
+@version 6.0.0
+@since 6.0.0
+-->
+
+<project name="gebu" default="help" basedir=".">
+
+	<property name="edgeutils:path" value="../../../../submodules/edgeutils/jaxb" />
+	<import file="${edgeutils:path}/ant-commons.xml"/>
+
+	<property name="local:xsd" value="${ant.project.name}.xsd" />
+	<property name="local:outpath" value="../java/" />
+	<property name="local:package" value="de.edgesoft.${ant.project.name}.jaxb" />
+	<property name="local:packagepath" value="${local:outpath}de/edgesoft/${ant.project.name}/jaxb/" />
+	<property name="local:bindings1" value="${edgeutils:path}/commons.xjb" />
+	<property name="local:bindings2" value="${edgeutils:path}/commons-reuse.xjb" />
+	<property name="local:bindings3" value="${ant.project.name}.xjb" />
+
+	<property name="legacy:xsd" value="${ant.project.name}-legacy-5.2.xsd" />
+	<property name="legacy:package" value="de.edgesoft.${ant.project.name}.jaxb_legacy_5_2" />
+	<property name="legacy:packagepath" value="${local:outpath}de/edgesoft/${ant.project.name}/jaxb_legacy_5_2/" />
+	<property name="legacy:bindings3" value="${ant.project.name}-legacy-5.2.xjb" />
+
+	<target name="model" description="Removes, then generates the gebu and gebu-legacy model classes from xsd.">
+
+		<antcall target="deletemodel">
+			<param name="del:path" value="${local:packagepath}" />
+		</antcall>
+
+		<antcall target="callxjc">
+			<param name="xjc:outpath" value="${local:outpath}" />
+			<param name="xjc:package" value="${local:package}" />
+			<param name="xjc:xsd" value="${local:xsd}" />
+			<param name="xjc:bindings1" value="${local:bindings1}" />
+			<param name="xjc:bindings2" value="${local:bindings2}" />
+			<param name="xjc:bindings3" value="${local:bindings3}" />
+		</antcall>
+
+		<antcall target="deletemodel">
+			<param name="del:path" value="${legacy:packagepath}" />
+		</antcall>
+
+		<antcall target="callxjc">
+			<param name="xjc:outpath" value="${local:outpath}" />
+			<param name="xjc:package" value="${legacy:package}" />
+			<param name="xjc:xsd" value="${legacy:xsd}" />
+			<param name="xjc:bindings1" value="${local:bindings1}" />
+			<param name="xjc:bindings2" value="${local:bindings2}" />
+			<param name="xjc:bindings3" value="${legacy:bindings3}" />
+		</antcall>
+
+	</target>
+
+</project>
+
