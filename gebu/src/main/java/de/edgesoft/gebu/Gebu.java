@@ -83,7 +83,7 @@ public class Gebu extends Application {
 	public static final Logger logger = LogManager.getLogger(Gebu.class.getPackage().getName());
 
 	/** Program and doc version. */
-	public static final Version VERSION = new VersionExt("6.0.0");
+	public static final Version VERSION = new VersionExt("6.0.0 beta 1");
 
 	/**
 	 * Application icon.
@@ -108,7 +108,7 @@ public class Gebu extends Application {
 	 * @since 6.0.0
 	 */
 	private Stage stgPrimary = null;
-	
+
 	/**
 	 * Pane: main application layout container.
 	 *
@@ -666,24 +666,24 @@ public class Gebu extends Application {
 
 	/**
 	 * Shows splash screen.
-	 * 
+	 *
 	 * Inspired by https://gist.github.com/jewelsea/2305098
 	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
 	public void showSplashScreen() {
-		
+
 		// Load splash screen.
 		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("SplashScreen");
 		final AnchorPane pane = (AnchorPane) pneLoad.getKey();
-		
+
 		// Create and fill splash screen stage.
 		Stage stage = new Stage();
 		stage.initModality(Modality.NONE);
 		stage.setAlwaysOnTop(true);
 		stage.initStyle(StageStyle.TRANSPARENT);
-		
+
 		Scene scene = new Scene(pane, new Color(1, 1, 1, .5));
 		stage.setScene(scene);
 
@@ -696,7 +696,7 @@ public class Gebu extends Application {
 				return null;
 			}
 		};
-		
+
 		// add listener to succeed state of task, then fade out
 		splashTask.stateProperty().addListener((observableValue, oldState, newState) -> {
             if (newState == Worker.State.SUCCEEDED) {
@@ -707,7 +707,7 @@ public class Gebu extends Application {
                 fadeSplash.play();
             }
         });
-		
+
 		// show splash screen, then start fading task
 		stage.show();
 		new Thread(splashTask).start();

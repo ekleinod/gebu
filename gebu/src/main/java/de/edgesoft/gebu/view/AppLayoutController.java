@@ -57,7 +57,7 @@ public class AppLayoutController {
 	 */
 	@FXML
 	private MenuItem mnuProgramDisplay;
-	
+
 	/**
 	 * Menu item program -> editor.
 	 *
@@ -66,7 +66,7 @@ public class AppLayoutController {
 	 */
 	@FXML
 	private MenuItem mnuProgramEditor;
-	
+
 	/**
 	 * Menu file.
 	 *
@@ -113,11 +113,13 @@ public class AppLayoutController {
 		mnuProgramDisplay.disableProperty().bind(appGebu.isDisplay());
 		mnuProgramEditor.disableProperty().bind(appGebu.isDisplay().not());
 
+		mnuProgramEditor.setGraphic(new ImageView(Resources.loadImage("images/application-exit.png")));
+
 		// hide unneeded menus, disable menu items, so they cannot be used in display mode
 		mnuFile.visibleProperty().bind(appGebu.isDisplay().not());
 		mnuFile.getItems().stream()
 				.forEach(menuitem -> menuitem.disableProperty().bind(appGebu.isDisplay()));
-		
+
 		mnuStatistics.visibleProperty().bind(appGebu.isDisplay().not());
 		mnuStatistics.getItems().stream()
 				.forEach(menuitem -> menuitem.disableProperty().bind(appGebu.isDisplay()));
