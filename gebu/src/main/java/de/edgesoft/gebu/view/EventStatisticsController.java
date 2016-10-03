@@ -18,7 +18,11 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
+import javafx.scene.image.ImageView;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 
 /**
  * Controller for event statistics scene.
@@ -83,6 +87,93 @@ public class EventStatisticsController {
 	 */
 	@FXML
 	private WebView viewDetails;
+
+	/**
+	 * Tab overview.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private Tab tabOverview;
+
+	/**
+	 * Tab stacked.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private Tab tabStacked;
+
+	/**
+	 * Tab event types.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private Tab tabEventtypes;
+
+	/**
+	 * Tab view.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private Tab tabDetails;
+
+	/**
+	 * OK button.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private Button btnOK;
+
+	/**
+	 * Reference to dialog stage.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	private Stage dialogStage;
+
+
+	/**
+	 * Sets dialog stage.
+	 *
+	 * @param theStage dialog stage
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public void setDialogStage(final Stage theStage) {
+        dialogStage = theStage;
+    }
+
+	/**
+	 * Initializes the controller class.
+	 *
+	 * This method is automatically called after the fxml file has been loaded.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private void initialize() {
+
+		// icons
+		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/actions/dialog-ok-16.png")));
+		
+		tabOverview.setGraphic(new ImageView(Resources.loadImage("icons/actions/office-chart-bar.png")));
+		tabStacked.setGraphic(new ImageView(Resources.loadImage("icons/actions/office-chart-bar-stacked.png")));
+		tabEventtypes.setGraphic(new ImageView(Resources.loadImage("icons/actions/office-chart-pie.png")));
+		tabDetails.setGraphic(new ImageView(Resources.loadImage("icons/actions/view-list-details.png")));
+		
+	}
 
 	/**
 	 * Fills statistics with event data.
@@ -154,6 +245,17 @@ public class EventStatisticsController {
 
 		viewDetails.getEngine().loadContent(Resources.loadWebView().replace("**content**", sbDetails));
 
+    }
+
+	/**
+	 * Closes dialog.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+    private void handleOk() {
+        dialogStage.close();
     }
 
 }

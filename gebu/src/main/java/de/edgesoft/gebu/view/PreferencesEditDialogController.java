@@ -6,13 +6,17 @@ import de.edgesoft.gebu.model.ContentModel;
 import de.edgesoft.gebu.utils.AlertUtils;
 import de.edgesoft.gebu.utils.PrefKey;
 import de.edgesoft.gebu.utils.Prefs;
+import de.edgesoft.gebu.utils.Resources;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -154,6 +158,42 @@ public class PreferencesEditDialogController {
 	private VBox boxEventtypes;
 
 	/**
+	 * OK button.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private Button btnOK;
+
+	/**
+	 * Cancel button.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private Button btnCancel;
+
+	/**
+	 * Tab disable events.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private Tab tabDisable;
+
+	/**
+	 * Tab display.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private Tab tabDisplay;
+
+	/**
 	 * Reference to dialog stage.
 	 *
 	 * @version 6.0.0
@@ -203,6 +243,13 @@ public class PreferencesEditDialogController {
 		pckFutureForeground.setValue(Color.web(Prefs.get(PrefKey.FUTURE_FOREGROUND)));
 		pckFutureBackground.setValue(Color.web(Prefs.get(PrefKey.FUTURE_BACKGROUND)));
 
+		// icons
+		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/actions/dialog-ok-16.png")));
+		btnCancel.setGraphic(new ImageView(Resources.loadImage("icons/actions/dialog-cancel-16.png")));
+		
+		tabDisable.setGraphic(new ImageView(Resources.loadImage("icons/actions/action-unavailable.png")));
+		tabDisplay.setGraphic(new ImageView(Resources.loadImage("icons/actions/view-calendar-birthday.png")));
+		
 	}
 
 	/**

@@ -646,6 +646,7 @@ public class Gebu extends Application {
         // Set the events into the controller.
         EventStatisticsController controller = pneLoad.getValue().getController();
         controller.fillStatistics(dtaGebu.getContent().getEvent());
+        controller.setDialogStage(dialogStage);
 
         // Show the dialog and wait until the user closes it
         dialogStage.show();

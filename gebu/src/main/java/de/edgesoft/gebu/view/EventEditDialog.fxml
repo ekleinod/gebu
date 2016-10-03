@@ -48,7 +48,7 @@
       <ButtonBar layoutX="286.0" layoutY="346.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0">
         <buttons>
           <Button fx:id="btnOK" defaultButton="true" onAction="#handleOk" text="_OK" />
-            <Button fx:id="btnCancel" cancelButton="true" onAction="#handleCancel" prefHeight="26.0" prefWidth="137.0" text="A_bbrechen" />
+            <Button fx:id="btnCancel" cancelButton="true" onAction="#handleCancel" prefWidth="140.0" text="A_bbrechen" />
         </buttons>
       </ButtonBar>
    </children>
