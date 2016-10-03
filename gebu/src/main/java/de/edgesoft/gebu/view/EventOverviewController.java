@@ -264,7 +264,6 @@ public class EventOverviewController {
 	 */
 	public void setTableItems() {
 		tblEvents.setItems(((ContentModel) appGebu.getGebuData().getContent()).getObservableEvents());
-//		tblEvents.getSortOrder().setAll(colDate);
     }
 
 	/**

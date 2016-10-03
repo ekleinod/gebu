@@ -521,7 +521,7 @@ public class Gebu extends Application {
         EventDisplayController ctlEventDisplay = pneLoad.getValue().getController();
         ctlEventDisplay.setGebuApp(this);
         ctlEventDisplay.displayEvents(LocalDate.now());
-
+        
         isDisplay.setValue(true);
 
     }
