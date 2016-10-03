@@ -68,6 +68,24 @@ public class AppLayoutController {
 	private MenuItem mnuProgramEditor;
 
 	/**
+	 * Menu item program -> preferences.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private MenuItem mnuProgramPreferences;
+
+	/**
+	 * Menu item program -> quit.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private MenuItem mnuProgramQuit;
+
+	/**
 	 * Menu file.
 	 *
 	 * @version 6.0.0
@@ -75,6 +93,42 @@ public class AppLayoutController {
 	 */
 	@FXML
 	private Menu mnuFile;
+
+	/**
+	 * Menu item file -> new.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private MenuItem mnuFileNew;
+
+	/**
+	 * Menu item file -> open.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private MenuItem mnuFileOpen;
+
+	/**
+	 * Menu item file -> save.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private MenuItem mnuFileSave;
+
+	/**
+	 * Menu item file -> save as.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private MenuItem mnuFileSaveAs;
 
 	/**
 	 * Menu statistics.
@@ -86,6 +140,24 @@ public class AppLayoutController {
 	private Menu mnuStatistics;
 
 	/**
+	 * Menu item statistics -> data.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private MenuItem mnuStatisticsData;
+
+	/**
+	 * Menu item help -> about.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private MenuItem mnuHelpAbout;
+
+	/**
 	 * Reference to application.
 	 *
 	 * @version 6.0.0
@@ -94,6 +166,32 @@ public class AppLayoutController {
 	private Gebu appGebu;
 
 
+	/**
+	 * Initializes the controller class.
+	 *
+	 * This method is automatically called after the fxml file has been loaded.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private void initialize() {
+		// icons for menus
+		mnuProgramDisplay.setGraphic(new ImageView(Resources.loadImage("icons/actions/view-calendar-birthday.png")));
+		mnuProgramEditor.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-edit.png")));
+		mnuProgramPreferences.setGraphic(new ImageView(Resources.loadImage("icons/actions/configure.png")));
+		mnuProgramQuit.setGraphic(new ImageView(Resources.loadImage("icons/actions/application-exit.png")));
+		
+		mnuFileNew.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-new.png")));
+		mnuFileOpen.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-open.png")));
+		mnuFileSave.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-save.png")));
+		mnuFileSaveAs.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-save-as.png")));
+		
+		mnuStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/actions/office-chart-bar.png")));
+		
+		mnuHelpAbout.setGraphic(new ImageView(Resources.loadImage("icons/actions/help-about.png")));
+	}
+	
 	/**
 	 * Called by main application for reference to itself.
 	 *
@@ -109,11 +207,9 @@ public class AppLayoutController {
         	handleProgramExit();
         });
 
-        // initialize menu
+        // bind menu to data
 		mnuProgramDisplay.disableProperty().bind(appGebu.isDisplay());
 		mnuProgramEditor.disableProperty().bind(appGebu.isDisplay().not());
-
-		mnuProgramEditor.setGraphic(new ImageView(Resources.loadImage("icons/actions/application-exit.png")));
 
 		// hide unneeded menus, disable menu items, so they cannot be used in display mode
 		mnuFile.visibleProperty().bind(appGebu.isDisplay().not());

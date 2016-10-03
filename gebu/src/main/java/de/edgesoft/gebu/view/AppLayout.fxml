@@ -7,7 +7,7 @@
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.gebu.view.AppLayoutController">
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.gebu.view.AppLayoutController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -23,9 +23,9 @@
                      </accelerator>
                   </MenuItem>
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem onAction="#handleProgramPreferences" text="E_instellungen" />
+                  <MenuItem fx:id="mnuProgramPreferences" onAction="#handleProgramPreferences" text="E_instellungen" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-              <MenuItem onAction="#handleProgramExit" text="_Schließen">
+              <MenuItem fx:id="mnuProgramQuit" onAction="#handleProgramExit" text="_Schließen">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
@@ -33,24 +33,24 @@
             </Menu>
           <Menu fx:id="mnuFile" text="_Datei">
                <items>
-                  <MenuItem onAction="#handleFileNew" text="_Neu">
+                  <MenuItem fx:id="mnuFileNew" onAction="#handleFileNew" text="_Neu">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem onAction="#handleFileOpen" text="Ö_ffnen...">
+                  <MenuItem fx:id="mnuFileOpen" onAction="#handleFileOpen" text="Ö_ffnen...">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem onAction="#handleFileSave" text="_Speichern">
+                  <MenuItem fx:id="mnuFileSave" onAction="#handleFileSave" text="_Speichern">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-                  <MenuItem onAction="#handleFileSaveAs" text="Speichern _als...">
+                  <MenuItem fx:id="mnuFileSaveAs" onAction="#handleFileSaveAs" text="Speichern _als...">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                      </accelerator>
@@ -59,15 +59,15 @@
           </Menu>
           <Menu fx:id="mnuStatistics" text="_Statistik">
             <items>
-              <MenuItem onAction="#handleEventStatistics" text="_Daten">
+              <MenuItem fx:id="mnuStatisticsData" onAction="#handleEventStatistics" text="_Daten">
                      <accelerator>
-                        <KeyCodeCombination alt="UP" code="I" control="ANY" meta="UP" shift="UP" shortcut="UP" />
+                        <KeyCodeCombination alt="UP" code="I" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
             </items>
           </Menu>
           <Menu text="_Hilfe">
             <items>
-              <MenuItem onAction="#handleHelpAbout" text="Ü_ber...">
+              <MenuItem fx:id="mnuHelpAbout" onAction="#handleHelpAbout" text="Ü_ber...">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="F1" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
