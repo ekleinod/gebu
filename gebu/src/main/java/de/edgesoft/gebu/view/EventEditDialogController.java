@@ -7,6 +7,7 @@ import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.gebu.Gebu;
 import de.edgesoft.gebu.jaxb.Event;
 import de.edgesoft.gebu.model.ContentModel;
+import de.edgesoft.gebu.utils.Resources;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -16,6 +17,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
@@ -102,6 +104,15 @@ public class EventEditDialogController {
 	private Button btnOK;
 
 	/**
+	 * Cancel button.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private Button btnCancel;
+
+	/**
 	 * Reference to dialog stage.
 	 *
 	 * @version 6.0.0
@@ -174,6 +185,10 @@ public class EventEditDialogController {
 				.or(cboEventtype.valueProperty().asString().isEmpty())
 				);
 
+		// icons
+		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/actions/dialog-ok-16.png")));
+		btnCancel.setGraphic(new ImageView(Resources.loadImage("icons/actions/dialog-cancel-16.png")));
+		
 	}
 
 	/**

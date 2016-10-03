@@ -176,7 +176,8 @@ public class AppLayoutController {
 	 */
 	@FXML
 	private void initialize() {
-		// icons for menus
+		
+		// icons
 		mnuProgramDisplay.setGraphic(new ImageView(Resources.loadImage("icons/actions/view-calendar-birthday.png")));
 		mnuProgramEditor.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-edit.png")));
 		mnuProgramPreferences.setGraphic(new ImageView(Resources.loadImage("icons/actions/configure.png")));

@@ -10,10 +10,12 @@ import de.edgesoft.gebu.model.EventModel;
 import de.edgesoft.gebu.utils.AlertUtils;
 import de.edgesoft.gebu.utils.PrefKey;
 import de.edgesoft.gebu.utils.Prefs;
+import de.edgesoft.gebu.utils.Resources;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -132,6 +134,15 @@ public class EventOverviewController {
 	private Label lblCategory;
 
 	/**
+	 * New button.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private Button btnNew;
+
+	/**
 	 * Edit button.
 	 *
 	 * @version 6.0.0
@@ -226,6 +237,11 @@ public class EventOverviewController {
 			Prefs.put(PrefKey.STAGE_SPLIT, Double.toString(newValue.doubleValue()));
 		});
 
+		// icons
+		btnNew.setGraphic(new ImageView(Resources.loadImage("icons/actions/list-add-16.png")));
+		btnEdit.setGraphic(new ImageView(Resources.loadImage("icons/actions/edit-16.png")));
+		btnDelete.setGraphic(new ImageView(Resources.loadImage("icons/actions/list-remove-16.png")));
+		
 	}
 
 	/**
