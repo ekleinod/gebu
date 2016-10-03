@@ -70,7 +70,6 @@ Additionally, the following branches my occur:
 - ESC function
 - icons for menu items
 - icon bar
-- do not show events of categories/eventtypes
 - resize statistics or hide border
 - export statistics as graphics
 

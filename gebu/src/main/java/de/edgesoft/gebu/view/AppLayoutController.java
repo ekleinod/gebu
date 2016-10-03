@@ -113,7 +113,7 @@ public class AppLayoutController {
 		mnuProgramDisplay.disableProperty().bind(appGebu.isDisplay());
 		mnuProgramEditor.disableProperty().bind(appGebu.isDisplay().not());
 
-		mnuProgramEditor.setGraphic(new ImageView(Resources.loadImage("images/application-exit.png")));
+		mnuProgramEditor.setGraphic(new ImageView(Resources.loadImage("icons/actions/application-exit.png")));
 
 		// hide unneeded menus, disable menu items, so they cannot be used in display mode
 		mnuFile.visibleProperty().bind(appGebu.isDisplay().not());
@@ -291,9 +291,20 @@ public class AppLayoutController {
         Alert alert = AlertUtils.createAlert(AlertType.INFORMATION);
 
         alert.setGraphic(new ImageView(Resources.loadImage("images/icon-64.png")));
-        alert.setTitle("Das Gebu-Programm");
-        alert.setHeaderText(MessageFormat.format("Über \"Das Gebu-Programm\" {0}", Gebu.VERSION));
-        alert.setContentText("Ein Qualitätsprodukt aus dem Hause \"edge-soft\".\n\nBei Fehlern bitte eine E-Mail an ekleinod@edgesoft.de senden.");
+        alert.setTitle("Über \"Das Gebu-Programm\"");
+        alert.setHeaderText(MessageFormat.format("Das Gebu-Programm Version {0}", Gebu.VERSION));
+        
+        StringBuilder sbText = new StringBuilder();
+        
+        sbText.append("Ein Qualitätsprodukt aus dem Hause \"edge-soft\".");
+        sbText.append("\n\n");
+        sbText.append("Verbesserungen, Fehler, Hinweise bitte per E-Mail an ekleinod@edgesoft.de.");
+        sbText.append("\n");
+        sbText.append("Alternativ kann auch eine Fehlermeldung bei github eröffnet werden: https://github.com/ekleinod/gebu/issues.");
+        sbText.append("\n\n");
+        sbText.append("Die Icons sind aus dem Papirus icon theme (https://github.com/PapirusDevelopmentTeam/papirus-icon-theme-gtk).");
+        
+        alert.setContentText(sbText.toString());
 
         alert.showAndWait();
 
