@@ -5,6 +5,7 @@ import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,6 +41,7 @@ import javafx.concurrent.Worker;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -118,7 +120,15 @@ public class Gebu extends Application {
 	private BorderPane pneAppLayout = null;
 
 	/**
-	 * Pane: event overview controller.
+	 * App controller.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	private AppLayoutController ctlApp = null;
+
+	/**
+	 * Event overview controller.
 	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
@@ -261,8 +271,8 @@ public class Gebu extends Application {
         stgPrimary.show();
 
         // Give the controller access to the main app.
-        AppLayoutController controller = pneLoad.getValue().getController();
-        controller.setGebuApp(this);
+        ctlApp = pneLoad.getValue().getController();
+        ctlApp.setGebuApp(this);
 
         // resize to last dimensions
     	stgPrimary.setX(Double.parseDouble(Prefs.get(PrefKey.STAGE_X)));
@@ -521,7 +531,7 @@ public class Gebu extends Application {
         EventDisplayController ctlEventDisplay = pneLoad.getValue().getController();
         ctlEventDisplay.setGebuApp(this);
         ctlEventDisplay.displayEvents(LocalDate.now());
-        
+
         isDisplay.setValue(true);
 
     }
@@ -712,6 +722,47 @@ public class Gebu extends Application {
 		// show splash screen, then start fading task
 		stage.show();
 		new Thread(splashTask).start();
+
+	}
+
+	/**
+	 * Check if data is modified, show corresponding dialog, save data if needed.
+	 *
+	 * @return continue?
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public boolean checkModified() {
+
+		boolean doContinue = true;
+
+		if (isModified()) {
+
+	    	Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION);
+	        alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+
+	        alert.setTitle("Nicht gespeicherte Änderungen");
+	        alert.setHeaderText("Sie haben Änderungen durchgeführt, die noch nicht gespeichert wurden.");
+	        alert.setContentText("Wollen Sie die geänderten Daten speichern, nicht speichern oder wollen Sie den gesamten Vorgang abbrechen?");
+
+	        Optional<ButtonType> result = alert.showAndWait();
+	        if (result.isPresent()) {
+    			if (result.get() == ButtonType.YES) {
+    				ctlApp.handleFileSave();
+    				doContinue = true;
+    			}
+    			if (result.get() == ButtonType.NO) {
+    				doContinue = true;
+    			}
+    			if (result.get() == ButtonType.CANCEL) {
+    				doContinue = false;
+    			}
+	        }
+
+		}
+
+		return doContinue;
 
 	}
 
