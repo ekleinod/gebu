@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.edgesoft</groupId>
   <artifactId>gebu</artifactId>
-  <version>6.0.0-beta-1</version>
+  <version>6.0.0-beta-2</version>
   <name>Das Gebu-Programm</name>
   <description>"Das Gebu-Programm" shows birthdays in a two week interval, i.e. birthdays of the last week, the actual birthdays, and the birthdays of the future week.</description>
   <url>https://github.com/ekleinod/gebu</url>
