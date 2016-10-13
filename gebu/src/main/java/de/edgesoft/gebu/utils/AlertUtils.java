@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 /**
  * Utility methods for alerts.
- * 
+ *
  * ## Legal stuff
  *
  * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
@@ -34,13 +34,13 @@ import javafx.stage.Stage;
  * @since 6.0.0
  */
 public class AlertUtils {
-	
+
 	/**
 	 * Creates and initializes an alert.
-	 * 
+	 *
 	 * This method just encapsulates the tiresome setting of
 	 * the icon and resizing the alert to fit the text.
-	 * 
+	 *
 	 * @param theAlertType alert type
 	 * @return created alert
 	 *
@@ -48,13 +48,13 @@ public class AlertUtils {
 	 * @since 6.0.0
 	 */
 	public static Alert createAlert(final AlertType theAlertType) {
-		
+
         Alert alert = new Alert(theAlertType);
-        
+
         // display all text and resize to height
         alert.setResizable(true);
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-        
+
         // set alert icon
         switch (theAlertType) {
 			case CONFIRMATION:
@@ -73,14 +73,12 @@ public class AlertUtils {
 				alert.setGraphic(new ImageView(Resources.loadImage("icons/status/dialog-warning.png")));
 				break;
 		}
-        
+
         // set window icon
         ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(Gebu.ICON);
-        
-        System.out.println(alert.getButtonTypes());
-        
+
         return alert;
-        
+
     }
 
 }

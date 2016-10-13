@@ -5,7 +5,6 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.namespace.QName;
-import de.edgesoft.edgeutils.commons.Info;
 import de.edgesoft.gebu.model.ContentModel;
 import de.edgesoft.gebu.model.EventModel;
 
@@ -28,7 +27,6 @@ import de.edgesoft.gebu.model.EventModel;
 public class ObjectFactory {
 
     private final static QName _Gebu_QNAME = new QName("", "gebu");
-    private final static QName _Test_QNAME = new QName("", "test");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: de.edgesoft.gebu.jaxb
@@ -68,15 +66,6 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "", name = "gebu")
     public JAXBElement<Gebu> createGebu(Gebu value) {
         return new JAXBElement<Gebu>(_Gebu_QNAME, Gebu.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Info }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "test")
-    public JAXBElement<Info> createTest(Info value) {
-        return new JAXBElement<Info>(_Test_QNAME, Info.class, null, value);
     }
 
 }

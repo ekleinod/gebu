@@ -2,7 +2,6 @@ package de.edgesoft.gebu.view;
 
 import java.io.File;
 import java.text.MessageFormat;
-import java.util.Optional;
 
 import de.edgesoft.gebu.Gebu;
 import de.edgesoft.gebu.model.ContentModel;
@@ -16,7 +15,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ToolBar;
@@ -241,34 +239,34 @@ public class AppLayoutController {
 	 */
 	@FXML
 	private void initialize() {
-		
+
 		// icons
 		mnuProgramDisplay.setGraphic(new ImageView(Resources.loadImage("icons/actions/view-calendar-birthday.png")));
 		mnuProgramEditor.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-edit.png")));
 		mnuProgramPreferences.setGraphic(new ImageView(Resources.loadImage("icons/actions/configure.png")));
 		mnuProgramQuit.setGraphic(new ImageView(Resources.loadImage("icons/actions/application-exit.png")));
-		
+
 		mnuFileNew.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-new.png")));
 		mnuFileOpen.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-open.png")));
 		mnuFileSave.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-save.png")));
 		mnuFileSaveAs.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-save-as.png")));
-		
+
 		mnuStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/actions/office-chart-bar.png")));
-		
+
 		mnuHelpAbout.setGraphic(new ImageView(Resources.loadImage("icons/actions/help-about.png")));
-		
+
 		// toolbar
 		btnProgramQuit.setGraphic(new ImageView(Resources.loadImage("icons/actions/application-exit.png")));
-		
+
 		btnFileNew.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-new.png")));
 		btnFileOpen.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-open.png")));
 		btnFileSave.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-save.png")));
 		btnFileSaveAs.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-save-as.png")));
-		
+
 		btnStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/actions/office-chart-bar.png")));
-		
+
 	}
-	
+
 	/**
 	 * Called by main application for reference to itself.
 	 *
@@ -301,7 +299,7 @@ public class AppLayoutController {
 		barMain.managedProperty().bind(barMain.visibleProperty());
 		barMain.getItems().stream()
 				.forEach(button -> button.disableProperty().bind(appGebu.isDisplay()));
-		
+
     }
 
 	/**
@@ -345,7 +343,7 @@ public class AppLayoutController {
 	 */
 	@FXML
 	private void handleProgramExit() {
-		if (checkModified()) {
+		if (appGebu.checkModified()) {
 			Platform.exit();
 		}
 	}
@@ -376,7 +374,7 @@ public class AppLayoutController {
 	 */
 	@FXML
 	private void handleFileNew() {
-		if (checkModified()) {
+		if (appGebu.checkModified()) {
 			appGebu.newData();
 		}
 	}
@@ -390,7 +388,7 @@ public class AppLayoutController {
 	@FXML
 	private void handleFileOpen() {
 
-		if (checkModified()) {
+		if (appGebu.checkModified()) {
 
 			FileChooser fileChooser = new FileChooser();
 
@@ -420,7 +418,7 @@ public class AppLayoutController {
 	 * @since 6.0.0
 	 */
 	@FXML
-    private void handleFileSave() {
+    public void handleFileSave() {
         if (Prefs.get(PrefKey.FILE).isEmpty()) {
         	handleFileSaveAs();
         } else {
@@ -451,6 +449,9 @@ public class AppLayoutController {
         File file = fileChooser.showSaveDialog(appGebu.getPrimaryStage());
 
         if (file != null) {
+        	if (!file.getName().contains(".")) {
+        		file = new File(String.format("%s.esx", file.getPath()));
+        	}
             appGebu.saveData(file.getPath());
         }
 
@@ -471,9 +472,9 @@ public class AppLayoutController {
         alert.setGraphic(new ImageView(Resources.loadImage("images/icon-64.png")));
         alert.setTitle("Über \"Das Gebu-Programm\"");
         alert.setHeaderText(MessageFormat.format("Das Gebu-Programm Version {0}", Gebu.VERSION));
-        
+
         StringBuilder sbText = new StringBuilder();
-        
+
         sbText.append("Ein Qualitätsprodukt aus dem Hause \"edge-soft\".");
         sbText.append("\n\n");
         sbText.append("Verbesserungen, Fehler, Hinweise bitte per E-Mail an ekleinod@edgesoft.de.");
@@ -481,7 +482,7 @@ public class AppLayoutController {
         sbText.append("Alternativ kann auch eine Fehlermeldung bei github eröffnet werden: https://github.com/ekleinod/gebu/issues.");
         sbText.append("\n\n");
         sbText.append("Die Icons sind aus dem Papirus icon theme (https://github.com/PapirusDevelopmentTeam/papirus-icon-theme-gtk).");
-        
+
         alert.setContentText(sbText.toString());
 
         alert.showAndWait();
@@ -498,48 +499,6 @@ public class AppLayoutController {
     private void handleEventStatistics() {
         appGebu.showEventStatistics();
     }
-
-	/**
-	 * Check if data is modified, show corresponding dialog, save data if needed.
-	 *
-	 * @return continue?
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-	 */
-	private boolean checkModified() {
-
-		boolean doContinue = true;
-
-		if (appGebu.isModified()) {
-
-	    	Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION);
-//	        alert.initOwner(getPrimaryStage());
-	        alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
-
-	        alert.setTitle("Nicht gespeicherte Änderungen");
-	        alert.setHeaderText("Sie haben Änderungen durchgeführt, die noch nicht gespeichert wurden.");
-	        alert.setContentText("Wollen Sie die geänderten Daten speichern, nicht speichern oder wollen Sie den gesamten Vorgang abbrechen?");
-
-	        Optional<ButtonType> result = alert.showAndWait();
-	        if (result.isPresent()) {
-    			if (result.get() == ButtonType.YES) {
-    				handleFileSave();
-    				doContinue = true;
-    			}
-    			if (result.get() == ButtonType.NO) {
-    				doContinue = true;
-    			}
-    			if (result.get() == ButtonType.CANCEL) {
-    				doContinue = false;
-    			}
-	        }
-
-		}
-
-		return doContinue;
-
-	}
 
 }
 

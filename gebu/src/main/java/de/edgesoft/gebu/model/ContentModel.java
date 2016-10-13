@@ -63,7 +63,7 @@ public class ContentModel extends Content {
      */
 	public ObservableList<Event> getObservableEvents() {
 		if (observableEvents == null) {
-			observableEvents = FXCollections.observableArrayList(getEvent());
+			observableEvents = FXCollections.observableList(getEvent());
 		}
 		return observableEvents;
 	}
@@ -97,8 +97,18 @@ public class ContentModel extends Content {
      */
 	public List<Event> getSortedFilterEvents(final LocalDate theDate, final int theLowerBound, final int theUpperBound) {
 		return getEvent().stream()
-				.filter(ev -> !Boolean.parseBoolean(Prefs.get(String.format("disable.category.%s", ev.getCategory().get()))))
-				.filter(ev -> !Boolean.parseBoolean(Prefs.get(String.format("disable.eventtype.%s", ev.getEventtype().get()))))
+				.filter(ev -> {
+						if (ev.getCategory() == null) {
+							return false;
+						}
+						return !Boolean.parseBoolean(Prefs.get(String.format("disable.category.%s", ev.getCategory().get())));
+					})
+				.filter(ev -> {
+						if (ev.getEventtype() == null) {
+							return false;
+						}
+						return !Boolean.parseBoolean(Prefs.get(String.format("disable.eventtype.%s", ev.getEventtype().get())));
+					})
 				.filter(ev -> {
 					LocalDate dteEvent = ((LocalDate) ev.getDate().getValue());
 

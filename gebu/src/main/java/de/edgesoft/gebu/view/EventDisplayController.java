@@ -11,7 +11,10 @@ import de.edgesoft.gebu.model.ContentModel;
 import de.edgesoft.gebu.utils.PrefKey;
 import de.edgesoft.gebu.utils.Prefs;
 import de.edgesoft.gebu.utils.Resources;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.web.WebView;
 
 /**
@@ -159,6 +162,22 @@ public class EventDisplayController {
 	public void setGebuApp(final Gebu theApp) {
         appGebu = theApp;
     }
+
+	/**
+	 * Opens edit dialog for new event.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private void keyListener(KeyEvent event){
+		if (event.getCode() == KeyCode.ESCAPE) {
+			if (appGebu.checkModified()) {
+				Platform.exit();
+			}
+			event.consume();
+		}
+	}
 
 }
 
