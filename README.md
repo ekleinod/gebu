@@ -1,10 +1,10 @@
 # Das Gebu-Programm
 
-Das Gebu-Programm zeigt Geburtstage in einem Rahmen von zwei Wochen an, d.h. die Geburtstage der vergangenen Woche, die heutigen Geburtstage sowie die zukünftigen Geburtstage der nächsten Woche werden in einer Übersicht angezeigt.
+Das Gebu-Programm zeigt Geburtstage in einem Rahmen von zwei Wochen an, d.h. die Geburtstage der vergangenen Woche, die heutigen Geburtstage sowie die zukünftigen Geburtstage der nächsten Woche.
 Die Geburtstage können mit einem internen Editor erweitert oder geändert werden.
 Das Anzeigeintervall ist einstellbar.
 
-"Das Gebu-Programm" shows birthdays in a two week internavl, i.e. birthdays of the last week, the actual birthdays, and the birthdays of the future week.
+"Das Gebu-Programm" shows birthdays in a two week interval, i.e. birthdays of the last week, the actual birthdays, and the birthdays of the future week.
 The birthdays can be edited with an internal editor.
 The interval is changeable.
 
@@ -12,10 +12,14 @@ The interval is changeable.
 ## Bedienung/usage
 
 Das Programm wird mit einem Installer ausgeliefert und benötigt Java zum Laufen.
-Ohne Installer ist die Datei `gebu.jar` mit Java auszuführen: `java -jar gebu.jar`
+Ohne Installer ist die Datei `gebu.jar` mit Java auszuführen:
+
+	`java -jar gebu.jar`
 
 The program comes with an installer and needs Java in order to function.
-Without installer just call `gebu.jar`with Java: `java -jar gebu.jar`
+Without installer just call `gebu.jar`with Java:
+
+	`java -jar gebu.jar`
 
 ## Libraries
 
@@ -54,12 +58,47 @@ Additionally, the following branches my occur:
 - `release/*` - Release-Synchronisierung (synchronizing release versions between `develop` and `master`)
 - `hotfix/*` - Fehlerbehebung (fast bugfixes)
 
-## Released Versions
+## Fertige Versionen/Released Versions
+
+### Version 6.0.0 beta 2
+
+- neue Funktionen
+	- ESC-Funktion
+	- Dateierweiterung ".esx" wird ergänzt, wenn keine Endung vorhanden ist
+- Fehlerbehebung
+	- neue und gelöschte Daten wurden nicht gespeichert
+	- NullPointerException bei Filterung von Events ohne Kategorie verhindert
+- Sonstiges
+	- Doku in README verbessert
+
+### Version 6.0.0 beta 1
+
+- erste komplett neu programmierte Beta
 
 ### Version 5
 
 - die bisher gültige Version, leider derzeit offline
+- current version, unfortunately offline for now
 
+## Neue Versionen
+
+Für eine neue Version:
+
+- Versionsnummer in `Gebu.java` anpassen
+- Versionsnummer in `pom.xml` anpassen
+- prüfen, ob log-File erzeugt oder abgestellt werden soll (`log4j.xml`)
+- *maven test* laufen lassen
+- *maven target* "gebu jar with dependencies" ausführen
+- erzeugte jar-Datei in jars-Ordner verschieben, dabei korrekt benennen
+- `gebu.jar` im Hauptverzeichnis neu verlinken
+- Versionsinformation in `README.MD` ergänzen
+- jar testen
+
+## To Do
+
+- ESC function
+- resize statistics or hide border
+- export statistics as graphics
 
 ## Copyright
 
