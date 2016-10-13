@@ -60,6 +60,17 @@ Additionally, the following branches my occur:
 
 ## Fertige Versionen/Released Versions
 
+### Version 6.0.0 beta 2
+
+- neue Funktionen
+	- ESC-Funktion
+	- Dateierweiterung ".esx" wird ergänzt, wenn keine Endung vorhanden ist
+- Fehlerbehebung
+	- neue und gelöschte Daten wurden nicht gespeichert
+	- NullPointerException bei Filterung von Events ohne Kategorie verhindert
+- Sonstiges
+	- Doku in README verbessert
+
 ### Version 6.0.0 beta 1
 
 - erste komplett neu programmierte Beta
@@ -68,6 +79,20 @@ Additionally, the following branches my occur:
 
 - die bisher gültige Version, leider derzeit offline
 - current version, unfortunately offline for now
+
+## Neue Versionen
+
+Für eine neue Version:
+
+- Versionsnummer in `Gebu.java` anpassen
+- Versionsnummer in `pom.xml` anpassen
+- prüfen, ob log-File erzeugt oder abgestellt werden soll (`log4j.xml`)
+- *maven test* laufen lassen
+- *maven target* "gebu jar with dependencies" ausführen
+- erzeugte jar-Datei in jars-Ordner verschieben, dabei korrekt benennen
+- `gebu.jar` im Hauptverzeichnis neu verlinken
+- Versionsinformation in `README.MD` ergänzen
+- jar testen
 
 ## To Do
 

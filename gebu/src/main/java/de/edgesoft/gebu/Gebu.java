@@ -85,7 +85,7 @@ public class Gebu extends Application {
 	public static final Logger logger = LogManager.getLogger(Gebu.class.getPackage().getName());
 
 	/** Program and doc version. */
-	public static final Version VERSION = new VersionExt("6.0.0 beta 1");
+	public static final Version VERSION = new VersionExt("6.0.0 beta 2");
 
 	/**
 	 * Application icon.
