@@ -70,7 +70,7 @@ public class Resources {
             return new AbstractMap.SimpleImmutableEntry<>((Pane) loader.load(), loader);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            Gebu.logger.catching(e);
             return null;
         }
     }
@@ -98,7 +98,7 @@ public class Resources {
 			return sbReturn.toString();
 
 		} catch (Exception e) {
-			e.printStackTrace();
+            Gebu.logger.catching(e);
 			return "";
 		}
 
