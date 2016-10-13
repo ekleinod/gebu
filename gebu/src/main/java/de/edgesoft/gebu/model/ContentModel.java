@@ -63,7 +63,7 @@ public class ContentModel extends Content {
      */
 	public ObservableList<Event> getObservableEvents() {
 		if (observableEvents == null) {
-			observableEvents = FXCollections.observableArrayList(getEvent());
+			observableEvents = FXCollections.observableList(getEvent());
 		}
 		return observableEvents;
 	}
