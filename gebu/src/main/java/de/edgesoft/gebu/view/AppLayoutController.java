@@ -449,6 +449,9 @@ public class AppLayoutController {
         File file = fileChooser.showSaveDialog(appGebu.getPrimaryStage());
 
         if (file != null) {
+        	if (!file.getName().contains(".")) {
+        		file = new File(String.format("%s.esx", file.getPath()));
+        	}
             appGebu.saveData(file.getPath());
         }
 
