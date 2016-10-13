@@ -24,10 +24,10 @@ import de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter;
  *   &lt;complexContent>
  *     &lt;extension base="{}ModelClass">
  *       &lt;sequence>
- *         &lt;element name="date" type="{http://www.w3.org/2001/XMLSchema}date"/>
- *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="eventtype" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="category" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="date" type="{}LocalDateProperty"/>
+ *         &lt;element name="title" type="{}StringProperty"/>
+ *         &lt;element name="eventtype" type="{}StringProperty"/>
+ *         &lt;element name="category" type="{}StringProperty" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
