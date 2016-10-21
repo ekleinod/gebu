@@ -1,4 +1,4 @@
-package de.edgesoft.gebu.view;
+package de.edgesoft.gebu.controller;
 
 import de.edgesoft.gebu.utils.Resources;
 import javafx.fxml.FXML;

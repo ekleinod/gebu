@@ -1,4 +1,4 @@
-package de.edgesoft.gebu.view;
+package de.edgesoft.gebu.controller;
 
 import de.edgesoft.edgeutils.javafx.ColorUtils;
 import de.edgesoft.gebu.Gebu;
