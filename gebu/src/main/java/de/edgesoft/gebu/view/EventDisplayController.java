@@ -84,31 +84,27 @@ public class EventDisplayController {
 					"past");
 
 			if (!sTemp.isEmpty()) {
-				sbEvents.append(getTableLines(
-						theDate,
-						((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, -iInterval, -1),
-						"past"));
+				sbEvents.append(sTemp);
 				sbEvents.append("<tr class=\"empty\" />");
 			}
 
 			sTemp = getTableLines(
 					theDate,
-					((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, -iInterval, -1),
-					"past");
+					((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, 0, 0),
+					"present");
 
 			if (!sTemp.isEmpty()) {
-				sbEvents.append(getTableLines(
-						theDate,
-						((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, 0, 0),
-						"present"));
+				sbEvents.append(sTemp);
 				sbEvents.append("<tr class=\"empty\" />");
 			}
 
+			sTemp = getTableLines(
+					theDate,
+					((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, 1, iInterval),
+					"future");
+
 			if (!sTemp.isEmpty()) {
-				sbEvents.append(getTableLines(
-						theDate,
-						((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, 1, iInterval),
-						"future"));
+				sbEvents.append(sTemp);
 			}
 
 			if (sbEvents.length() == 0) {
