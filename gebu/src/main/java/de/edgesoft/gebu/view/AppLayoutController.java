@@ -394,7 +394,8 @@ public class AppLayoutController {
 
 			fileChooser.setTitle("Gebu-Datei öffnen");
 	        fileChooser.getExtensionFilters().addAll(
-	        		new FileChooser.ExtensionFilter("Gebu-Dateien (*.esx)", "*.esx"),
+	        		new FileChooser.ExtensionFilter("Gebu-Dateien (*.gebu)", "*.gebu"),
+	        		new FileChooser.ExtensionFilter("Gebu-5-Dateien (*.esx)", "*.esx"),
 	        		new FileChooser.ExtensionFilter("Alle Dateien (*.*)", "*.*")
 	        		);
 	        if (!Prefs.get(PrefKey.PATH).isEmpty()) {
@@ -439,7 +440,7 @@ public class AppLayoutController {
 
 		fileChooser.setTitle("Gebu-Datei speichern");
         fileChooser.getExtensionFilters().addAll(
-        		new FileChooser.ExtensionFilter("Gebu-Dateien (*.esx)", "*.esx"),
+        		new FileChooser.ExtensionFilter("Gebu-Dateien (*.gebu)", "*.gebu"),
         		new FileChooser.ExtensionFilter("Alle Dateien (*.*)", "*.*")
         		);
         if (!Prefs.get(PrefKey.PATH).isEmpty()) {
@@ -450,7 +451,7 @@ public class AppLayoutController {
 
         if (file != null) {
         	if (!file.getName().contains(".")) {
-        		file = new File(String.format("%s.esx", file.getPath()));
+        		file = new File(String.format("%s.gebu", file.getPath()));
         	}
             appGebu.saveData(file.getPath());
         }
