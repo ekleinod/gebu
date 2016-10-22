@@ -247,8 +247,8 @@ public class EventEditDialogController {
         currentEvent = theEvent;
 
 		// fill event type and category boxes
-		cboEventtype.setItems(FXCollections.observableArrayList(((ContentModel) appGebu.getGebuData().getContent()).getEventtypes()));
-		cboCategory.setItems(FXCollections.observableArrayList(((ContentModel) appGebu.getGebuData().getContent()).getCategories()));
+		cboEventtype.setItems(FXCollections.observableArrayList(((ContentModel) appGebu.getData().getContent()).getEventtypes()));
+		cboCategory.setItems(FXCollections.observableArrayList(((ContentModel) appGebu.getData().getContent()).getCategories()));
 
     }
 

@@ -74,13 +74,13 @@ public class EventDisplayController {
 
 		StringBuilder sbEvents = new StringBuilder();
 
-		if (appGebu.getGebuData().getContent().getEvent().isEmpty()) {
+		if (appGebu.getData().getContent().getEvent().isEmpty()) {
 			sbEvents.append(String.format("<tr><td colspan=\"4\">%s</td></tr>", "Es wurden noch keine Ereignisse eingegeben."));
 		} else {
 
 			String sTemp = getTableLines(
 					theDate,
-					((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, -iInterval, -1),
+					((ContentModel) appGebu.getData().getContent()).getSortedFilterEvents(theDate, -iInterval, -1),
 					"past");
 
 			if (!sTemp.isEmpty()) {
@@ -90,7 +90,7 @@ public class EventDisplayController {
 
 			sTemp = getTableLines(
 					theDate,
-					((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, 0, 0),
+					((ContentModel) appGebu.getData().getContent()).getSortedFilterEvents(theDate, 0, 0),
 					"present");
 
 			if (!sTemp.isEmpty()) {
@@ -100,7 +100,7 @@ public class EventDisplayController {
 
 			sTemp = getTableLines(
 					theDate,
-					((ContentModel) appGebu.getGebuData().getContent()).getSortedFilterEvents(theDate, 1, iInterval),
+					((ContentModel) appGebu.getData().getContent()).getSortedFilterEvents(theDate, 1, iInterval),
 					"future");
 
 			if (!sTemp.isEmpty()) {

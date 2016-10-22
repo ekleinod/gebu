@@ -263,13 +263,13 @@ public class PreferencesEditDialogController {
 	public void setGebuApp(final Gebu theApp) {
         appGebu = theApp;
         
-        ((ContentModel) appGebu.getGebuData().getContent()).getCategories().stream()
+        ((ContentModel) appGebu.getData().getContent()).getCategories().stream()
 				.forEach(category -> {
 					CheckBox chkTemp = new CheckBox(category);
 					chkTemp.setSelected(Boolean.parseBoolean(Prefs.get(String.format("disable.category.%s", category))));
 					boxCategories.getChildren().add(chkTemp);
 				});
-        ((ContentModel) appGebu.getGebuData().getContent()).getEventtypes().stream()
+        ((ContentModel) appGebu.getData().getContent()).getEventtypes().stream()
 				.forEach(eventtypes -> {
 					CheckBox chkTemp = new CheckBox(eventtypes);
 					chkTemp.setSelected(Boolean.parseBoolean(Prefs.get(String.format("disable.eventtype.%s", eventtypes))));

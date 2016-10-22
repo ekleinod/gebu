@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.gebu.Gebu;
 import de.edgesoft.gebu.jaxb.Event;
+import de.edgesoft.gebu.model.AppModel;
 import de.edgesoft.gebu.model.ContentModel;
 import de.edgesoft.gebu.model.EventModel;
 import de.edgesoft.gebu.utils.AlertUtils;
@@ -15,7 +16,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -23,6 +23,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.ImageView;
 
 /**
  * Controller for event overview scene.
@@ -50,7 +51,7 @@ import javafx.scene.control.TableView;
  * @version 6.0.0
  * @since 6.0.0
  */
-public class EventOverviewController {
+public class EventEditorController {
 
 	/**
 	 * Table view.
@@ -169,14 +170,6 @@ public class EventOverviewController {
 	@FXML
 	private SplitPane pneSplit;
 
-	/**
-	 * Reference to application.
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-	 */
-	private Gebu appGebu;
-
 
 	/**
 	 * Initializes the controller class.
@@ -245,25 +238,17 @@ public class EventOverviewController {
 	}
 
 	/**
-	 * Called by main application for reference to itself.
-	 *
-	 * @param theApp reference to application
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-	 */
-	public void setGebuApp(final Gebu theApp) {
-        appGebu = theApp;
-    }
-
-	/**
 	 * Sets events as table items.
 	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
 	public void setTableItems() {
-		tblEvents.setItems(((ContentModel) appGebu.getGebuData().getContent()).getObservableEvents());
+		if (AppModel.getData() != null) {
+			tblEvents.setItems(((ContentModel) AppModel.getData().getContent()).getObservableEvents());
+		} else {
+			tblEvents.setItems(null);
+		}
     }
 
 	/**
@@ -317,7 +302,7 @@ public class EventOverviewController {
 
 		EventModel newEvent = new EventModel();
 		if (appGebu.showEventEditDialog(newEvent)) {
-			((ContentModel) appGebu.getGebuData().getContent()).getObservableEvents().add(newEvent);
+			((ContentModel) appGebu.getData().getContent()).getObservableEvents().add(newEvent);
 			appGebu.setModified(true);
 			appGebu.setAppTitle();
 		}
