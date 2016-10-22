@@ -1,6 +1,7 @@
 package de.edgesoft.gebu.controller;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -465,10 +466,10 @@ public class AppLayoutController {
 	public void setAppTitle() {
 		
 		primaryStage.setTitle(String.format("Das Gebu-Programm%s%s",
-				Prefs.get(PrefKey.FILE).isEmpty() ? "" : String.format(" - %s", Prefs.get(PrefKey.FILE)),
+				Prefs.get(PrefKey.FILE).isEmpty() ? "" : String.format(" - %s", Paths.get(Prefs.get(PrefKey.FILE)).toAbsolutePath().toString()),
 				AppModel.isModified() ? " *" : ""
 				));
-
+		
     }
 
 	/**
@@ -542,7 +543,7 @@ public class AppLayoutController {
 					newEvent.setCategory(new SimpleStringProperty((event.getCategory().equals("Keine") ? null : event.getCategory())));
 					
 					AppModel.getData().getContent().getEvent().add(newEvent);
-					AppModel.setLegacy(false);
+					AppModel.setLegacy(true);
 
 				}
 				);
