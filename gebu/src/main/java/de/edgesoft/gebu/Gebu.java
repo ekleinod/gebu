@@ -5,6 +5,9 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory;
+import com.sun.javafx.application.HostServicesDelegate;
+
 import de.edgesoft.edgeutils.commons.Version;
 import de.edgesoft.edgeutils.commons.ext.VersionExt;
 import de.edgesoft.gebu.controller.AppLayoutController;
@@ -67,6 +70,16 @@ public class Gebu extends Application {
 	 */
 	public static final Version VERSION = new VersionExt("6.0.0 beta 2");
 
+	/** 
+	 * Host services delegate.
+	 * 
+	 * Needed for opening links in browser etc.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public static HostServicesDelegate hostServices = null;
+
 	/**
 	 * Starts the application.
 	 *
@@ -97,6 +110,9 @@ public class Gebu extends Application {
 		// load app layout and controller, then delegate control to controller
     	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("AppLayout");
         ((AppLayoutController) pneLoad.getValue().getController()).initController(primaryStage);
+        
+        // host services
+        hostServices = HostServicesFactory.getInstance(this);
 
 	}
 

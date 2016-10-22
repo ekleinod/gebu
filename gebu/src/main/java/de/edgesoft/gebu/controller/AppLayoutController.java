@@ -42,6 +42,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -766,21 +767,15 @@ public class AppLayoutController {
 	@FXML
     private void handleHelpAbout() {
 
-        StringBuilder sbText = new StringBuilder();
-
-        sbText.append("Ein Qualitätsprodukt aus dem Hause \"edge-soft\".");
-        sbText.append("\n\n");
-        sbText.append("Verbesserungen, Fehler, Hinweise bitte per E-Mail an ekleinod@edgesoft.de.");
-        sbText.append("\n");
-        sbText.append("Alternativ kann auch eine Fehlermeldung bei github eröffnet werden: https://github.com/ekleinod/gebu/issues.");
-        sbText.append("\n\n");
-        sbText.append("Die Icons sind aus dem Papirus icon theme (https://github.com/PapirusDevelopmentTeam/papirus-icon-theme-gtk).");
-
         Alert alert = AlertUtils.createAlert(AlertType.INFORMATION, primaryStage,
         		"Über \"Das Gebu-Programm\"",
         		MessageFormat.format("Das Gebu-Programm Version {0}", Gebu.VERSION),
-        		sbText.toString()
+        		null
         		);
+        
+    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("AboutText");
+    	VBox aboutText = (VBox) pneLoad.getKey();
+    	alert.getDialogPane().contentProperty().set(aboutText);
 
         alert.setGraphic(new ImageView(Resources.loadImage("images/icon-64.png")));
         alert.showAndWait();
