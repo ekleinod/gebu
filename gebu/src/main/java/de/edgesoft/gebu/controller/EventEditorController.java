@@ -275,8 +275,10 @@ public class EventEditorController {
 	public void setTableItems() {
 		if (AppModel.getData() != null) {
 			tblEvents.setItems(((ContentModel) AppModel.getData().getContent()).getObservableEvents());
+			tblEvents.refresh();
 		} else {
 			tblEvents.setItems(null);
+			tblEvents.refresh();
 		}
     }
 
@@ -332,6 +334,7 @@ public class EventEditorController {
 		EventModel newEvent = new EventModel();
 		if (showEventEditDialog(newEvent)) {
 			((ContentModel) AppModel.getData().getContent()).getObservableEvents().add(newEvent);
+			tblEvents.getSelectionModel().select(newEvent);
 			AppModel.setModified(true);
 			appController.setAppTitle();
 		}
@@ -417,14 +420,14 @@ public class EventEditorController {
         dialogStage.setScene(scene);
 
         // Set the event into the controller.
-        EventEditDialogController controller = pneLoad.getValue().getController();
-        controller.setDialogStage(dialogStage);
-        controller.setEvent(theEvent);
+        EventEditDialogController editController = pneLoad.getValue().getController();
+        editController.setDialogStage(dialogStage);
+        editController.setEvent(theEvent);
 
         // Show the dialog and wait until the user closes it
         dialogStage.showAndWait();
 
-        return controller.isOkClicked();
+        return editController.isOkClicked();
 
 	}
 
