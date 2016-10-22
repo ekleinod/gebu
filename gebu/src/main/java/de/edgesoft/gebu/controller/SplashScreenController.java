@@ -51,7 +51,7 @@ public class SplashScreenController {
 	 */
 	@FXML
 	private void initialize() {
-		imageView.setImage(Resources.loadImage("images/logo.png"));
+		imageView.setImage(Resources.loadImage("images/splash.png"));
 	}
 	
 }
