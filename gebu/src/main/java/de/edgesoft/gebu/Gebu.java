@@ -122,6 +122,8 @@ public class Gebu extends Application {
 
 		Scene scene = new Scene(pane, new Color(1, 1, 1, .5));
 		stage.setScene(scene);
+		stage.sizeToScene();
+		stage.centerOnScreen();
 
 		// define task, that waits 4 seconds, then returns null, i.e. succeeds
 		// if needed, some progress bar output could be defined here
