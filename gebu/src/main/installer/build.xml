@@ -40,7 +40,6 @@ along with "Das Gebu-Programm".  If not, see <http://www.gnu.org/licenses/>.
 			<arg line="${file:nsi}" />
 		</exec>
 
-		<echo message="Created installer correctly, log file: ${file:log})." />
 	</target>
 
 	<target name="help" description="Shows help text.">

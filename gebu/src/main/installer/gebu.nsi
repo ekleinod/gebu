@@ -37,7 +37,7 @@ RequestExecutionLevel user
 !define URL http://www.edgesoft.de/
 !define LONGNAME "Das Gebu-Programm"
 !define DIRNAME "gebu"
-!define INSTALLNAME "gebu_install.exe"
+!define INSTALLNAME "../../../../gebu_install.exe"
 
 # MUI Symbol Definitions
 !define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\modern-install.ico"
@@ -62,8 +62,8 @@ Sind Sie sicher, dass Sie die Installation abbrechen wollen?"
 
 # Images
 !define MUI_HEADERIMAGE
-!define MUI_HEADERIMAGE_BITMAP "header.png"
-!define MUI_WELCOMEFINISHPAGE_BITMAP "welcomefinish.png"
+!define MUI_HEADERIMAGE_BITMAP "../resources/images/installer_header.png"
+!define MUI_WELCOMEFINISHPAGE_BITMAP "../resources/images/installer_welcomefinish.png"
 
 # Welcome
 !define MUI_WELCOMEPAGE_TITLE "Installation $\"${LONGNAME}$\" ${LONG_VERSION}"
@@ -106,7 +106,7 @@ ShowUninstDetails show
 Section -jar SEC0000
 		SetOverwrite on
 		SetOutPath $INSTDIR
-		File ../../../gebu.jar
+		File ../../../../gebu.jar
 		WriteRegStr HKLM "${REGKEY}\Components" jar 1
 SectionEnd
 
@@ -118,7 +118,7 @@ SectionEnd
 Function .onInit
 		InitPluginsDir
 		Push $R1
-		File /oname=$PLUGINSDIR\spltmp.bmp "splash.png"
+		File /oname=$PLUGINSDIR\spltmp.bmp "../resources/images/splash.png"
 		advsplash::show 1500 600 400 -1 $PLUGINSDIR\spltmp
 		Pop $R1
 		Pop $R1

@@ -10,15 +10,15 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="507.42044"
-   height="316.16"
+   width="500"
+   height="300"
    id="svg2"
    sodipodi:version="0.32"
    inkscape:version="0.91 r"
-   sodipodi:docname="logo.svg"
+   sodipodi:docname="splash.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
    version="1.0"
-   inkscape:export-filename="/home/ekleinod/working/git/gebu/gebu/src/main/resources/images/logo.png"
+   inkscape:export-filename="/home/ekleinod/working/git/gebu/gebu/src/main/resources/images/splash.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90"
    sodipodi:modified="TRUE">
@@ -103,43 +103,43 @@
          id="feGaussianBlur4398" />
     </filter>
     <filter
-       x="-.15855"
-       y="-.55379"
-       color-interpolation-filters="sRGB"
+       x="-0.15854999"
+       y="-0.55378997"
        width="1.3171"
        height="2.1076"
-       id="filter4046">
+       id="filter4046"
+       style="color-interpolation-filters:sRGB">
       <feGaussianBlur
          stdDeviation="22.744847"
          id="feGaussianBlur4048" />
     </filter>
     <filter
-       x="-.53438"
-       y="-.14956"
-       color-interpolation-filters="sRGB"
+       x="-0.53438002"
+       y="-0.14956"
        width="2.0688"
        height="1.2991"
-       id="filter4139">
+       id="filter4139"
+       style="color-interpolation-filters:sRGB">
       <feGaussianBlur
          stdDeviation="3.9028105"
          id="feGaussianBlur4141" />
     </filter>
     <filter
-       x="-.15855"
-       y="-.55379"
-       color-interpolation-filters="sRGB"
+       x="-0.15854999"
+       y="-0.55378997"
        width="1.3171"
        height="2.1076"
-       id="filter4046-2">
+       id="filter4046-2"
+       style="color-interpolation-filters:sRGB">
       <feGaussianBlur
          stdDeviation="22.744847"
          id="feGaussianBlur4048-7" />
     </filter>
     <radialGradient
-       r="90.714"
+       r="90.713997"
        gradientTransform="matrix(1,0,0,0.46457,0,433.05)"
-       cx="297.55"
-       cy="848.47"
+       cx="297.54999"
+       cy="848.46997"
        gradientUnits="userSpaceOnUse"
        id="radialGradient4227">
       <stop
@@ -159,7 +159,7 @@
        r="93.084"
        gradientTransform="matrix(1.0126,0.0094876,-0.0033272,0.47446,-0.63454,421.63)"
        cx="299.47"
-       cy="808.41"
+       cy="808.40997"
        gradientUnits="userSpaceOnUse"
        id="radialGradient4229">
       <stop
@@ -180,32 +180,32 @@
          id="stop4031" />
     </radialGradient>
     <filter
-       x="-.15855"
-       y="-.55379"
-       color-interpolation-filters="sRGB"
+       x="-0.15854999"
+       y="-0.55378997"
        width="1.3171"
        height="2.1076"
-       id="filter4046-2-1">
+       id="filter4046-2-1"
+       style="color-interpolation-filters:sRGB">
       <feGaussianBlur
          stdDeviation="22.744847"
          id="feGaussianBlur4048-7-4" />
     </filter>
     <filter
-       x="-.53438"
-       y="-.14956"
-       color-interpolation-filters="sRGB"
+       x="-0.53438002"
+       y="-0.14956"
        width="2.0688"
        height="1.2991"
-       id="filter4139-9">
+       id="filter4139-9"
+       style="color-interpolation-filters:sRGB">
       <feGaussianBlur
          stdDeviation="3.9028105"
          id="feGaussianBlur4141-2" />
     </filter>
     <radialGradient
-       r="53.232"
+       r="53.231998"
        gradientTransform="matrix(0.80829,0.080013,-0.15881,1.6043,597.86,-43.713)"
        cx="304.47"
-       cy="177.4"
+       cy="177.39999"
        gradientUnits="userSpaceOnUse"
        id="radialGradient4369">
       <stop
@@ -222,9 +222,9 @@
          id="stop4062" />
     </radialGradient>
     <radialGradient
-       r="53.232"
+       r="53.231998"
        gradientTransform="matrix(0.80958,0.061973,-0.12098,1.5208,81.357,-84.625)"
-       cx="302.55"
+       cx="302.54999"
        cy="180.27"
        gradientUnits="userSpaceOnUse"
        id="radialGradient4383">
@@ -246,12 +246,12 @@
          id="stop3994" />
     </radialGradient>
     <linearGradient
-       x1="306.21"
+       x1="306.20999"
        y1="250.42"
        gradientTransform="matrix(0.75247,0,0,0.80908,-117.8,-34.43)"
        x2="316.81"
        gradientUnits="userSpaceOnUse"
-       y2="199.49"
+       y2="199.49001"
        id="linearGradient3113">
       <stop
          offset="0"
@@ -264,11 +264,11 @@
     </linearGradient>
     <linearGradient
        x1="201.66"
-       y1="330.36"
+       y1="330.35999"
        gradientTransform="translate(-87.131,-103.96)"
-       x2="196.1"
+       x2="196.10001"
        gradientUnits="userSpaceOnUse"
-       y2="652.6"
+       y2="652.59998"
        id="linearGradient3118">
       <stop
          offset="0"
@@ -307,8 +307,8 @@
     <radialGradient
        r="120.34"
        gradientTransform="matrix(0.7522,0.018395,-0.0063163,0.212,16.189,117.16)"
-       cx="806.18"
-       cy="307.85"
+       cx="806.17999"
+       cy="307.85001"
        gradientUnits="userSpaceOnUse"
        id="radialGradient3903">
       <stop
@@ -325,10 +325,10 @@
          id="stop3851" />
     </radialGradient>
     <radialGradient
-       r="90.178"
+       r="90.178001"
        gradientTransform="matrix(0.99829,0.012776,-0.0034648,0.27072,2.9063,491.08)"
        cx="321.78"
-       cy="654.16"
+       cy="654.15997"
        gradientUnits="userSpaceOnUse"
        id="radialGradient3932">
       <stop
@@ -345,9 +345,9 @@
          id="stop4335" />
     </radialGradient>
     <radialGradient
-       r="53.232"
+       r="53.231998"
        gradientTransform="matrix(0.80829,0.080013,-0.15881,1.6043,597.86,-43.713)"
-       cx="315.99"
+       cx="315.98999"
        cy="176.83"
        gradientUnits="userSpaceOnUse"
        id="radialGradient3934">
@@ -365,22 +365,22 @@
          id="stop4062-6" />
     </radialGradient>
     <filter
-       color-interpolation-filters="sRGB"
-       id="filter3886">
+       id="filter3886"
+       style="color-interpolation-filters:sRGB">
       <feGaussianBlur
          stdDeviation="1.6038524"
          id="feGaussianBlur3888" />
     </filter>
     <filter
-       color-interpolation-filters="sRGB"
-       id="filter3890">
+       id="filter3890"
+       style="color-interpolation-filters:sRGB">
       <feGaussianBlur
          stdDeviation="1.3542483"
          id="feGaussianBlur3892" />
     </filter>
     <filter
-       color-interpolation-filters="sRGB"
-       id="filter3898">
+       id="filter3898"
+       style="color-interpolation-filters:sRGB">
       <feGaussianBlur
          stdDeviation="1.2656431"
          id="feGaussianBlur3900" />
@@ -394,7 +394,7 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.3722166"
-     inkscape:cx="253.57839"
+     inkscape:cx="254.42148"
      inkscape:cy="158.06073"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -418,7 +418,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -426,7 +426,7 @@
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(7.4204426,380)"
+     transform="translate(7.4204426,363.84)"
      style="display:inline">
     <g
        transform="matrix(0.84229979,0,0,0.84229979,0.86832068,-375.70051)"
@@ -547,7 +547,7 @@
     </g>
     <g
        id="g3641"
-       transform="matrix(0.70138146,0,0,0.70138146,4.1073186,-109.20215)">
+       transform="matrix(0.70138146,0,0,0.70138146,-2.2158817,-101.21384)">
       <text
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:50px;line-height:125%;font-family:'Linux Libertine OC';-inkscape-font-specification:'Linux Libertine OC, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter4384)"
@@ -595,7 +595,7 @@
     </g>
     <g
        id="g3614"
-       transform="matrix(0.34266666,0,0,0.34266666,328.66667,-41.964159)">
+       transform="matrix(0.34266666,0,0,0.34266666,321.24623,-41.964163)">
       <path
          style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;filter:url(#filter4207)"
          d="m 344.194,-353.65333 -38.03797,38.59482 76.07595,0 -38.03798,-38.59482 z m 38.03798,38.59482 15.24241,15.46553 23.27189,0 0,23.61259 15.2424,15.46553 0,-54.54365 -53.7567,0 z m 53.7567,54.54365 0,77.18968 38.03797,-38.59482 -38.03797,-38.59486 z m 0,77.18968 -15.2424,15.46554 0,23.61258 -23.27189,0 -15.24241,15.46554 53.7567,0 0,-54.54366 z m -53.7567,54.54366 -76.07595,0 38.03797,38.594853 38.03798,-38.594853 z m -76.07595,0 -15.2424,-15.46554 -23.33994,0 0,-23.61258 -15.2424,-15.46554 0,54.54366 53.82474,0 z m -53.82474,-54.54366 0,-77.18968 -38.03798,38.59486 38.03798,38.59482 z m 0,-77.18968 15.2424,-15.46553 0,-23.61259 23.33994,0 15.2424,-15.46553 -53.82474,0 0,54.54365 z m 38.58234,-39.07812 -23.33994,23.61259 0,108.12075 23.33994,23.61258 106.56076,0 23.27189,-23.61258 0,-108.12075 -23.27189,-23.61259 -106.56076,0 z m 53.28037,0.34539 28.57953,28.99793 19.053,0 0,19.40098 28.51147,28.92885 -28.51147,28.92889 0,19.40094 -19.053,0 -28.57953,28.99788 -28.5795,-28.99788 -19.12106,0 0,-19.40094 -28.51147,-28.92889 28.51147,-28.92885 0,-19.40098 19.12106,0 28.5795,-28.99793 z m -28.5795,28.99793 -19.12106,19.40098 0,57.85774 19.12106,19.40094 57.15903,0 19.053,-19.40094 0,-57.85774 -19.053,-19.40098 -57.15903,0 z m 28.5795,0.34539 47.22425,47.9846 -47.22425,47.98461 -47.29228,-47.98461 47.29228,-47.9846 z"
@@ -626,7 +626,7 @@
          y="-33.333344" /></text>
     <g
        id="g3651"
-       transform="matrix(1.339221,0,0,1.339221,-380.14714,-126.86445)">
+       transform="matrix(1.339221,0,0,1.339221,-388.15652,-119.27661)">
       <text
          sodipodi:linespacing="125%"
          id="text4392"
