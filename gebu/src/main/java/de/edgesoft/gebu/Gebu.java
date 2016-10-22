@@ -96,7 +96,7 @@ public class Gebu extends Application {
 
 		// load app layout and controller, then delegate control to controller
     	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("AppLayout");
-        ((AppLayoutController) pneLoad.getValue().getController()).initAppLayout(primaryStage);
+        ((AppLayoutController) pneLoad.getValue().getController()).initController(primaryStage);
 
 	}
 

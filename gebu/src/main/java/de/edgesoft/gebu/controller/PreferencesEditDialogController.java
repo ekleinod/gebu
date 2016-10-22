@@ -1,22 +1,21 @@
 package de.edgesoft.gebu.controller;
 
 import de.edgesoft.edgeutils.javafx.ColorUtils;
-import de.edgesoft.gebu.Gebu;
+import de.edgesoft.gebu.model.AppModel;
 import de.edgesoft.gebu.model.ContentModel;
 import de.edgesoft.gebu.utils.AlertUtils;
 import de.edgesoft.gebu.utils.PrefKey;
 import de.edgesoft.gebu.utils.Prefs;
 import de.edgesoft.gebu.utils.Resources;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Tab;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -209,14 +208,6 @@ public class PreferencesEditDialogController {
 	 */
 	private boolean okClicked;
 
-	/**
-	 * Reference to application.
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-	 */
-	private Gebu appGebu;
-
 
 	/**
 	 * Initializes the controller class.
@@ -250,26 +241,13 @@ public class PreferencesEditDialogController {
 		tabDisable.setGraphic(new ImageView(Resources.loadImage("icons/actions/action-unavailable.png")));
 		tabDisplay.setGraphic(new ImageView(Resources.loadImage("icons/actions/view-calendar-birthday.png")));
 		
-	}
-
-	/**
-	 * Called by main application for reference to itself.
-	 *
-	 * @param theApp reference to application
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-	 */
-	public void setGebuApp(final Gebu theApp) {
-        appGebu = theApp;
-        
-        ((ContentModel) appGebu.getData().getContent()).getCategories().stream()
+        ((ContentModel) AppModel.getData().getContent()).getCategories().stream()
 				.forEach(category -> {
 					CheckBox chkTemp = new CheckBox(category);
 					chkTemp.setSelected(Boolean.parseBoolean(Prefs.get(String.format("disable.category.%s", category))));
 					boxCategories.getChildren().add(chkTemp);
 				});
-        ((ContentModel) appGebu.getData().getContent()).getEventtypes().stream()
+        ((ContentModel) AppModel.getData().getContent()).getEventtypes().stream()
 				.forEach(eventtypes -> {
 					CheckBox chkTemp = new CheckBox(eventtypes);
 					chkTemp.setSelected(Boolean.parseBoolean(Prefs.get(String.format("disable.eventtype.%s", eventtypes))));
@@ -394,14 +372,11 @@ public class PreferencesEditDialogController {
         }
 
         // Show the error message.
-        Alert alert = AlertUtils.createAlert(AlertType.ERROR);
-        alert.initOwner(dialogStage);
-
-        alert.setTitle("Ungültige Eingaben");
-        alert.setHeaderText("Bitte korrigieren Sie die fehlerhaften Eingaben.");
-        alert.setContentText(sbErrorMessage.toString());
-
-        alert.showAndWait();
+        AlertUtils.createAlert(AlertType.ERROR, dialogStage,
+        		"Ungültige Eingaben",
+        		"Bitte korrigieren Sie die fehlerhaften Eingaben.",
+        		sbErrorMessage.toString())
+        .showAndWait();
 
         return false;
 

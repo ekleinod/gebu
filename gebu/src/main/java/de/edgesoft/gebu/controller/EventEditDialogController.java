@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
-import de.edgesoft.gebu.Gebu;
 import de.edgesoft.gebu.jaxb.Event;
+import de.edgesoft.gebu.model.AppModel;
 import de.edgesoft.gebu.model.ContentModel;
 import de.edgesoft.gebu.utils.Resources;
 import javafx.beans.property.SimpleObjectProperty;
@@ -129,14 +129,6 @@ public class EventEditDialogController {
 	private Event currentEvent;
 
 	/**
-	 * Reference to application.
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-	 */
-	private Gebu appGebu;
-
-	/**
 	 * OK clicked?.
 	 *
 	 * @version 6.0.0
@@ -192,18 +184,6 @@ public class EventEditDialogController {
 	}
 
 	/**
-	 * Called by main application for reference to itself.
-	 *
-	 * @param theApp reference to application
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-	 */
-	public void setGebuApp(final Gebu theApp) {
-        appGebu = theApp;
-    }
-
-	/**
 	 * Sets dialog stage.
 	 *
 	 * @param theStage dialog stage
@@ -247,8 +227,8 @@ public class EventEditDialogController {
         currentEvent = theEvent;
 
 		// fill event type and category boxes
-		cboEventtype.setItems(FXCollections.observableArrayList(((ContentModel) appGebu.getData().getContent()).getEventtypes()));
-		cboCategory.setItems(FXCollections.observableArrayList(((ContentModel) appGebu.getData().getContent()).getCategories()));
+		cboEventtype.setItems(FXCollections.observableArrayList(((ContentModel) AppModel.getData().getContent()).getEventtypes()));
+		cboCategory.setItems(FXCollections.observableArrayList(((ContentModel) AppModel.getData().getContent()).getCategories()));
 
     }
 

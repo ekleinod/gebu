@@ -16,7 +16,6 @@ import de.edgesoft.gebu.jaxb.Event;
 import de.edgesoft.gebu.jaxb.ObjectFactory;
 import de.edgesoft.gebu.model.AppModel;
 import de.edgesoft.gebu.model.ContentModel;
-import de.edgesoft.gebu.model.EventModel;
 import de.edgesoft.gebu.utils.AlertUtils;
 import de.edgesoft.gebu.utils.PrefKey;
 import de.edgesoft.gebu.utils.Prefs;
@@ -347,14 +346,14 @@ public class AppLayoutController {
 	}
 
 	/**
-	 * Initializes the application layout.
+	 * Initializes the controller with things, that cannot be done during {@link #initialize()}.
 	 * 
 	 * @param thePrimaryStage primary stage
 	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
-	public void initAppLayout(final Stage thePrimaryStage) {
+	public void initController(final Stage thePrimaryStage) {
 
 		primaryStage = thePrimaryStage;
 		
@@ -463,7 +462,7 @@ public class AppLayoutController {
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
-	private void setAppTitle() {
+	public void setAppTitle() {
 		
 		primaryStage.setTitle(String.format("Das Gebu-Programm%s%s",
 				Prefs.get(PrefKey.FILE).isEmpty() ? "" : String.format(" - %s", Prefs.get(PrefKey.FILE)),
@@ -575,6 +574,7 @@ public class AppLayoutController {
 
         // Give the controller access to the app.
         EventDisplayController ctlEventDisplay = pneLoad.getValue().getController();
+        ctlEventDisplay.initController(this);
         ctlEventDisplay.displayEvents(LocalDate.now());
 
         isDisplay.setValue(true);
@@ -600,6 +600,7 @@ public class AppLayoutController {
 
         // Give the controller access to the app.
         ctlEventOverview = pneLoad.getValue().getController();
+        ctlEventOverview.initController(this);
         ctlEventOverview.setTableItems();
 
         isDisplay.setValue(false);
@@ -650,28 +651,10 @@ public class AppLayoutController {
 	 * @since 6.0.0
 	 */
 	@FXML
-	private void handleProgramExit() {
+	public void handleProgramExit() {
 		if (checkModified()) {
 			Platform.exit();
 		}
-	}
-
-	/**
-	 * Opens edit dialog for new event.
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-	 */
-	@FXML
-	private void handleNewEvent() {
-
-		EventModel newEvent = new EventModel();
-		if (showEventEditDialog(newEvent)) {
-			((ContentModel) AppModel.getData().getContent()).getObservableEvents().add(newEvent);
-			AppModel.setModified(true);
-			setAppTitle();
-		}
-
 	}
 
 	/**
@@ -829,18 +812,6 @@ public class AppLayoutController {
 
     }
 
-//	/**
-//     * Returns the primary stage.
-//     *
-//     * @return primary stage
-//	 *
-//	 * @version 6.0.0
-//	 * @since 6.0.0
-//     */
-//    public Stage getPrimaryStage() {
-//        return primaryStage;
-//    }
-
 	/**
 	 * Check if data is modified, show corresponding dialog, save data if needed.
 	 *
@@ -879,43 +850,6 @@ public class AppLayoutController {
 		}
 
 		return doContinue;
-
-	}
-
-	/**
-	 * Opens the event edit dialog.
-	 *
-	 * If the user clicks OK, the changes are saved into the provided event object and true is returned.
-	 *
-	 * @param theEvent the event to be edited
-	 * @return true if the user clicked OK, false otherwise.
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-	 */
-	private boolean showEventEditDialog(Event theEvent) {
-
-    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("EventEditDialog");
-    	AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
-
-        // Create the dialog Stage.
-        Stage dialogStage = new Stage();
-        dialogStage.initModality(Modality.WINDOW_MODAL);
-        dialogStage.initOwner(primaryStage);
-        dialogStage.setTitle("Ereignis editieren");
-
-        Scene scene = new Scene(editDialog);
-        dialogStage.setScene(scene);
-
-        // Set the event into the controller.
-        EventEditDialogController controller = pneLoad.getValue().getController();
-        controller.setDialogStage(dialogStage);
-        controller.setEvent(theEvent);
-
-        // Show the dialog and wait until the user closes it
-        dialogStage.showAndWait();
-
-        return controller.isOkClicked();
 
 	}
 
@@ -961,6 +895,18 @@ public class AppLayoutController {
 		setAppTitle();
 
     }
+	
+	/**
+	 * Returns primary stage.
+	 * 
+	 * @return primary stage
+	 * 
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public Stage getPrimaryStage() {
+		return primaryStage;
+	}
 
 }
 

@@ -1,9 +1,9 @@
 package de.edgesoft.gebu.controller;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
-import de.edgesoft.gebu.Gebu;
 import de.edgesoft.gebu.jaxb.Event;
 import de.edgesoft.gebu.model.AppModel;
 import de.edgesoft.gebu.model.ContentModel;
@@ -14,6 +14,8 @@ import de.edgesoft.gebu.utils.Prefs;
 import de.edgesoft.gebu.utils.Resources;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -24,6 +26,10 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * Controller for event overview scene.
@@ -172,6 +178,15 @@ public class EventEditorController {
 
 
 	/**
+	 * Main app controller.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	private AppLayoutController appController = null;
+	
+
+	/**
 	 * Initializes the controller class.
 	 *
 	 * This method is automatically called after the fxml file has been loaded.
@@ -238,6 +253,20 @@ public class EventEditorController {
 	}
 
 	/**
+	 * Initializes the controller with things, that cannot be done during {@link #initialize()}.
+	 * 
+	 * @param theAppController app controller
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public void initController(final AppLayoutController theAppController) {
+
+		appController = theAppController;
+		
+	}
+		
+	/**
 	 * Sets events as table items.
 	 *
 	 * @version 6.0.0
@@ -301,10 +330,10 @@ public class EventEditorController {
 	private void handleNewEvent() {
 
 		EventModel newEvent = new EventModel();
-		if (appGebu.showEventEditDialog(newEvent)) {
-			((ContentModel) appGebu.getData().getContent()).getObservableEvents().add(newEvent);
-			appGebu.setModified(true);
-			appGebu.setAppTitle();
+		if (showEventEditDialog(newEvent)) {
+			((ContentModel) AppModel.getData().getContent()).getObservableEvents().add(newEvent);
+			AppModel.setModified(true);
+			appController.setAppTitle();
 		}
 
 	}
@@ -322,10 +351,10 @@ public class EventEditorController {
 
 	    if (editEvent != null) {
 
-			if (appGebu.showEventEditDialog(editEvent)) {
+			if (showEventEditDialog(editEvent)) {
 				showEventDetails(editEvent);
-				appGebu.setModified(true);
-				appGebu.setAppTitle();
+				AppModel.setModified(true);
+				appController.setAppTitle();
 			}
 
 	    }
@@ -345,21 +374,57 @@ public class EventEditorController {
 
 	    if (selectedIndex >= 0) {
 
-	    	Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION);
-	        alert.initOwner(appGebu.getPrimaryStage());
-
-	        alert.setTitle("Bestätigung Ereignis löschen");
-	        alert.setHeaderText("Soll das ausgewählte Ereignis gelöscht werden?");
+	    	Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, appController.getPrimaryStage(),
+	    			"Bestätigung Ereignis löschen",
+	    			"Soll das ausgewählte Ereignis gelöscht werden?",
+	    			null);
 
 	        alert.showAndWait()
 	        		.filter(response -> response == ButtonType.OK)
 	        		.ifPresent(response -> {
 	        			tblEvents.getItems().remove(selectedIndex);
-	        			appGebu.setModified(true);
-	        			appGebu.setAppTitle();
+	        			AppModel.setModified(true);
+	        			appController.setAppTitle();
 	        			});
 
 	    }
+
+	}
+
+	/**
+	 * Opens the event edit dialog.
+	 *
+	 * If the user clicks OK, the changes are saved into the provided event object and true is returned.
+	 *
+	 * @param theEvent the event to be edited
+	 * @return true if the user clicked OK, false otherwise.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	private boolean showEventEditDialog(Event theEvent) {
+
+    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("EventEditDialog");
+    	AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
+
+        // Create the dialog Stage.
+        Stage dialogStage = new Stage();
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.initOwner(appController.getPrimaryStage());
+        dialogStage.setTitle("Ereignis editieren");
+
+        Scene scene = new Scene(editDialog);
+        dialogStage.setScene(scene);
+
+        // Set the event into the controller.
+        EventEditDialogController controller = pneLoad.getValue().getController();
+        controller.setDialogStage(dialogStage);
+        controller.setEvent(theEvent);
+
+        // Show the dialog and wait until the user closes it
+        dialogStage.showAndWait();
+
+        return controller.isOkClicked();
 
 	}
 
