@@ -30,6 +30,8 @@ package de.edgesoft.gebu.utils;
  * @since 6.0.0
  */
 public enum PrefKey {
+	
+	DISPLAY_CATEGORIES,
 
 	FILE,
 
@@ -54,6 +56,8 @@ public enum PrefKey {
 	STAGE_WIDTH,
 	STAGE_X,
 	STAGE_Y,
+	
+	TITLE_FULLPATH,
 	;
 
     private final String value;

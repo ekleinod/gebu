@@ -89,7 +89,7 @@ public class EventDisplayController {
 		StringBuilder sbEvents = new StringBuilder();
 
 		if (AppModel.getData().getContent().getEvent().isEmpty()) {
-			sbEvents.append(String.format("<tr><td colspan=\"4\">%s</td></tr>", "Es wurden noch keine Ereignisse eingegeben."));
+			sbEvents.append(String.format("<tr><td>%s</td></tr>", "Es wurden noch keine Ereignisse eingegeben."));
 		} else {
 
 			String sTemp = getTableLines(
@@ -122,7 +122,7 @@ public class EventDisplayController {
 			}
 
 			if (sbEvents.length() == 0) {
-				sbEvents.append(String.format("<tr><td colspan=\"4\">%s</td></tr>",
+				sbEvents.append(String.format("<tr><td>%s</td></tr>",
 						MessageFormat.format("Im Intervall von &pm; {0} Tagen liegen keine Ereignisse.", Integer.parseInt(Prefs.get(PrefKey.INTERVAL)))));
 			}
 		}
@@ -155,6 +155,11 @@ public class EventDisplayController {
 					sbReturn.append(String.format("<td>(%s)</td>", theDate.getYear() - dteEvent.getYear()));
 					sbReturn.append(String.format("<td>%s</td>", event.getEventtype().getValue()));
 					sbReturn.append(String.format("<td>%s</td>", event.getTitle().getValue()));
+					
+					if (Boolean.parseBoolean(Prefs.get(PrefKey.DISPLAY_CATEGORIES))) {
+						sbReturn.append(String.format("<td>%s</td>", event.getCategory().getValue()));
+					}
+					
 					sbReturn.append("</tr>");
 				});
 

@@ -139,6 +139,24 @@ public class PreferencesEditDialogController {
 	private ColorPicker pckFutureBackground;
 
 	/**
+	 * Checkbox: full path in title.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private CheckBox chkTitleFullpath;
+
+	/**
+	 * Checkbox: display categories.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private CheckBox chkDisplayCategories;
+
+	/**
 	 * VBox for categories.
 	 *
 	 * @version 6.0.0
@@ -234,13 +252,6 @@ public class PreferencesEditDialogController {
 		pckFutureForeground.setValue(Color.web(Prefs.get(PrefKey.FUTURE_FOREGROUND)));
 		pckFutureBackground.setValue(Color.web(Prefs.get(PrefKey.FUTURE_BACKGROUND)));
 
-		// icons
-		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/actions/dialog-ok-16.png")));
-		btnCancel.setGraphic(new ImageView(Resources.loadImage("icons/actions/dialog-cancel-16.png")));
-		
-		tabDisable.setGraphic(new ImageView(Resources.loadImage("icons/actions/action-unavailable.png")));
-		tabDisplay.setGraphic(new ImageView(Resources.loadImage("icons/actions/view-calendar-birthday.png")));
-		
         ((ContentModel) AppModel.getData().getContent()).getCategories().stream()
 				.forEach(category -> {
 					CheckBox chkTemp = new CheckBox(category);
@@ -253,6 +264,17 @@ public class PreferencesEditDialogController {
 					chkTemp.setSelected(Boolean.parseBoolean(Prefs.get(String.format("disable.eventtype.%s", eventtypes))));
 					boxEventtypes.getChildren().add(chkTemp);
 				});
+        
+        chkTitleFullpath.setSelected(Boolean.parseBoolean(Prefs.get(PrefKey.TITLE_FULLPATH)));
+        chkDisplayCategories.setSelected(Boolean.parseBoolean(Prefs.get(PrefKey.DISPLAY_CATEGORIES)));
+        
+		// icons
+		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/actions/dialog-ok-16.png")));
+		btnCancel.setGraphic(new ImageView(Resources.loadImage("icons/actions/dialog-cancel-16.png")));
+		
+		tabDisable.setGraphic(new ImageView(Resources.loadImage("icons/actions/action-unavailable.png")));
+		tabDisplay.setGraphic(new ImageView(Resources.loadImage("icons/actions/view-calendar-birthday.png")));
+		
     }
 
 	/**
@@ -321,6 +343,9 @@ public class PreferencesEditDialogController {
 							Prefs.remove(String.format("disable.eventtype.%s", ((CheckBox) checkbox).getText()));
 						}
 					});
+        	
+        	Prefs.put(PrefKey.TITLE_FULLPATH, Boolean.toString(chkTitleFullpath.isSelected()));
+        	Prefs.put(PrefKey.DISPLAY_CATEGORIES, Boolean.toString(chkDisplayCategories.isSelected()));
 	
             okClicked = true;
             dialogStage.close();

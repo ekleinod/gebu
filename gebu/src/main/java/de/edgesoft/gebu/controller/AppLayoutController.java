@@ -464,9 +464,15 @@ public class AppLayoutController {
 	 * @since 6.0.0
 	 */
 	public void setAppTitle() {
+
+		String sFile = Prefs.get(PrefKey.FILE).isEmpty() ? 
+				"" : 
+				String.format(" - %s", Boolean.parseBoolean(Prefs.get(PrefKey.TITLE_FULLPATH)) ?
+						Paths.get(Prefs.get(PrefKey.FILE)).toAbsolutePath().toString() :
+						Paths.get(Prefs.get(PrefKey.FILE)).getFileName().toString());
 		
 		primaryStage.setTitle(String.format("Das Gebu-Programm%s%s",
-				Prefs.get(PrefKey.FILE).isEmpty() ? "" : String.format(" - %s", Paths.get(Prefs.get(PrefKey.FILE)).toAbsolutePath().toString()),
+				sFile,
 				AppModel.isModified() ? " *" : ""
 				));
 		
@@ -642,6 +648,7 @@ public class AppLayoutController {
         if (isDisplay.getValue() && controller.isOkClicked()) {
         	handleProgramDisplay();
         }
+        setAppTitle();
 
 	}
 
