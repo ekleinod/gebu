@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+Create gebu installer.
+
+## Legal stuff
+
+Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+
+This file is part of "Das Gebu-Programm".
+
+"Das Gebu-Programm" is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+"Das Gebu-Programm" is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with "Das Gebu-Programm".  If not, see <http://www.gnu.org/licenses/>.
+
+@author Ekkart Kleinod
+@version 6.0.0
+@since 6.0.0
+
+-->
+
+<project name="gebu" default="help" basedir=".">
+
+	<property name="file:log" value="build.log" />
+	<property name="file:nsi" value="${ant.project.name}.nsi" />
+
+	<target name="installer" depends="clearLog" description="Create installer.">
+
+		<exec executable="makensis" output="${file:log}" append="true" failonerror="true">
+			<arg line="${file:nsi}" />
+		</exec>
+
+		<echo message="Created installer correctly, log file: ${file:log})." />
+	</target>
+
+	<target name="help" description="Shows help text.">
+		<echo>Create ${ant.project.name} installer</echo>
+		<echo />
+		<echo>You can use the following targets:</echo>
+
+		<!-- show all available targets -->
+		<java classname="org.apache.tools.ant.Main">
+			<arg value="-projecthelp" />
+			<arg value="-buildfile" />
+			<arg value="${ant.file}" />
+		</java>
+	</target>
+
+	<target name="clearLog" description="Delete log file.">
+		<echo message="" file="${file:log}" />
+		<delete>
+			<fileset dir="." includes="**/*.log" />
+		</delete>
+	</target>
+
+</project>
+
+<!-- EOF -->
