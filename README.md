@@ -14,12 +14,12 @@ The interval is changeable.
 Das Programm wird mit einem Installer ausgeliefert und benötigt Java zum Laufen.
 Ohne Installer ist die Datei `gebu.jar` mit Java auszuführen:
 
-	`java -jar gebu.jar`
+	java -jar gebu.jar
 
 The program comes with an installer and needs Java in order to function.
 Without installer just call `gebu.jar`with Java:
 
-	`java -jar gebu.jar`
+	java -jar gebu.jar
 
 ## Libraries
 
@@ -93,6 +93,7 @@ Für eine neue Version:
 - `gebu.jar` im Hauptverzeichnis neu verlinken
 - Versionsinformation in `README.MD` ergänzen
 - jar testen
+- *target*-Ordner leeren, Projekt in *eclipse* neu erzeugen
 
 ## To Do
 
