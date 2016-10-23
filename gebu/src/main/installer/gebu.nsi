@@ -114,7 +114,7 @@ Section -jar SEC0000
 #		!insertmacro MUI_STARTMENU_WRITE_BEGIN Application
 #				CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
 #				CreateShortCut "$SMPROGRAMS\$StartMenuFolder\${LONGNAME}.lnk" "$INSTDIR\gebu.jar"
-				CreateShortCut "$SMPROGRAMS\Autostart\${LONGNAME}.lnk" "$INSTDIR\gebu.jar"
+				CreateShortCut "$SMSTARTUP\${LONGNAME}.lnk" "$INSTDIR\gebu.jar"
 #		!insertmacro MUI_STARTMENU_WRITE_END
 
 SectionEnd
