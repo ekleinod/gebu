@@ -23,7 +23,7 @@
 # @version 6.0.0
 # @since 6.0.0
 #
-# use encoding: UTF-8
+# use encoding: ISO-8859-15
 
 Name Gebu
 
@@ -69,12 +69,12 @@ Sind Sie sicher, dass Sie die Installation abbrechen wollen?"
 # Welcome
 !define MUI_WELCOMEPAGE_TITLE "Installation $\"${LONGNAME}$\" ${LONG_VERSION}"
 !define MUI_WELCOMEPAGE_TEXT "Willkommen bei der Installation von $\"${LONGNAME}$\".$\r$\n$\r$\n\
-Dieser Installer fÃ¼hrt Sie durch die Installation. \
-Sie kÃ¶nnen die Installation jederzeit abbrechen, indem Sie unten rechts auf $\"Abbrechen$\" klicken."
+Dieser Installer führt Sie durch die Installation. \
+Sie können die Installation jederzeit abbrechen, indem Sie unten rechts auf $\"Abbrechen$\" klicken."
 
 !define MUI_FINISHPAGE_TITLE "Installation $\"${LONGNAME}$\" ${LONG_VERSION}"
 !define MUI_FINISHPAGE_TEXT "Die Installation wurde erfolgreich abgeschlossen.$\r$\n$\r$\n\
-Sie kÃ¶nnen das Installationsprogramm beenden und danach $\"${LONGNAME}$\" starten."
+Sie können das Installationsprogramm beenden und danach $\"${LONGNAME}$\" starten."
 
 # Installer pages
 !insertmacro MUI_PAGE_WELCOME
