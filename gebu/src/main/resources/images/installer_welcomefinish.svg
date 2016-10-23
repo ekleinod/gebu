@@ -14,7 +14,7 @@
    height="314"
    id="svg2"
    sodipodi:version="0.32"
-   inkscape:version="0.91 r"
+   inkscape:version="0.91 r13725"
    sodipodi:docname="installer_welcomefinish.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
    version="1.0"
@@ -388,18 +388,18 @@
   </defs>
   <sodipodi:namedview
      id="base"
-     pagecolor="#aaaaaa"
+     pagecolor="#ffffff"
      bordercolor="#666666"
      borderopacity="1.0"
-     inkscape:pageopacity="0"
+     inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="2.388535"
-     inkscape:cx="82"
-     inkscape:cy="157"
+     inkscape:cx="19.827999"
+     inkscape:cy="156.16267"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
-     inkscape:window-width="1680"
-     inkscape:window-height="973"
+     inkscape:window-width="1920"
+     inkscape:window-height="1004"
      inkscape:window-x="0"
      inkscape:window-y="25"
      width="20px"
@@ -418,7 +418,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>

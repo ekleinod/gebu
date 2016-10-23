@@ -23,14 +23,14 @@
 # @version 6.0.0
 # @since 6.0.0
 #
-# use encoding: ISO-8859-15
+# use encoding: UTF-8
 
 Name Gebu
 
 RequestExecutionLevel user
 
 # General Symbol Definitions
-!define REGKEY "SOFTWARE\Gebu"
+!define REGKEY "Software\Gebu"
 !define VERSION 6.0.0
 !define LONG_VERSION ${VERSION} beta 2
 !define COMPANY "Ekkart Kleinod (edge-soft)"
@@ -42,9 +42,10 @@ RequestExecutionLevel user
 # MUI Symbol Definitions
 !define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\modern-install.ico"
 !define MUI_FINISHPAGE_NOAUTOCLOSE
-!define MUI_STARTMENUPAGE_REGISTRY_ROOT HKLM
+!define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKCU"
 !define MUI_STARTMENUPAGE_REGISTRY_KEY ${REGKEY}
-!define MUI_STARTMENUPAGE_DEFAULTFOLDER ${GEBU_FOLDER}
+!define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "Start Menu Folder"
+!define MUI_STARTMENUPAGE_DEFAULTFOLDER ${DIRNAME}
 
 # Included files
 !include Sections.nsh
@@ -62,23 +63,24 @@ Sind Sie sicher, dass Sie die Installation abbrechen wollen?"
 
 # Images
 !define MUI_HEADERIMAGE
-!define MUI_HEADERIMAGE_BITMAP "../resources/images/installer_header.png"
-!define MUI_WELCOMEFINISHPAGE_BITMAP "../resources/images/installer_welcomefinish.png"
+!define MUI_HEADERIMAGE_BITMAP "../resources/images/installer_header.bmp"
+!define MUI_WELCOMEFINISHPAGE_BITMAP "../resources/images/installer_welcomefinish.bmp"
 
 # Welcome
 !define MUI_WELCOMEPAGE_TITLE "Installation $\"${LONGNAME}$\" ${LONG_VERSION}"
 !define MUI_WELCOMEPAGE_TEXT "Willkommen bei der Installation von $\"${LONGNAME}$\".$\r$\n$\r$\n\
-Dieser Installer führt Sie durch die Installation. \
-Sie können die Installation jederzeit abbrechen, indem Sie unten rechts auf $\"Abbrechen$\" klicken."
+Dieser Installer fÃ¼hrt Sie durch die Installation. \
+Sie kÃ¶nnen die Installation jederzeit abbrechen, indem Sie unten rechts auf $\"Abbrechen$\" klicken."
 
 !define MUI_FINISHPAGE_TITLE "Installation $\"${LONGNAME}$\" ${LONG_VERSION}"
 !define MUI_FINISHPAGE_TEXT "Die Installation wurde erfolgreich abgeschlossen.$\r$\n$\r$\n\
-Sie können das Installationsprogramm beenden und danach $\"${LONGNAME}$\" starten."
+Sie kÃ¶nnen das Installationsprogramm beenden und danach $\"${LONGNAME}$\" starten."
 
 # Installer pages
 !insertmacro MUI_PAGE_WELCOME
-!define MUI_PAGE_CUSTOMFUNCTION_EXISTING CopyExisting
+!define MUI_PAGE_CUSTOMFUNCTION_LEAVE CopyExisting
 !insertmacro MUI_PAGE_DIRECTORY
+#!insertmacro MUI_PAGE_STARTMENU Application $StartMenuFolder
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
 
@@ -108,17 +110,20 @@ Section -jar SEC0000
 		SetOutPath $INSTDIR
 		File ../../../../gebu.jar
 		WriteRegStr HKLM "${REGKEY}\Components" jar 1
-SectionEnd
 
-Section -autostart SEC0001
-		CreateShortCut "$SMPROGRAMS\${LONGNAME}.lnk" "$INSTDIR\gebu.jar"
+#		!insertmacro MUI_STARTMENU_WRITE_BEGIN Application
+#				CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
+#				CreateShortCut "$SMPROGRAMS\$StartMenuFolder\${LONGNAME}.lnk" "$INSTDIR\gebu.jar"
+				CreateShortCut "$SMPROGRAMS\Autostart\${LONGNAME}.lnk" "$INSTDIR\gebu.jar"
+#		!insertmacro MUI_STARTMENU_WRITE_END
+
 SectionEnd
 
 # Installer functions
 Function .onInit
 		InitPluginsDir
 		Push $R1
-		File /oname=$PLUGINSDIR\spltmp.bmp "../resources/images/splash.png"
+		File /oname=$PLUGINSDIR\spltmp.bmp "../resources/images/installer_splash.bmp"
 		advsplash::show 1500 600 400 -1 $PLUGINSDIR\spltmp
 		Pop $R1
 		Pop $R1
