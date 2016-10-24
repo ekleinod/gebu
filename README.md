@@ -60,6 +60,22 @@ Additionally, the following branches my occur:
 
 ## Fertige Versionen/Released Versions
 
+### Version 6.0.0 beta 3
+
+- neue Funktionen
+	- Installer
+	- Dateierweiterung ".gebu" statt ".esx"
+	- Links in Über-Text anklickbar
+	- Dateiname in Titel kurz oder kompletter Pfad
+	- Anzeige der Kategorie in Ausgabe wählbar
+- Fehlerbehebung
+	- Eingabe in Datumfeld ohne führende Nullen möglich
+	- stabilere Tabellenansicht, auch nach Speichern und Änderungen
+	- Ereignisanzeige zeigte Ereignisse nicht an
+- Sonstiges
+	- neues Logo
+	- MVC-Ansatz durchgezogen
+
 ### Version 6.0.0 beta 2
 
 - neue Funktionen
@@ -95,12 +111,6 @@ Für eine neue Version:
 - jar testen
 - *target*-Ordner leeren, Projekt in *eclipse* neu erzeugen
 - Installer anpassen, erzeugen (und testen)
-
-## To Do
-
-- ESC function
-- resize statistics or hide border
-- export statistics as graphics
 
 ## Copyright
 
