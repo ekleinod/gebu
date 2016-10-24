@@ -39,7 +39,7 @@
                   <Font name="System Bold" size="11.0" />
                </font></Label>
             <Label mnemonicParsing="true" text="_Kategorie" GridPane.rowIndex="3" />
-            <DatePicker fx:id="pickDate" promptText="eingeben oder auswählen" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
+            <DatePicker fx:id="pickDate" promptText="dd.mm.jjjj" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
             <TextField fx:id="txtTitle" promptText="Titel eingeben" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <ComboBox fx:id="cboEventtype" editable="true" prefWidth="150.0" promptText="eingeben oder auswählen" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <ComboBox fx:id="cboCategory" editable="true" prefWidth="150.0" promptText="eingeben oder auswählen" GridPane.columnIndex="1" GridPane.rowIndex="3" />
