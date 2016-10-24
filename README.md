@@ -94,6 +94,7 @@ Für eine neue Version:
 - Versionsinformation in `README.MD` ergänzen
 - jar testen
 - *target*-Ordner leeren, Projekt in *eclipse* neu erzeugen
+- Installer anpassen, erzeugen (und testen)
 
 ## To Do
 
