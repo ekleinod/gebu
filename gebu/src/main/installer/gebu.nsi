@@ -40,7 +40,7 @@ RequestExecutionLevel user
 !define INSTALLNAME "..\..\..\..\gebu_install.exe"
 
 # MUI Symbol Definitions
-!define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\modern-install.ico"
+!define MUI_ICON "..\resources\images\installer_icon.ico"
 !define MUI_FINISHPAGE_NOAUTOCLOSE
 !define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKLM" # store in registry under HKEY_LOCAL_MACHINE
 !define MUI_STARTMENUPAGE_REGISTRY_KEY ${REGKEY}
@@ -78,6 +78,7 @@ Sie können das Installationsprogramm beenden und danach $\"${LONGNAME}$\" starte
 
 # Installer pages
 !insertmacro MUI_PAGE_WELCOME
+!insertmacro MUI_PAGE_COMPONENTS
 !define MUI_PAGE_CUSTOMFUNCTION_LEAVE CopyExisting
 !insertmacro MUI_PAGE_DIRECTORY
 #!insertmacro MUI_PAGE_STARTMENU Application $StartMenuFolder
@@ -105,19 +106,30 @@ InstallDirRegKey HKLM "${REGKEY}" Path
 ShowUninstDetails show
 
 # Installer sections
-Section -jar SEC0000
-		SetOverwrite on
-		SetOutPath $INSTDIR
-		File ..\..\..\..\gebu.jar
-		WriteRegStr HKLM "${REGKEY}\Components" jar 1
-
-#		!insertmacro MUI_STARTMENU_WRITE_BEGIN Application
-#				CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
-#				CreateShortCut "$SMPROGRAMS\$StartMenuFolder\${LONGNAME}.lnk" "$INSTDIR\gebu.jar"
-				CreateShortCut "$SMSTARTUP\${LONGNAME}.lnk" "$INSTDIR\gebu.jar"
-#		!insertmacro MUI_STARTMENU_WRITE_END
-
+Section "${LONGNAME}" SEC_JAR
+	SectionIn RO # required
+	SetOverwrite on
+	SetOutPath $INSTDIR
+	File ..\..\..\..\gebu.jar
+	WriteRegStr HKLM "${REGKEY}\Components" jar 1
 SectionEnd
+
+Section "Startmenü-Eintrag" SEC_SM
+	SetOverwrite on
+	CreateShortCut "$SMPROGRAMS\${LONGNAME}\${LONGNAME}.lnk" "$INSTDIR\gebu.jar"
+SectionEnd
+
+Section "Autostart-Eintrag" SEC_AS
+		SetOverwrite on
+		CreateShortCut "$SMSTARTUP\${LONGNAME}.lnk" "$INSTDIR\gebu.jar"
+SectionEnd
+
+# Component descriptions
+!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
+	!insertmacro MUI_DESCRIPTION_TEXT ${SEC_JAR} "Die Programmdateien des Gebu-Programms."
+	!insertmacro MUI_DESCRIPTION_TEXT ${SEC_SM} "Der Eintrag im Startmenü sorgt dafür, dass Sie das Gebu-Programm bequem von Hand aus dem Startmenü starten können."
+	!insertmacro MUI_DESCRIPTION_TEXT ${SEC_AS} "Dieser Eintrag sorgt dafür, dass das Gebu-Programm bei jedem Rechnerstart automatisch ausgeführt wird."
+!insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 # Installer functions
 Function .onInit
@@ -131,7 +143,7 @@ FunctionEnd
 
 Function CopyExisting
 		IfFileExists "$INSTDIR\gebu.jar" 0 +4
-			MessageBox MB_YESNO "Das Gebu-Programm ist bereits im Installatiosnverzeichnis vorhanden. Soll es überschrieben werden? Bei $\"Nein$\" kann ein neues Verzeichns ausgesucht werden." IDYES continue
+			MessageBox MB_OKCANCEL|MB_ICONQUESTION "Das Gebu-Programm ist bereits im Installationsverzeichnis vorhanden. Soll es überschrieben werden?$\r$\n$\r$\nBei $\"Abbrechen$\" kann ein neues Verzeichns ausgesucht werden." IDOK continue
 			Abort
 		continue:
 FunctionEnd
