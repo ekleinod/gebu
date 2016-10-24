@@ -37,14 +37,14 @@ RequestExecutionLevel user
 !define URL http://www.edgesoft.de/
 !define LONGNAME "Das Gebu-Programm"
 !define DIRNAME "gebu"
-!define INSTALLNAME "../../../../gebu_install.exe"
+!define INSTALLNAME "..\..\..\..\gebu_install.exe"
 
 # MUI Symbol Definitions
 !define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\modern-install.ico"
 !define MUI_FINISHPAGE_NOAUTOCLOSE
-!define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKCU"
+!define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKLM" # store in registry under HKEY_LOCAL_MACHINE
 !define MUI_STARTMENUPAGE_REGISTRY_KEY ${REGKEY}
-!define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "Start Menu Folder"
+!define MUI_STARTMENUPAGE_REGISTRY_VALUENAME ${DIRNAME}
 !define MUI_STARTMENUPAGE_DEFAULTFOLDER ${DIRNAME}
 
 # Included files
@@ -63,8 +63,8 @@ Sind Sie sicher, dass Sie die Installation abbrechen wollen?"
 
 # Images
 !define MUI_HEADERIMAGE
-!define MUI_HEADERIMAGE_BITMAP "../resources/images/installer_header.bmp"
-!define MUI_WELCOMEFINISHPAGE_BITMAP "../resources/images/installer_welcomefinish.bmp"
+!define MUI_HEADERIMAGE_BITMAP "..\resources\images\installer_header.bmp"
+!define MUI_WELCOMEFINISHPAGE_BITMAP "..\resources\images\installer_welcomefinish.bmp"
 
 # Welcome
 !define MUI_WELCOMEPAGE_TITLE "Installation $\"${LONGNAME}$\" ${LONG_VERSION}"
@@ -108,7 +108,7 @@ ShowUninstDetails show
 Section -jar SEC0000
 		SetOverwrite on
 		SetOutPath $INSTDIR
-		File ../../../../gebu.jar
+		File ..\..\..\..\gebu.jar
 		WriteRegStr HKLM "${REGKEY}\Components" jar 1
 
 #		!insertmacro MUI_STARTMENU_WRITE_BEGIN Application
@@ -123,15 +123,17 @@ SectionEnd
 Function .onInit
 		InitPluginsDir
 		Push $R1
-		File /oname=$PLUGINSDIR\spltmp.bmp "../resources/images/installer_splash.bmp"
+		File /oname=$PLUGINSDIR\spltmp.bmp "..\resources\images\installer_splash.bmp"
 		advsplash::show 1500 600 400 -1 $PLUGINSDIR\spltmp
 		Pop $R1
 		Pop $R1
 FunctionEnd
 
 Function CopyExisting
-		IfFileExists "$INSTDIR\gebu.jar" 0 +2
-			CopyFiles "gebu.jar" "gebu.orig.jar"
+		IfFileExists "$INSTDIR\gebu.jar" 0 +4
+			MessageBox MB_YESNO "Das Gebu-Programm ist bereits im Installatiosnverzeichnis vorhanden. Soll es überschrieben werden? Bei $\"Nein$\" kann ein neues Verzeichns ausgesucht werden." IDYES continue
+			Abort
+		continue:
 FunctionEnd
 
 # EOF
