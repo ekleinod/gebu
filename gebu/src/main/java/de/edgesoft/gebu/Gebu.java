@@ -68,7 +68,7 @@ public class Gebu extends Application {
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
-	public static final Version VERSION = new VersionExt("6.0.0 beta 2");
+	public static final Version VERSION = new VersionExt("6.0.0 beta 3");
 
 	/** 
 	 * Host services delegate.

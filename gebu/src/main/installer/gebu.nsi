@@ -32,7 +32,7 @@ RequestExecutionLevel user
 # General Symbol Definitions
 !define REGKEY "Software\Gebu"
 !define VERSION 6.0.0
-!define LONG_VERSION ${VERSION} beta 2
+!define LONG_VERSION "${VERSION} beta 3"
 !define COMPANY "Ekkart Kleinod (edge-soft)"
 !define URL http://www.edgesoft.de/
 !define LONGNAME "Das Gebu-Programm"
