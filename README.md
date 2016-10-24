@@ -14,12 +14,12 @@ The interval is changeable.
 Das Programm wird mit einem Installer ausgeliefert und benötigt Java zum Laufen.
 Ohne Installer ist die Datei `gebu.jar` mit Java auszuführen:
 
-	`java -jar gebu.jar`
+	java -jar gebu.jar
 
 The program comes with an installer and needs Java in order to function.
 Without installer just call `gebu.jar`with Java:
 
-	`java -jar gebu.jar`
+	java -jar gebu.jar
 
 ## Libraries
 
@@ -60,6 +60,22 @@ Additionally, the following branches my occur:
 
 ## Fertige Versionen/Released Versions
 
+### Version 6.0.0 beta 3
+
+- neue Funktionen
+	- Installer
+	- Dateierweiterung ".gebu" statt ".esx"
+	- Links in Über-Text anklickbar
+	- Dateiname in Titel kurz oder kompletter Pfad
+	- Anzeige der Kategorie in Ausgabe wählbar
+- Fehlerbehebung
+	- Eingabe in Datumfeld ohne führende Nullen möglich
+	- stabilere Tabellenansicht, auch nach Speichern und Änderungen
+	- Ereignisanzeige zeigte Ereignisse nicht an
+- Sonstiges
+	- neues Logo
+	- MVC-Ansatz durchgezogen
+
 ### Version 6.0.0 beta 2
 
 - neue Funktionen
@@ -93,12 +109,8 @@ Für eine neue Version:
 - `gebu.jar` im Hauptverzeichnis neu verlinken
 - Versionsinformation in `README.MD` ergänzen
 - jar testen
-
-## To Do
-
-- ESC function
-- resize statistics or hide border
-- export statistics as graphics
+- *target*-Ordner leeren, Projekt in *eclipse* neu erzeugen
+- Installer anpassen, erzeugen (und testen)
 
 ## Copyright
 
