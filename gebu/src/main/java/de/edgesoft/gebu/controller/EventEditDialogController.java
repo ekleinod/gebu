@@ -165,7 +165,11 @@ public class EventEditDialogController {
 
 			@Override
 			public LocalDate fromString(String string) {
-				return DateTimeUtils.parseDate(string);
+				String sPattern = DateTimeUtils.DATE_PATTERN;
+				DateTimeUtils.setDatePattern("d.M.yyyy");
+				LocalDate dteParsed = DateTimeUtils.parseDate(string);
+				DateTimeUtils.setDatePattern(sPattern);
+				return dteParsed;
 			}
 		});
 
