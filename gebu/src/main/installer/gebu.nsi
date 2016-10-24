@@ -110,18 +110,20 @@ Section "${LONGNAME}" SEC_JAR
 	SectionIn RO # required
 	SetOverwrite on
 	SetOutPath $INSTDIR
-	File ..\..\..\..\gebu.jar
+	File "..\..\..\..\gebu.jar"
+	File "/oname=gebu.ico" "..\resources\images\installer_icon.ico"
 	WriteRegStr HKLM "${REGKEY}\Components" jar 1
 SectionEnd
 
 Section "Startmenü-Eintrag" SEC_SM
 	SetOverwrite on
-	CreateShortCut "$SMPROGRAMS\${LONGNAME}\${LONGNAME}.lnk" "$INSTDIR\gebu.jar"
+	CreateDirectory "$SMPROGRAMS\${LONGNAME}"
+	CreateShortCut "$SMPROGRAMS\${LONGNAME}\${LONGNAME}.lnk" "$INSTDIR\gebu.jar" "" "$INSTDIR\gebu.ico"
 SectionEnd
 
 Section "Autostart-Eintrag" SEC_AS
-		SetOverwrite on
-		CreateShortCut "$SMSTARTUP\${LONGNAME}.lnk" "$INSTDIR\gebu.jar"
+	SetOverwrite on
+	CreateShortCut "$SMSTARTUP\${LONGNAME}.lnk" "$INSTDIR\gebu.jar" "" "$INSTDIR\gebu.ico"
 SectionEnd
 
 # Component descriptions
@@ -133,19 +135,19 @@ SectionEnd
 
 # Installer functions
 Function .onInit
-		InitPluginsDir
-		Push $R1
-		File /oname=$PLUGINSDIR\spltmp.bmp "..\resources\images\installer_splash.bmp"
-		advsplash::show 1500 600 400 -1 $PLUGINSDIR\spltmp
-		Pop $R1
-		Pop $R1
+	InitPluginsDir
+	Push $R1
+	File /oname=$PLUGINSDIR\spltmp.bmp "..\resources\images\installer_splash.bmp"
+	advsplash::show 1500 600 400 -1 $PLUGINSDIR\spltmp
+	Pop $R1
+	Pop $R1
 FunctionEnd
 
 Function CopyExisting
-		IfFileExists "$INSTDIR\gebu.jar" 0 +4
-			MessageBox MB_OKCANCEL|MB_ICONQUESTION "Das Gebu-Programm ist bereits im Installationsverzeichnis vorhanden. Soll es überschrieben werden?$\r$\n$\r$\nBei $\"Abbrechen$\" kann ein neues Verzeichns ausgesucht werden." IDOK continue
-			Abort
-		continue:
+	IfFileExists "$INSTDIR\gebu.jar" 0 +4
+		MessageBox MB_OKCANCEL|MB_ICONQUESTION "${LONGNAME} ist bereits im Installationsverzeichnis vorhanden. Soll es überschrieben werden?$\r$\n$\r$\nBei $\"Abbrechen$\" kann ein neues Verzeichnis ausgesucht werden." IDOK continue
+		Abort
+	continue:
 FunctionEnd
 
 # EOF
