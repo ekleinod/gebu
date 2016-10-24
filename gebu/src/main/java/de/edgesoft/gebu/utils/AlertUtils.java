@@ -1,6 +1,6 @@
 package de.edgesoft.gebu.utils;
 
-import de.edgesoft.gebu.Gebu;
+import de.edgesoft.gebu.controller.AppLayoutController;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
@@ -47,9 +47,13 @@ public class AlertUtils {
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
-	public static Alert createAlert(final AlertType theAlertType) {
+	public static Alert createAlert(final AlertType theAlertType, final Stage theOwner, 
+			final String theTitle, final String theHeader, final String theContent) {
 
         Alert alert = new Alert(theAlertType);
+
+        // set owning stage
+        alert.initOwner(theOwner);
 
         // display all text and resize to height
         alert.setResizable(true);
@@ -75,8 +79,13 @@ public class AlertUtils {
 		}
 
         // set window icon
-        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(Gebu.ICON);
+        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(AppLayoutController.ICON);
 
+        // set texts
+        alert.setTitle(theTitle);
+        alert.setHeaderText(theHeader);
+        alert.setContentText(theContent);
+        
         return alert;
 
     }

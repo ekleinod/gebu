@@ -1,11 +1,12 @@
-package de.edgesoft.gebu.view;
+package de.edgesoft.gebu.controller;
 
-import de.edgesoft.gebu.utils.Resources;
+import de.edgesoft.gebu.Gebu;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Hyperlink;
 
 /**
- * Controller for splash screen.
+ * Controller for about text.
  *
  * ## Legal stuff
  *
@@ -30,30 +31,36 @@ import javafx.scene.image.ImageView;
  * @version 6.0.0
  * @since 6.0.0
  */
-public class SplashScreenController {
+public class AboutTextController {
 
 	/**
-	 * Image view.
+	 * Email link.
+	 * 
+	 * @param theEvent action event
 	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
+	@SuppressWarnings("static-method")
 	@FXML
-	private ImageView imageView;
-
-	/**
-	 * Initializes the controller class.
-	 *
-	 * This method is automatically called after the fxml file has been loaded.
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-	 */
-	@FXML
-	private void initialize() {
-		imageView.setImage(Resources.loadImage("images/logo.png"));
+	private void handleEmailLinkAction(final ActionEvent theEvent) {
+		Gebu.hostServices.showDocument(String.format("mailto:%s", ((Hyperlink) theEvent.getTarget()).getText()));
 	}
-	
+
+	/**
+	 * Web link.
+	 * 
+	 * @param theEvent action event
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@SuppressWarnings("static-method")
+	@FXML
+	private void handleWebLinkAction(final ActionEvent theEvent) {
+		Gebu.hostServices.showDocument(((Hyperlink) theEvent.getTarget()).getText());
+	}
+
 }
 
 /* EOF */

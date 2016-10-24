@@ -1,10 +1,11 @@
+package de.edgesoft.gebu.controller;
 
-package de.edgesoft.gebu.utils;
+import de.edgesoft.gebu.utils.Resources;
+import javafx.fxml.FXML;
+import javafx.scene.image.ImageView;
 
 /**
- * Preference keys.
- *
- * For enums I use the coding style of jaxb, so there will be no inconsistencies.
+ * Controller for splash screen.
  *
  * ## Legal stuff
  *
@@ -29,56 +30,30 @@ package de.edgesoft.gebu.utils;
  * @version 6.0.0
  * @since 6.0.0
  */
-public enum PrefKey {
+public class SplashScreenController {
+
+	/**
+	 * Image view.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private ImageView imageView;
+
+	/**
+	 * Initializes the controller class.
+	 *
+	 * This method is automatically called after the fxml file has been loaded.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	@FXML
+	private void initialize() {
+		imageView.setImage(Resources.loadImage("images/splash.png"));
+	}
 	
-	DISPLAY_CATEGORIES,
-
-	FILE,
-
-	FUTURE_BACKGROUND,
-	FUTURE_FONTSIZE,
-	FUTURE_FOREGROUND,
-
-	INTERVAL,
-
-	PAST_BACKGROUND,
-	PAST_FONTSIZE,
-	PAST_FOREGROUND,
-
-	PATH,
-
-	PRESENT_BACKGROUND,
-	PRESENT_FONTSIZE,
-	PRESENT_FOREGROUND,
-
-	STAGE_HEIGHT,
-	STAGE_SPLIT,
-	STAGE_WIDTH,
-	STAGE_X,
-	STAGE_Y,
-	
-	TITLE_FULLPATH,
-	;
-
-    private final String value;
-
-    PrefKey() {
-        value = name().toLowerCase();
-    }
-
-    public String value() {
-        return value;
-    }
-
-    public static PrefKey fromValue(String v) {
-        for (PrefKey c: PrefKey.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
-
 }
 
 /* EOF */

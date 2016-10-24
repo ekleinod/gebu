@@ -68,6 +68,10 @@ public class Prefs {
 	public static String get(final PrefKey theKey) {
 
 		switch (theKey) {
+		
+			case DISPLAY_CATEGORIES:
+				return getPreferences().get(theKey.value(), "false");
+				
 			case FUTURE_BACKGROUND:
 				return getPreferences().get(theKey.value(), "#F0F8FF");
 			case FUTURE_FONTSIZE:
@@ -105,6 +109,9 @@ public class Prefs {
 			case STAGE_SPLIT:
 				return getPreferences().get(theKey.value(), ".6");
 
+			case TITLE_FULLPATH:
+				return getPreferences().get(theKey.value(), "false");
+				
 			default:
 				return getPreferences().get(theKey.value(), "");
 		}
