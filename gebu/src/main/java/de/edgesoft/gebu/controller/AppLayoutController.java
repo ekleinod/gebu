@@ -262,8 +262,8 @@ public class AppLayoutController {
 	 */
 	@FXML
 	private Button btnStatisticsData;
-	
-	
+
+
 	/**
 	 * Primary stage.
 	 *
@@ -301,7 +301,7 @@ public class AppLayoutController {
 	private void initialize() {
 
 		isDisplay = new SimpleBooleanProperty();
-		
+
 		// icons
 		mnuProgramDisplay.setGraphic(new ImageView(Resources.loadImage("icons/actions/view-calendar-birthday.png")));
 		mnuProgramEditor.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-edit.png")));
@@ -349,7 +349,7 @@ public class AppLayoutController {
 
 	/**
 	 * Initializes the controller with things, that cannot be done during {@link #initialize()}.
-	 * 
+	 *
 	 * @param thePrimaryStage primary stage
 	 *
 	 * @version 6.0.0
@@ -358,7 +358,7 @@ public class AppLayoutController {
 	public void initController(final Stage thePrimaryStage) {
 
 		primaryStage = thePrimaryStage;
-		
+
         // set icon
 		primaryStage.getIcons().add(ICON);
 
@@ -374,18 +374,32 @@ public class AppLayoutController {
     	primaryStage.setWidth(Double.parseDouble(Prefs.get(PrefKey.STAGE_WIDTH)));
     	primaryStage.setHeight(Double.parseDouble(Prefs.get(PrefKey.STAGE_HEIGHT)));
 
+    	primaryStage.setMaximized(Boolean.parseBoolean(Prefs.get(PrefKey.MAXIMIZED)));
+
 		// if changed, save bounds to preferences
 		primaryStage.xProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-			Prefs.put(PrefKey.STAGE_X, Double.toString(newValue.doubleValue()));
+			if (!primaryStage.isMaximized()) {
+				Prefs.put(PrefKey.STAGE_X, Double.toString(newValue.doubleValue()));
+			}
 		});
 		primaryStage.widthProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-			Prefs.put(PrefKey.STAGE_WIDTH, Double.toString(newValue.doubleValue()));
+			if (!primaryStage.isMaximized()) {
+				Prefs.put(PrefKey.STAGE_WIDTH, Double.toString(newValue.doubleValue()));
+			}
 		});
 		primaryStage.yProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-			Prefs.put(PrefKey.STAGE_Y, Double.toString(newValue.doubleValue()));
+			if (!primaryStage.isMaximized()) {
+				Prefs.put(PrefKey.STAGE_Y, Double.toString(newValue.doubleValue()));
+			}
 		});
 		primaryStage.heightProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-			Prefs.put(PrefKey.STAGE_HEIGHT, Double.toString(newValue.doubleValue()));
+			if (!primaryStage.isMaximized()) {
+				Prefs.put(PrefKey.STAGE_HEIGHT, Double.toString(newValue.doubleValue()));
+			}
+		});
+
+		primaryStage.maximizedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+			Prefs.put(PrefKey.MAXIMIZED, Boolean.toString(newValue.booleanValue()));
 		});
 
         // set handler for close requests (x-button of window)
@@ -393,8 +407,8 @@ public class AppLayoutController {
         	event.consume();
         	handleProgramExit();
         });
-		
-		// finally, we can initialize the data 
+
+		// finally, we can initialize the data
 		initData();
 
 		// show correct pane
@@ -444,14 +458,14 @@ public class AppLayoutController {
 
 		Content content = new ObjectFactory().createContent();
 		dtaGebu.setContent(content);
-		
+
 		AppModel.setData(dtaGebu);
 
 		AppModel.setFilename(null);
 		AppModel.setModified(false);
 		AppModel.setLegacy(false);
 		setAppTitle();
-		
+
 		if (ctlEventOverview != null) {
 			ctlEventOverview.setTableItems();
 		}
@@ -466,17 +480,17 @@ public class AppLayoutController {
 	 */
 	public void setAppTitle() {
 
-		String sFile = Prefs.get(PrefKey.FILE).isEmpty() ? 
-				"" : 
+		String sFile = Prefs.get(PrefKey.FILE).isEmpty() ?
+				"" :
 				String.format(" - %s", Boolean.parseBoolean(Prefs.get(PrefKey.TITLE_FULLPATH)) ?
 						Paths.get(Prefs.get(PrefKey.FILE)).toAbsolutePath().toString() :
 						Paths.get(Prefs.get(PrefKey.FILE)).getFileName().toString());
-		
+
 		primaryStage.setTitle(String.format("Das Gebu-Programm%s%s",
 				sFile,
 				AppModel.isModified() ? " *" : ""
 				));
-		
+
     }
 
 	/**
@@ -495,7 +509,7 @@ public class AppLayoutController {
 
 			AppModel.setData(dtaGebu);
 			AppModel.setLegacy(false);
-			
+
 			// legacy files?
 			if (dtaGebu.getInfo() == null) {
 				openLegacyData(theFilename);
@@ -527,7 +541,7 @@ public class AppLayoutController {
 	 * Loads and converts legacy data.
 	 *
 	 * @param theFilename filename
-	 * 
+	 *
 	 * @throws EdgeUtilsException if loading or converting went wrong
 	 *
 	 * @version 6.0.0
@@ -541,14 +555,14 @@ public class AppLayoutController {
 
 		dtaLegacy.getData().getEvent().stream().forEach(
 				event -> {
-					
+
 					Event newEvent = new ObjectFactory().createEvent();
-					
+
 					newEvent.setTitle(new SimpleStringProperty(event.getDescription()));
 					newEvent.setDate(new SimpleObjectProperty<>(event.getDate()));
 					newEvent.setEventtype(new SimpleStringProperty(event.getEventname()));
 					newEvent.setCategory(new SimpleStringProperty((event.getCategory().equals("Keine") ? null : event.getCategory())));
-					
+
 					AppModel.getData().getContent().getEvent().add(newEvent);
 					AppModel.setLegacy(true);
 
@@ -573,7 +587,7 @@ public class AppLayoutController {
 	 */
 	@FXML
 	private void handleProgramDisplay() {
-		
+
     	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("EventDisplay");
     	AnchorPane eventDisplay = (AnchorPane) pneLoad.getKey();
 
@@ -772,7 +786,7 @@ public class AppLayoutController {
         		MessageFormat.format("Das Gebu-Programm Version {0}", Gebu.VERSION),
         		null
         		);
-        
+
     	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("AboutText");
     	VBox aboutText = (VBox) pneLoad.getKey();
     	alert.getDialogPane().contentProperty().set(aboutText);
@@ -833,7 +847,7 @@ public class AppLayoutController {
 	    			"Nicht gespeicherte Änderungen",
 	    			"Sie haben Änderungen durchgeführt, die noch nicht gespeichert wurden.",
 	    			"Wollen Sie die geänderten Daten speichern, nicht speichern oder wollen Sie den gesamten Vorgang abbrechen?");
-	        
+
 	        alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
 
 	        Optional<ButtonType> result = alert.showAndWait();
@@ -874,7 +888,7 @@ public class AppLayoutController {
 			AppModel.getData().getInfo().setCreator(Gebu.class.getCanonicalName());
 
 			((ContentModel) AppModel.getData().getContent()).sortEvents();
-			
+
 			if (ctlEventOverview != null) {
 				ctlEventOverview.setTableItems();
 			}
@@ -898,12 +912,12 @@ public class AppLayoutController {
 		setAppTitle();
 
     }
-	
+
 	/**
 	 * Returns primary stage.
-	 * 
+	 *
 	 * @return primary stage
-	 * 
+	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
