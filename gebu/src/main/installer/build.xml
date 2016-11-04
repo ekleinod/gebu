@@ -34,9 +34,39 @@ along with "Das Gebu-Programm".  If not, see <http://www.gnu.org/licenses/>.
 	<property name="file:log" value="build.log" />
 	<property name="file:nsi" value="${ant.project.name}.nsi" />
 
+	<!-- your local path here -->
+	<property name="exe:nsis:windows" value="C:\localapps\NSIS\makensis.exe" />
+	<property name="exe:nsis:unix" value="makensis" />
+
+	<condition property="isWindows">
+		<os family="windows" />
+	</condition>
+	<condition property="isUnix">
+		<os family="unix" />
+	</condition>
+
 	<target name="installer" depends="clearLog" description="Create installer.">
 
-		<exec executable="makensis" output="${file:log}" append="true" failonerror="true">
+		<antcall target="nsis:windows" />
+		<antcall target="nsis:unix" />
+
+	</target>
+
+	<target name="nsis:windows" if="isWindows">
+		<antcall target="nsis">
+			<param name="exe:nsis" value="${exe:nsis:windows}" />
+		</antcall>
+	</target>
+
+	<target name="nsis:unix" if="isUnix">
+		<antcall target="nsis">
+			<param name="exe:nsis" value="${exe:nsis:unix}" />
+		</antcall>
+	</target>
+
+	<target name="nsis" depends="clearLog">
+
+		<exec executable="${exe:nsis}" output="${file:log}" append="true" failonerror="true">
 			<arg line="${file:nsi}" />
 		</exec>
 
