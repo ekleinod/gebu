@@ -165,11 +165,7 @@ public class EventEditDialogController {
 
 			@Override
 			public LocalDate fromString(String string) {
-				String sPattern = DateTimeUtils.DATE_PATTERN;
-				DateTimeUtils.setDatePattern("d.M.yyyy");
-				LocalDate dteParsed = DateTimeUtils.parseDate(string);
-				DateTimeUtils.setDatePattern(sPattern);
-				return dteParsed;
+				return DateTimeUtils.parseDate(string, "d.M.yyyy");
 			}
 		});
 
@@ -184,7 +180,7 @@ public class EventEditDialogController {
 		// icons
 		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/actions/dialog-ok-16.png")));
 		btnCancel.setGraphic(new ImageView(Resources.loadImage("icons/actions/dialog-cancel-16.png")));
-		
+
 	}
 
 	/**
