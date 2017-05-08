@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.AbstractMap;
 import java.util.Map;
+import java.util.Properties;
 
 import de.edgesoft.gebu.Gebu;
 import javafx.fxml.FXMLLoader;
@@ -38,6 +39,14 @@ import javafx.scene.layout.Pane;
  * @since 6.0.0
  */
 public class Resources {
+
+	/**
+	 * Project properties singleton.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	private static Properties prpProject = null;
 
 	/**
 	 * Loads image from resources.
@@ -102,6 +111,46 @@ public class Resources {
 			return "";
 		}
 
+    }
+
+	/**
+	 * Loads properties from resources.
+	 *
+	 * @param theFileName pane name
+	 * @return loaded file as properties
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public static Properties loadProperties(final String theFileName) {
+
+		Properties prpReturn = new Properties();
+
+		try {
+
+			prpReturn.load(Gebu.class.getClassLoader().getResourceAsStream(theFileName));
+
+		} catch (Exception e) {
+            Gebu.logger.catching(e);
+		}
+
+		return prpReturn;
+
+    }
+
+	/**
+	 * Loads project properties from resources.
+	 *
+	 * @return project properties
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public static Properties getProjectProperties() {
+		if (prpProject == null) {
+			prpProject = loadProperties("project.properties");
+		}
+		return prpProject;
     }
 
 	/**

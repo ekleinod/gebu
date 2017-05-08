@@ -450,8 +450,8 @@ public class AppLayoutController {
 
 		info.setCreated(LocalDateTime.now());
 		info.setModified(LocalDateTime.now());
-		info.setAppversion(Gebu.VERSION);
-		info.setDocversion(Gebu.VERSION);
+		info.setAppversion(Gebu.getVersion());
+		info.setDocversion(Gebu.getVersion());
 		info.setCreator(Gebu.class.getCanonicalName());
 
 		dtaGebu.setInfo(info);
@@ -783,7 +783,7 @@ public class AppLayoutController {
 
         Alert alert = AlertUtils.createAlert(AlertType.INFORMATION, primaryStage,
         		"Über \"Das Gebu-Programm\"",
-        		MessageFormat.format("Das Gebu-Programm Version {0}", Gebu.VERSION),
+        		MessageFormat.format("Das Gebu-Programm Version {0}", Gebu.getVersion()),
         		null
         		);
 
@@ -883,8 +883,8 @@ public class AppLayoutController {
 		try {
 
 			AppModel.getData().getInfo().setModified(LocalDateTime.now());
-			AppModel.getData().getInfo().setAppversion(Gebu.VERSION);
-			AppModel.getData().getInfo().setDocversion(Gebu.VERSION);
+			AppModel.getData().getInfo().setAppversion(Gebu.getVersion());
+			AppModel.getData().getInfo().setDocversion(Gebu.getVersion());
 			AppModel.getData().getInfo().setCreator(Gebu.class.getCanonicalName());
 
 			((ContentModel) AppModel.getData().getContent()).sortEvents();

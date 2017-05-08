@@ -54,25 +54,17 @@ import javafx.util.Duration;
  */
 public class Gebu extends Application {
 
-	/** 
-	 * Central logger for all classes. 
+	/**
+	 * Central logger for all classes.
 	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
 	public static final Logger logger = LogManager.getLogger(Gebu.class.getPackage().getName());
 
-	/** 
-	 * Program and doc version. 
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-	 */
-	public static final Version VERSION = new VersionExt("6.0.0 beta 3");
-
-	/** 
+	/**
 	 * Host services delegate.
-	 * 
+	 *
 	 * Needed for opening links in browser etc.
 	 *
 	 * @version 6.0.0
@@ -110,7 +102,7 @@ public class Gebu extends Application {
 		// load app layout and controller, then delegate control to controller
     	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("AppLayout");
         ((AppLayoutController) pneLoad.getValue().getController()).initController(primaryStage);
-        
+
         // host services
         hostServices = HostServicesFactory.getInstance(this);
 
@@ -166,6 +158,23 @@ public class Gebu extends Application {
 		stage.show();
 		new Thread(splashTask).start();
 
+	}
+
+	/**
+	 * Program and doc version.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public static Version getVersion() {
+		return new VersionExt(String.format("%s.%s.%s%s",
+				Resources.getProjectProperties().getProperty("version.major"),
+				Resources.getProjectProperties().getProperty("version.minor"),
+				Resources.getProjectProperties().getProperty("version.build"),
+				((Resources.getProjectProperties().getProperty("version.additional") == null) || Resources.getProjectProperties().getProperty("version.additional").isEmpty()) ?
+						"" :
+						String.format(" %s", Resources.getProjectProperties().getProperty("version.additional"))
+				));
 	}
 
 }
