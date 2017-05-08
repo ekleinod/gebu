@@ -1,16 +1,25 @@
 package de.edgesoft.gebu.controller;
 
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.text.MessageFormat;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
+import de.edgesoft.gebu.Gebu;
 import de.edgesoft.gebu.jaxb.Event;
 import de.edgesoft.gebu.model.AppModel;
 import de.edgesoft.gebu.model.ContentModel;
 import de.edgesoft.gebu.utils.PrefKey;
 import de.edgesoft.gebu.utils.Prefs;
 import de.edgesoft.gebu.utils.Resources;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -21,7 +30,7 @@ import javafx.scene.web.WebView;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of "Das Gebu-Programm".
  *
@@ -60,11 +69,11 @@ public class EventDisplayController {
 	 * @since 6.0.0
 	 */
 	private AppLayoutController appController = null;
-	
-	
+
+
 	/**
 	 * Initializes the controller with things, that cannot be done during {@link #initialize()}.
-	 * 
+	 *
 	 * @param theAppController app controller
 	 *
 	 * @version 6.0.0
@@ -73,9 +82,9 @@ public class EventDisplayController {
 	public void initController(final AppLayoutController theAppController) {
 
 		appController = theAppController;
-		
+
 	}
-		
+
 	/**
 	 * Displays events for given date.
 	 *
@@ -127,7 +136,21 @@ public class EventDisplayController {
 			}
 		}
 
-		dspEvents.getEngine().loadContent(Resources.loadWebView().replace("**content**", String.format("<table class=\"display\">%s</table>", sbEvents)));
+		try {
+
+			Map<String, String> mapContent = new HashMap<>();
+			mapContent.put("content", String.format("<table class=\"display\">%s</table>", sbEvents));
+
+			Template tplDisplay = new Template("display", new StringReader(Resources.loadWebView()), new Configuration(Configuration.VERSION_2_3_26));
+
+			try (StringWriter wrtContent = new StringWriter()) {
+				tplDisplay.process(mapContent, wrtContent);
+				dspEvents.getEngine().loadContent(wrtContent.toString());
+			}
+
+		} catch (IOException | TemplateException e) {
+            Gebu.logger.catching(e);
+		}
 
 	}
 
@@ -155,11 +178,11 @@ public class EventDisplayController {
 					sbReturn.append(String.format("<td>(%s)</td>", theDate.getYear() - dteEvent.getYear()));
 					sbReturn.append(String.format("<td>%s</td>", event.getEventtype().getValue()));
 					sbReturn.append(String.format("<td>%s</td>", event.getTitle().getValue()));
-					
+
 					if (Boolean.parseBoolean(Prefs.get(PrefKey.DISPLAY_CATEGORIES))) {
 						sbReturn.append(String.format("<td>%s</td>", event.getCategory().getValue()));
 					}
-					
+
 					sbReturn.append("</tr>");
 				});
 

@@ -49,7 +49,7 @@ public class Prefs {
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
-	private static Preferences getPreferences() {
+	public static Preferences getPreferences() {
 		if (preferences == null) {
 			preferences = Preferences.userNodeForPackage(Gebu.class);
 		}

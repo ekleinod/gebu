@@ -3,11 +3,17 @@ package de.edgesoft.gebu.utils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.AbstractMap;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
 import de.edgesoft.gebu.Gebu;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
@@ -17,7 +23,7 @@ import javafx.scene.layout.Pane;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of "Das Gebu-Programm".
  *
@@ -163,24 +169,34 @@ public class Resources {
 	 */
 	public static String loadWebView() {
 
-		String sReturn = loadFile("webview.html");
-		if (sReturn == null) {
-			sReturn = "**content**";
+		String sReturn = null;
+
+		try {
+
+			Map<String, String> mapPrefs = new HashMap<>();
+
+			for (PrefKey key : PrefKey.values()) {
+				mapPrefs.put(key.toString().toLowerCase(), Prefs.get(key));
+			}
+
+			mapPrefs.put("content", "${content}");
+
+			String sWebView = loadFile("webview.html");
+			if (sWebView == null) {
+				sWebView = "${content}";
+			}
+
+			Template tplWebView = new Template("webview", new StringReader(sWebView), new Configuration(Configuration.VERSION_2_3_26));
+
+			try (StringWriter wrtContent = new StringWriter()) {
+				tplWebView.process(mapPrefs, wrtContent);
+				sReturn = wrtContent.toString();
+			}
+
+		} catch (IOException | TemplateException e) {
+            Gebu.logger.catching(e);
+			sReturn = e.getMessage();
 		}
-
-		sReturn = sReturn
-				.replace("**past foreground**", Prefs.get(PrefKey.PAST_FOREGROUND))
-				.replace("**past fontsize**", Prefs.get(PrefKey.PAST_FONTSIZE))
-				.replace("**past background**", Prefs.get(PrefKey.PAST_BACKGROUND))
-
-				.replace("**present foreground**", Prefs.get(PrefKey.PRESENT_FOREGROUND))
-				.replace("**present fontsize**", Prefs.get(PrefKey.PRESENT_FONTSIZE))
-				.replace("**present background**", Prefs.get(PrefKey.PRESENT_BACKGROUND))
-
-				.replace("**future foreground**", Prefs.get(PrefKey.FUTURE_FOREGROUND))
-				.replace("**future fontsize**", Prefs.get(PrefKey.FUTURE_FONTSIZE))
-				.replace("**future background**", Prefs.get(PrefKey.FUTURE_BACKGROUND))
-				;
 
 		return sReturn;
 

@@ -1,5 +1,8 @@
 package de.edgesoft.gebu.controller;
 
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.text.Collator;
 import java.time.LocalDate;
 import java.time.Month;
@@ -11,8 +14,12 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import de.edgesoft.gebu.Gebu;
 import de.edgesoft.gebu.jaxb.Event;
 import de.edgesoft.gebu.utils.Resources;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
@@ -167,12 +174,12 @@ public class EventStatisticsController {
 
 		// icons
 		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/actions/dialog-ok-16.png")));
-		
+
 		tabOverview.setGraphic(new ImageView(Resources.loadImage("icons/actions/office-chart-bar.png")));
 		tabStacked.setGraphic(new ImageView(Resources.loadImage("icons/actions/office-chart-bar-stacked.png")));
 		tabEventtypes.setGraphic(new ImageView(Resources.loadImage("icons/actions/office-chart-pie.png")));
 		tabDetails.setGraphic(new ImageView(Resources.loadImage("icons/actions/view-list-details.png")));
-		
+
 	}
 
 	/**
@@ -243,7 +250,22 @@ public class EventStatisticsController {
 
 		sbDetails.append("</table>");
 
-		viewDetails.getEngine().loadContent(Resources.loadWebView().replace("**content**", sbDetails));
+		try {
+
+			Map<String, String> mapContent = new HashMap<>();
+			mapContent.put("content", sbDetails.toString());
+
+			Template tplDisplay = new Template("stats", new StringReader(Resources.loadWebView()), new Configuration(Configuration.VERSION_2_3_26));
+
+			try (StringWriter wrtContent = new StringWriter()) {
+				tplDisplay.process(mapContent, wrtContent);
+				viewDetails.getEngine().loadContent(wrtContent.toString());
+			}
+
+		} catch (IOException | TemplateException e) {
+            Gebu.logger.catching(e);
+		}
+
 
     }
 
