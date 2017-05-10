@@ -4,16 +4,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
-import java.io.StringWriter;
 import java.util.AbstractMap;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
 import de.edgesoft.gebu.Gebu;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import freemarker.template.TemplateException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
@@ -161,45 +158,23 @@ public class Resources {
     }
 
 	/**
-	 * Loads web view from resources.
+	 * Loads statistics view from resources.
 	 *
-	 * @return web view as string
+	 * @return statistics view as template
 	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
-	public static String loadWebView() {
-
-		String sReturn = null;
+	public static Template loadStatisticsView() {
 
 		try {
 
-			Map<String, String> mapPrefs = new HashMap<>();
+			return new Template("statisticsview", new StringReader(loadFile("statisticsview.html")), new Configuration(Configuration.VERSION_2_3_26));
 
-			for (PrefKey key : PrefKey.values()) {
-				mapPrefs.put(key.toString().toLowerCase(), Prefs.get(key));
-			}
-
-			mapPrefs.put("content", "${content}");
-
-			String sWebView = loadFile("webview.html");
-			if (sWebView == null) {
-				sWebView = "${content}";
-			}
-
-			Template tplWebView = new Template("webview", new StringReader(sWebView), new Configuration(Configuration.VERSION_2_3_26));
-
-			try (StringWriter wrtContent = new StringWriter()) {
-				tplWebView.process(mapPrefs, wrtContent);
-				sReturn = wrtContent.toString();
-			}
-
-		} catch (IOException | TemplateException e) {
+		} catch (IOException e) {
             Gebu.logger.catching(e);
-			sReturn = e.getMessage();
+			return null;
 		}
-
-		return sReturn;
 
     }
 

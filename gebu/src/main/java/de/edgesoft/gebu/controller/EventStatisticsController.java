@@ -1,7 +1,6 @@
 package de.edgesoft.gebu.controller;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.text.Collator;
 import java.time.LocalDate;
@@ -17,7 +16,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import de.edgesoft.gebu.Gebu;
 import de.edgesoft.gebu.jaxb.Event;
 import de.edgesoft.gebu.utils.Resources;
-import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import javafx.fxml.FXML;
@@ -207,8 +205,8 @@ public class EventStatisticsController {
 		});
 
 		AtomicInteger iWholeCount = new AtomicInteger();
-		StringBuilder sbDetails = new StringBuilder();
-		sbDetails.append("<table>");
+		Map<String, Object> mapContent = new HashMap<>();
+		Map<String, Integer> mapStats = new HashMap<>();
 
 		// output data
 		mapCounts.entrySet().stream()
@@ -235,27 +233,18 @@ public class EventStatisticsController {
 					chartStacked.getData().add(seriesStacked);
 					chartEventtypes.getData().add(new PieChart.Data(String.format("%s (%d)", typemap.getKey(), iEventCount.get()), iEventCount.get()));
 
-					sbDetails.append("<tr>");
-					sbDetails.append(String.format("<th>%s</th>", typemap.getKey()));
-					sbDetails.append(String.format("<td>%d</td>", iEventCount.get()));
-					sbDetails.append("</tr>");
 					iWholeCount.addAndGet(iEventCount.get());
+
+					mapStats.put(typemap.getKey(), iEventCount.get());
 
 				});
 
-		sbDetails.append("<tr>");
-		sbDetails.append(String.format("<th>%s</th>", "Summe"));
-		sbDetails.append(String.format("<td>%d</td>", iWholeCount.get()));
-		sbDetails.append("</tr>");
-
-		sbDetails.append("</table>");
+		mapContent.put("stats", mapStats);
+		mapContent.put("sum", iWholeCount);
 
 		try {
 
-			Map<String, String> mapContent = new HashMap<>();
-			mapContent.put("content", sbDetails.toString());
-
-			Template tplDisplay = new Template("stats", new StringReader(Resources.loadWebView()), new Configuration(Configuration.VERSION_2_3_26));
+			Template tplDisplay = Resources.loadStatisticsView();
 
 			try (StringWriter wrtContent = new StringWriter()) {
 				tplDisplay.process(mapContent, wrtContent);
