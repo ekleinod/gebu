@@ -108,6 +108,7 @@ public class Resources {
 
 			while ((sLine = reader.readLine()) != null) {
 			    sbReturn.append(sLine);
+			    sbReturn.append(System.lineSeparator());
 			}
 
 			return sbReturn.toString();

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<#setting datetime_format="iso"><#setting locale="de">
 <html>
 	<head>
 		<title>Das Gebu-Programm</title>
@@ -48,20 +49,20 @@
 	</head>
 	<body>
 		<table class="display">
-			<#if noevents??>
+			<#if noevents >
 				<tr><td>Es wurden noch keine Ereignisse eingegeben.</td></tr>
-			<#elseif noeventsininterval??>
+			<#elseif noeventsininterval >
 				<tr><td>Im Intervall von &pm; ${interval} Tagen liegen keine Ereignisse.</td></tr>
 			<#else>
 				<#list time_kinds as time_kind, events>
 					<#list events as event>
 						<tr class="${time_kind}">
-							<td>${event.date}</td>
+							<td>${event.date.value?date["yyyy-MM-dd"]?string["dd.MM.yyyy"]}</td>
 							<td>(${event.getAge(compare_date)})</td>
-							<td>${event.eventtype}</td>
-							<td>${event.title}</td>
-							<#if display_categories??>
-								<td>${event.category}</td>
+							<td>${event.eventtype.value}</td>
+							<td>${event.title.value}</td>
+							<#if display_categories?boolean >
+								<td>${event.category.value}</td>
 							</#if>
 						</tr>
 					</#list>
