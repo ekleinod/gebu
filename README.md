@@ -58,44 +58,6 @@ Additionally, the following branches my occur:
 - `release/*` - Release-Synchronisierung (synchronizing release versions between `develop` and `master`)
 - `hotfix/*` - Fehlerbehebung (fast bugfixes)
 
-## Fertige Versionen/Released Versions
-
-### Version 6.0.0 beta 3
-
-- neue Funktionen
-	- Installer
-	- Dateierweiterung ".gebu" statt ".esx"
-	- Links in Über-Text anklickbar
-	- Dateiname in Titel kurz oder kompletter Pfad
-	- Anzeige der Kategorie in Ausgabe wählbar
-- Fehlerbehebung
-	- Eingabe in Datumfeld ohne führende Nullen möglich
-	- stabilere Tabellenansicht, auch nach Speichern und Änderungen
-	- Ereignisanzeige zeigte Ereignisse nicht an
-- Sonstiges
-	- neues Logo
-	- MVC-Ansatz durchgezogen
-
-### Version 6.0.0 beta 2
-
-- neue Funktionen
-	- ESC-Funktion
-	- Dateierweiterung ".esx" wird ergänzt, wenn keine Endung vorhanden ist
-- Fehlerbehebung
-	- neue und gelöschte Daten wurden nicht gespeichert
-	- NullPointerException bei Filterung von Events ohne Kategorie verhindert
-- Sonstiges
-	- Doku in README verbessert
-
-### Version 6.0.0 beta 1
-
-- erste komplett neu programmierte Beta
-
-### Version 5
-
-- die bisher gültige Version, leider derzeit offline
-- current version, unfortunately offline for now
-
 ## Neue Versionen
 
 Für eine neue Version:

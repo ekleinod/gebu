@@ -7,18 +7,37 @@ gebu (6.0.0 beta 4) unstable; urgency=low
 -- Ekkart Kleinod <ekleinod@edgesoft.de>  Thu, 11 May 2017 12:00:00 +0100
 
 
+gebu (6.0.0 beta 3 installer) unstable; urgency=low
+
+	* fixed Windows installer, now working on Windows 7
+
+-- Ekkart Kleinod <ekleinod@edgesoft.de>  Tue, 25 Oct 2016 12:00:00 +0100
+
+
 gebu (6.0.0 beta 3) unstable; urgency=low
 
-	* bugfix version
-	* windows installer
 	* new icon and graphics
+	* completed MVC concept
 
--- Ekkart Kleinod <ekleinod@edgesoft.de>  Mon, 3 Oct 2016 12:00:00 +0100
+	* new functions
+	* Windows installer
+	* file extension ".gebu" instead of ".esx"
+	* links in about dialog clickable
+
+	* preferences
+	* filename in title short or full path
+	* category display selectable
+
+	* bugfixes
+	* date input without leading zeros
+	* more stable table view after saving and editing
+	* event display did not show all events
+
+-- Ekkart Kleinod <ekleinod@edgesoft.de>  Mon, 24 Oct 2016 12:00:00 +0100
 
 
 gebu (6.0.0 beta 2) unstable; urgency=low
 
-	* bugfix version
 	* beloved Escape functionality (close program with ESC key)
 	* improved documentation
 
