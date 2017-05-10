@@ -53,8 +53,8 @@
 			<#elseif noeventsininterval??>
 				<tr><td>Im Intervall von &pm; ${interval} Tagen liegen keine Ereignisse.</td></tr>
 			<#else>
-				<#list time_kinds as time_kind>
-					<#list time_kind.events as event>
+				<#list time_kinds as time_kind, events>
+					<#list events as event>
 						<tr class="${time_kind}">
 							<td>${event.date}</td>
 							<td>(${event.getAge(compare_date)})</td>
