@@ -202,6 +202,27 @@ public class Resources {
 
     }
 
+	/**
+	 * Loads event view from resources.
+	 *
+	 * @return event view as template
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public static Template loadEventView() {
+
+		try {
+
+			return new Template("eventview", new StringReader(loadFile("eventview.html")), new Configuration(Configuration.VERSION_2_3_26));
+
+		} catch (IOException e) {
+            Gebu.logger.catching(e);
+			return null;
+		}
+
+    }
+
 }
 
 /* EOF */

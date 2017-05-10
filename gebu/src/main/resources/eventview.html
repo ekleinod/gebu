@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Das Gebu-Programm</title>
+		<style type="text/css">
+			body {
+				background-color: #FFFFFF;
+				font-family: sans-serif;
+			}
+
+			table.display {
+				margin-left: auto;
+				margin-right: auto;
+			}
+
+			th {
+				text-align: left;
+			}
+
+			tr.empty {
+				height: 1ex;
+			}
+
+			td {
+				padding: .5ex 1ex .5ex 1ex;
+			}
+
+			tr.past {
+				font-size: ${past_fontsize}pt;
+				color: ${past_foreground};
+				background-color: ${past_background};
+			}
+
+			tr.present {
+				font-size: ${present_fontsize}pt;
+				color: ${present_foreground};
+				background-color: ${present_background};
+			}
+
+			tr.future {
+				font-size: ${future_fontsize}pt;
+				color: ${future_foreground};
+				background-color: ${future_background};
+			}
+
+		</style>
+
+	</head>
+	<body>
+		<table class="display">
+			<#if noevents??>
+				<tr><td>Es wurden noch keine Ereignisse eingegeben.</td></tr>
+			<#elseif noeventsininterval??>
+				<tr><td>Im Intervall von &pm; ${interval} Tagen liegen keine Ereignisse.</td></tr>
+			<#else>
+				<#list time_kinds as time_kind>
+					<#list time_kind.events as event>
+						<tr class="${time_kind}">
+							<td>${event.date}</td>
+							<td>(${event.getAge(compare_date)})</td>
+							<td>${event.eventtype}</td>
+							<td>${event.title}</td>
+							<#if display_categories??>
+								<td>${event.category}</td>
+							</#if>
+						</tr>
+					</#list>
+					<#sep><tr class="empty" /></#sep>
+				</#list>
+			</#if>
+		</table>
+	</body>
+</html>

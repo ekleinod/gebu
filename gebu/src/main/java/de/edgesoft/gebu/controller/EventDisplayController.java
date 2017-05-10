@@ -14,6 +14,7 @@ import de.edgesoft.gebu.Gebu;
 import de.edgesoft.gebu.jaxb.Event;
 import de.edgesoft.gebu.model.AppModel;
 import de.edgesoft.gebu.model.ContentModel;
+import de.edgesoft.gebu.model.EventModel;
 import de.edgesoft.gebu.utils.PrefKey;
 import de.edgesoft.gebu.utils.Prefs;
 import de.edgesoft.gebu.utils.Resources;
@@ -92,6 +93,82 @@ public class EventDisplayController {
 	 * @since 6.0.0
 	 */
 	public void displayEvents(final LocalDate theDate) {
+
+		int iInterval = Integer.parseInt(Prefs.get(PrefKey.INTERVAL));
+
+		Map<String, Object> mapContent = new HashMap<>();
+
+		for (PrefKey key : PrefKey.values()) {
+			mapContent.put(key.toString().toLowerCase(), Prefs.get(key));
+		}
+
+		mapContent.put("noevents", false);
+		mapContent.put("noeventsininterval", false);
+
+		if (AppModel.getData().getContent().getEvent().isEmpty()) {
+			mapContent.put("noevents", true);
+		} else {
+
+			Map<String, List<EventModel>> mapTimeKinds = new HashMap<>();
+			mapContent.put("time_kinds", mapTimeKinds);
+
+			String sTemp = getTableLines(
+					theDate,
+					((ContentModel) AppModel.getData().getContent()).getSortedFilterEvents(theDate, -iInterval, -1),
+					"past");
+
+			if (!sTemp.isEmpty()) {
+				sbEvents.append(sTemp);
+				sbEvents.append("<tr class=\"empty\" />");
+			}
+
+			sTemp = getTableLines(
+					theDate,
+					((ContentModel) AppModel.getData().getContent()).getSortedFilterEvents(theDate, 0, 0),
+					"present");
+
+			if (!sTemp.isEmpty()) {
+				sbEvents.append(sTemp);
+				sbEvents.append("<tr class=\"empty\" />");
+			}
+
+			sTemp = getTableLines(
+					theDate,
+					((ContentModel) AppModel.getData().getContent()).getSortedFilterEvents(theDate, 1, iInterval),
+					"future");
+
+			if (!sTemp.isEmpty()) {
+				sbEvents.append(sTemp);
+			}
+
+			if (sbEvents.length() == 0) {
+				sbEvents.append(String.format("<tr><td>%s</td></tr>",
+						MessageFormat.format("Im Intervall von &pm; {0} Tagen liegen keine Ereignisse.", Integer.parseInt(Prefs.get(PrefKey.INTERVAL)))));
+			}
+		}
+
+		try {
+
+			Template tplDisplay = new Template("display", new StringReader(Resources.loadWebView()), new Configuration(Configuration.VERSION_2_3_26));
+
+			try (StringWriter wrtContent = new StringWriter()) {
+				tplDisplay.process(mapContent, wrtContent);
+				dspEvents.getEngine().loadContent(wrtContent.toString());
+			}
+
+		} catch (IOException | TemplateException e) {
+            Gebu.logger.catching(e);
+		}
+
+	}
+
+	/**
+	 * Displays events for given date.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public void displayEventsOld(final LocalDate theDate) {
 
 		int iInterval = Integer.parseInt(Prefs.get(PrefKey.INTERVAL));
 
