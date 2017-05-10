@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Das Gebu-Programm
+Comment=Shows birthdays in a selectable interval.
+Comment[de]=Zeigt Geburtstage in einem frei wählbaren Intervall.
+Exec=/bin/gebu
+Icon=/usr/share/gebu/icon.svg
+Terminal=false
+Type=Application
+Categories=Java;Application;Office
+StartupNotify=true

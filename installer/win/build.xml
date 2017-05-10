@@ -2,11 +2,15 @@
 
 <!--
 
-Create gebu installer.
+Create gebu win installer.
 
-## Legal stuff
+# Legal stuff
 
-Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
+
+The program is distributed under the terms of the GNU Lesser General Public License.
+
+See COPYING and COPYING.LESSER for details.
 
 This file is part of "Das Gebu-Programm".
 
@@ -29,10 +33,7 @@ along with "Das Gebu-Programm".  If not, see <http://www.gnu.org/licenses/>.
 
 -->
 
-<project name="gebu" default="help" basedir=".">
-
-	<property name="file:log" value="build.log" />
-	<property name="file:nsi" value="${ant.project.name}.nsi" />
+<project basedir=".">
 
 	<!-- your local path here -->
 	<property name="exe:nsis:windows" value="C:\localapps\NSIS\makensis.exe" />
@@ -45,7 +46,7 @@ along with "Das Gebu-Programm".  If not, see <http://www.gnu.org/licenses/>.
 		<os family="unix" />
 	</condition>
 
-	<target name="installer" depends="clearLog" description="Create installer.">
+	<target name="installer">
 
 		<antcall target="nsis:windows" />
 		<antcall target="nsis:unix" />
@@ -64,32 +65,12 @@ along with "Das Gebu-Programm".  If not, see <http://www.gnu.org/licenses/>.
 		</antcall>
 	</target>
 
-	<target name="nsis" depends="clearLog">
+	<target name="nsis">
 
-		<exec executable="${exe:nsis}" output="${file:log}" append="true" failonerror="true">
-			<arg line="${file:nsi}" />
+		<exec executable="${exe:nsis}" output="${file.log}" append="true" failonerror="true">
+			<arg line="${file.nsi}" />
 		</exec>
 
-	</target>
-
-	<target name="help" description="Shows help text.">
-		<echo>Create ${ant.project.name} installer</echo>
-		<echo />
-		<echo>You can use the following targets:</echo>
-
-		<!-- show all available targets -->
-		<java classname="org.apache.tools.ant.Main">
-			<arg value="-projecthelp" />
-			<arg value="-buildfile" />
-			<arg value="${ant.file}" />
-		</java>
-	</target>
-
-	<target name="clearLog" description="Delete log file.">
-		<echo message="" file="${file:log}" />
-		<delete>
-			<fileset dir="." includes="**/*.log" />
-		</delete>
 	</target>
 
 </project>
