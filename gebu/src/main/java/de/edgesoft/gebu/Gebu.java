@@ -58,7 +58,6 @@ public class Gebu extends Application {
 	 * Central logger for all classes.
 	 *
 	 * @version 6.0.0
-	 * @since 6.0.0
 	 */
 	public static final Logger logger = LogManager.getLogger(Gebu.class.getPackage().getName());
 
@@ -68,7 +67,6 @@ public class Gebu extends Application {
 	 * Needed for opening links in browser etc.
 	 *
 	 * @version 6.0.0
-	 * @since 6.0.0
 	 */
 	public static HostServicesDelegate hostServices = null;
 
@@ -78,7 +76,6 @@ public class Gebu extends Application {
 	 * @param args command line arguments
 	 *
 	 * @version 6.0.0
-	 * @since 6.0.0
 	 */
 	public static void main(String[] args) {
 		launch(args);
@@ -92,7 +89,6 @@ public class Gebu extends Application {
      * @param primaryStage primary stage
 	 *
 	 * @version 6.0.0
-	 * @since 6.0.0
      */
 	@Override
 	public void start(Stage primaryStage) {
@@ -114,7 +110,6 @@ public class Gebu extends Application {
 	 * Inspired by https://gist.github.com/jewelsea/2305098
 	 *
 	 * @version 6.0.0
-	 * @since 6.0.0
 	 */
 	public void showSplashScreen() {
 
@@ -164,7 +159,6 @@ public class Gebu extends Application {
 	 * Program and doc version.
 	 *
 	 * @version 6.0.0
-	 * @since 6.0.0
 	 */
 	public static Version getVersion() {
 		return new VersionExt(String.format("%s.%s.%s%s",
