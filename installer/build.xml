@@ -40,7 +40,10 @@ along with "Das Gebu-Programm".  If not, see <http://www.gnu.org/licenses/>.
 	<!-- ant-contrib has to be installed -->
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
 
-	<property file="project.properties"/>
+	<property name="edgeutils:path" value="../submodules/edgeutils" />
+	<import file="${edgeutils:path}/ant/ant-commons.xml"/>
+
+	<property file="../gebu/src/main/resources/project.properties"/>
 
 	<import file="${dir.win}/build.xml" />
 
@@ -157,26 +160,6 @@ along with "Das Gebu-Programm".  If not, see <http://www.gnu.org/licenses/>.
 			resource="${ant.project.name}-${version}.exe"
 			overwrite="true"
 		/>
-	</target>
-
-	<target name="help" description="Shows help text.">
-		<echo>Create ${ant.project.name} installer</echo>
-		<echo />
-		<echo>You can use the following targets:</echo>
-
-		<!-- show all available targets -->
-		<java classname="org.apache.tools.ant.Main">
-			<arg value="-projecthelp" />
-			<arg value="-buildfile" />
-			<arg value="${ant.file}" />
-		</java>
-	</target>
-
-	<target name="clearLog" description="Delete log file.">
-		<echo message="" file="${file.log}" />
-		<delete>
-			<fileset dir="." includes="**/*.log" />
-		</delete>
 	</target>
 
 </project>
