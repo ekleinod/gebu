@@ -42,12 +42,16 @@ public class AlertUtils {
 	 * the icon and resizing the alert to fit the text.
 	 *
 	 * @param theAlertType alert type
+	 * @param theOwner alert owner
+	 * @param theTitle alert title
+	 * @param theHeader alert header text
+	 * @param theContent alert content (null allowed for empty content)
 	 * @return created alert
 	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
-	public static Alert createAlert(final AlertType theAlertType, final Stage theOwner, 
+	public static Alert createAlert(final AlertType theAlertType, final Stage theOwner,
 			final String theTitle, final String theHeader, final String theContent) {
 
         Alert alert = new Alert(theAlertType);
@@ -85,7 +89,7 @@ public class AlertUtils {
         alert.setTitle(theTitle);
         alert.setHeaderText(theHeader);
         alert.setContentText(theContent);
-        
+
         return alert;
 
     }
