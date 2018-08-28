@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<#setting datetime_format="iso"><#setting locale="de">
+<html>
+	<head>
+		<title>Das Gebu-Programm</title>
+		<style type="text/css">
+			body {
+				background-color: #FFFFFF;
+				font-family: sans-serif;
+			}
+
+			th {
+				text-align: left;
+			}
+
+			tr.empty {
+				height: 1ex;
+			}
+
+			td {
+				padding: .5ex 1ex .5ex 1ex;
+			}
+
+		</style>
+
+	</head>
+	<body>
+		<table>
+			<#list stats as type, count>
+				<tr>
+					<th>${type}</th>
+					<td>${count}</td>
+				</tr>
+			</#list>
+			<tr class="empty" />
+			<tr>
+				<th>Summe</th>
+				<td>${sum}</td>
+			</tr>
+		</table>
+	</body>
+</html>

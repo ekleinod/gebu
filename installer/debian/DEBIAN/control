@@ -1,0 +1,12 @@
+Package: Das Gebu-Programm
+Version: **version**
+Section: misc
+Priority: optional
+Architecture: all
+Maintainer: Ekkart Kleinod <ekleinod@edgesoft.de>
+Description: "Das Gebu-Programm" shows birthdays in a two week interval, i.e. birthdays of the last week, the actual birthdays, and the birthdays of the future week.
+	The birthdays can be edited with an internal editor.
+	The interval is changeable.
+Depends: openjdk-8-jre | openjdk-9-jre | oracle-java8-installer | oracle-java9-installer
+Homepage: https://github.com/ekleinod/gebu
+Installed-Size: **size**

@@ -4,6 +4,10 @@
 #
 # Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
 #
+# The program is distributed under the terms of the GNU General Public License.
+#
+# See COPYING for details.
+#
 # This file is part of "Das Gebu-Programm".
 #
 # "Das Gebu-Programm" is free software: you can redistribute it and/or modify

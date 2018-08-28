@@ -1,3 +1,6 @@
 [submodule "submodules/edgeutils"]
 	path = submodules/edgeutils
 	url = git@github.com:ekleinod/edgeutils.git
+[submodule "submodules/doxygen-bootstrapped"]
+	path = submodules/doxygen-bootstrapped
+	url = git@github.com:Velron/doxygen-bootstrapped.git
