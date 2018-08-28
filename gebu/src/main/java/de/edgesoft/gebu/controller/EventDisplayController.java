@@ -1,16 +1,21 @@
 package de.edgesoft.gebu.controller;
 
-import java.text.MessageFormat;
+import java.io.IOException;
+import java.io.StringWriter;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import de.edgesoft.edgeutils.datetime.DateTimeUtils;
+import de.edgesoft.gebu.Gebu;
 import de.edgesoft.gebu.jaxb.Event;
 import de.edgesoft.gebu.model.AppModel;
 import de.edgesoft.gebu.model.ContentModel;
 import de.edgesoft.gebu.utils.PrefKey;
 import de.edgesoft.gebu.utils.Prefs;
 import de.edgesoft.gebu.utils.Resources;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -21,7 +26,7 @@ import javafx.scene.web.WebView;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of "Das Gebu-Programm".
  *
@@ -60,11 +65,11 @@ public class EventDisplayController {
 	 * @since 6.0.0
 	 */
 	private AppLayoutController appController = null;
-	
-	
+
+
 	/**
 	 * Initializes the controller with things, that cannot be done during {@link #initialize()}.
-	 * 
+	 *
 	 * @param theAppController app controller
 	 *
 	 * @version 6.0.0
@@ -73,9 +78,9 @@ public class EventDisplayController {
 	public void initController(final AppLayoutController theAppController) {
 
 		appController = theAppController;
-		
+
 	}
-		
+
 	/**
 	 * Displays events for given date.
 	 *
@@ -86,84 +91,43 @@ public class EventDisplayController {
 
 		int iInterval = Integer.parseInt(Prefs.get(PrefKey.INTERVAL));
 
-		StringBuilder sbEvents = new StringBuilder();
+		Map<String, Object> mapContent = new HashMap<>();
 
-		if (AppModel.getData().getContent().getEvent().isEmpty()) {
-			sbEvents.append(String.format("<tr><td>%s</td></tr>", "Es wurden noch keine Ereignisse eingegeben."));
-		} else {
-
-			String sTemp = getTableLines(
-					theDate,
-					((ContentModel) AppModel.getData().getContent()).getSortedFilterEvents(theDate, -iInterval, -1),
-					"past");
-
-			if (!sTemp.isEmpty()) {
-				sbEvents.append(sTemp);
-				sbEvents.append("<tr class=\"empty\" />");
-			}
-
-			sTemp = getTableLines(
-					theDate,
-					((ContentModel) AppModel.getData().getContent()).getSortedFilterEvents(theDate, 0, 0),
-					"present");
-
-			if (!sTemp.isEmpty()) {
-				sbEvents.append(sTemp);
-				sbEvents.append("<tr class=\"empty\" />");
-			}
-
-			sTemp = getTableLines(
-					theDate,
-					((ContentModel) AppModel.getData().getContent()).getSortedFilterEvents(theDate, 1, iInterval),
-					"future");
-
-			if (!sTemp.isEmpty()) {
-				sbEvents.append(sTemp);
-			}
-
-			if (sbEvents.length() == 0) {
-				sbEvents.append(String.format("<tr><td>%s</td></tr>",
-						MessageFormat.format("Im Intervall von &pm; {0} Tagen liegen keine Ereignisse.", Integer.parseInt(Prefs.get(PrefKey.INTERVAL)))));
-			}
+		for (PrefKey key : PrefKey.values()) {
+			mapContent.put(key.toString().toLowerCase(), Prefs.get(key));
 		}
 
-		dspEvents.getEngine().loadContent(Resources.loadWebView().replace("**content**", String.format("<table class=\"display\">%s</table>", sbEvents)));
+		mapContent.put("compare_date", theDate);
 
-	}
+		mapContent.put("noevents", AppModel.getData().getContent().getEvent().isEmpty());
 
-	/**
-	 * Returns table lines for a time.
-	 *
-	 * @param theDate date (for age computation)
-	 * @param theEvents list of events
-	 * @param theTime kind of time (past, present, future)
-	 *
-	 * @return table lines for time
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-	 */
-	private static String getTableLines(final LocalDate theDate, final List<Event> theEvents, final String theTime) {
+		if (!AppModel.getData().getContent().getEvent().isEmpty()) {
 
-		StringBuilder sbReturn = new StringBuilder();
+			Map<String, List<Event>> mapTimeKinds = new HashMap<>();
 
-		theEvents.stream()
-				.forEach(event -> {
-					sbReturn.append(String.format("<tr class=\"%s\">", theTime));
-					LocalDate dteEvent = (LocalDate) event.getDate().getValue();
-					sbReturn.append(String.format("<td>%s</td>", DateTimeUtils.formatDate(dteEvent)));
-					sbReturn.append(String.format("<td>(%s)</td>", theDate.getYear() - dteEvent.getYear()));
-					sbReturn.append(String.format("<td>%s</td>", event.getEventtype().getValue()));
-					sbReturn.append(String.format("<td>%s</td>", event.getTitle().getValue()));
-					
-					if (Boolean.parseBoolean(Prefs.get(PrefKey.DISPLAY_CATEGORIES))) {
-						sbReturn.append(String.format("<td>%s</td>", event.getCategory().getValue()));
-					}
-					
-					sbReturn.append("</tr>");
-				});
+			mapTimeKinds.put("past", ((ContentModel) AppModel.getData().getContent()).getSortedFilterEvents(theDate, -iInterval, -1));
+			mapTimeKinds.put("present", ((ContentModel) AppModel.getData().getContent()).getSortedFilterEvents(theDate, 0, 0));
+			mapTimeKinds.put("future", ((ContentModel) AppModel.getData().getContent()).getSortedFilterEvents(theDate, 1, iInterval));
 
-		return sbReturn.toString();
+			mapContent.put("time_kinds", mapTimeKinds);
+
+			mapContent.put("noeventsininterval", mapTimeKinds.get("past").isEmpty() && mapTimeKinds.get("present").isEmpty() && mapTimeKinds.get("future").isEmpty());
+
+		}
+
+		try {
+
+			Template tplDisplay = Resources.loadEventView();
+
+			try (StringWriter wrtContent = new StringWriter()) {
+				tplDisplay.process(mapContent, wrtContent);
+				dspEvents.getEngine().loadContent(wrtContent.toString());
+			}
+
+		} catch (IOException | TemplateException e) {
+            Gebu.logger.catching(e);
+		}
+
 	}
 
 	/**

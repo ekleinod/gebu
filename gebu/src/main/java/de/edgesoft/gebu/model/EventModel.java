@@ -140,6 +140,19 @@ public class EventModel extends Event {
 	 */
 	public static final Comparator<Event> DATE_INTERVAL_TITLE = DATE_INTERVAL.thenComparing(event -> event.getTitle().getValue(), Collator.getInstance());
 
+	/**
+	 * Returns age of event.
+	 *
+	 * @param theDate date (for age computation)
+	 * @return age (year based only)
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public int getAge(final LocalDate theDate) {
+		return theDate.getYear() - ((LocalDate) getDate().getValue()).getYear();
+	}
+
 }
 
 /* EOF */

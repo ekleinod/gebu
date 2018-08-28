@@ -1,0 +1,106 @@
+gebu (6.0.0 beta 4) unstable; urgency=low
+
+	* rewrote event and statistics display, now using freemarker
+	* new icon and graphics
+	* deb installer
+
+-- Ekkart Kleinod <ekleinod@edgesoft.de>  Thu, 11 May 2017 12:00:00 +0100
+
+
+gebu (6.0.0 beta 3 installer) unstable; urgency=low
+
+	* fixed Windows installer, now working on Windows 7
+
+-- Ekkart Kleinod <ekleinod@edgesoft.de>  Tue, 25 Oct 2016 12:00:00 +0100
+
+
+gebu (6.0.0 beta 3) unstable; urgency=low
+
+	* new icon and graphics
+	* completed MVC concept
+
+	* new functions
+	* Windows installer
+	* file extension ".gebu" instead of ".esx"
+	* links in about dialog clickable
+
+	* preferences
+	* filename in title short or full path
+	* category display selectable
+
+	* bugfixes
+	* date input without leading zeros
+	* more stable table view after saving and editing
+	* event display did not show all events
+
+-- Ekkart Kleinod <ekleinod@edgesoft.de>  Mon, 24 Oct 2016 12:00:00 +0100
+
+
+gebu (6.0.0 beta 2) unstable; urgency=low
+
+	* beloved Escape functionality (close program with ESC key)
+	* improved documentation
+
+	* new functions
+	* ESC functionality
+	* file extensions ".esx" is added if no extension is given
+
+	* bugfixes
+	* new and deleted data was not saved
+	* NullPointerException when filtering events without category
+
+-- Ekkart Kleinod <ekleinod@edgesoft.de>  Mon, 3 Oct 2016 12:00:00 +0100
+
+
+gebu (6.0.0 beta 1) unstable; urgency=low
+
+	* complete rewrite using JavaFX
+	* new XML format
+	* imports data from version 5.0.0
+
+-- Ekkart Kleinod <ekleinod@edgesoft.de>  Mon, 3 Oct 2016 12:00:00 +0100
+
+
+gebu (5.0.0) stable; urgency=low
+
+	* Java version
+	* XML data format
+	* model-view-controller
+	* imports data from version 4.0.0
+
+-- Ekkart Kleinod <ekleinod@edgesoft.de>
+
+
+gebu (4.0.0) stable; urgency=low
+
+	* initial Java version
+	* ASCII data format
+	* converter for data of version 3.0.0
+
+-- Ekkart Kleinod <ekleinod@edgesoft.de>
+
+
+gebu (3.0.0) stable; urgency=low
+
+	* the classic Windows version
+	* written in Visual Basic
+	* integrated editor
+	* binary data format
+	* problems running under Windows 7+
+
+-- Ekkart Kleinod <ekleinod@edgesoft.de>
+
+
+gebu (2.0.0) unstable; urgency=low
+
+	* never finished rewrite for Windows
+
+-- Ekkart Kleinod <ekleinod@edgesoft.de>
+
+
+gebu (1.0.0) stable; urgency=low
+
+	* DOS version
+	* show data but no edit functionality
+
+-- Ekkart Kleinod <ekleinod@edgesoft.de>

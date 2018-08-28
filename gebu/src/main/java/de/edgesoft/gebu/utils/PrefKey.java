@@ -30,7 +30,7 @@ package de.edgesoft.gebu.utils;
  * @since 6.0.0
  */
 public enum PrefKey {
-	
+
 	DISPLAY_CATEGORIES,
 
 	FILE,
@@ -40,6 +40,8 @@ public enum PrefKey {
 	FUTURE_FOREGROUND,
 
 	INTERVAL,
+
+	MAXIMIZED,
 
 	PAST_BACKGROUND,
 	PAST_FONTSIZE,
@@ -56,7 +58,7 @@ public enum PrefKey {
 	STAGE_WIDTH,
 	STAGE_X,
 	STAGE_Y,
-	
+
 	TITLE_FULLPATH,
 	;
 

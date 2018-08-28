@@ -35,11 +35,10 @@ public class AboutTextController {
 
 	/**
 	 * Email link.
-	 * 
+	 *
 	 * @param theEvent action event
 	 *
 	 * @version 6.0.0
-	 * @since 6.0.0
 	 */
 	@SuppressWarnings("static-method")
 	@FXML
@@ -49,11 +48,10 @@ public class AboutTextController {
 
 	/**
 	 * Web link.
-	 * 
+	 *
 	 * @param theEvent action event
 	 *
 	 * @version 6.0.0
-	 * @since 6.0.0
 	 */
 	@SuppressWarnings("static-method")
 	@FXML

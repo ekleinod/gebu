@@ -3,10 +3,14 @@ package de.edgesoft.gebu.utils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.util.AbstractMap;
 import java.util.Map;
+import java.util.Properties;
 
 import de.edgesoft.gebu.Gebu;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
@@ -16,7 +20,7 @@ import javafx.scene.layout.Pane;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of "Das Gebu-Programm".
  *
@@ -38,6 +42,14 @@ import javafx.scene.layout.Pane;
  * @since 6.0.0
  */
 public class Resources {
+
+	/**
+	 * Project properties singleton.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	private static Properties prpProject = null;
 
 	/**
 	 * Loads image from resources.
@@ -93,6 +105,7 @@ public class Resources {
 
 			while ((sLine = reader.readLine()) != null) {
 			    sbReturn.append(sLine);
+			    sbReturn.append(System.lineSeparator());
 			}
 
 			return sbReturn.toString();
@@ -105,35 +118,84 @@ public class Resources {
     }
 
 	/**
-	 * Loads web view from resources.
+	 * Loads properties from resources.
 	 *
-	 * @return web view as string
+	 * @param theFileName pane name
+	 * @return loaded file as properties
 	 *
 	 * @version 6.0.0
 	 * @since 6.0.0
 	 */
-	public static String loadWebView() {
+	public static Properties loadProperties(final String theFileName) {
 
-		String sReturn = loadFile("webview.html");
-		if (sReturn == null) {
-			sReturn = "**content**";
+		Properties prpReturn = new Properties();
+
+		try {
+
+			prpReturn.load(Gebu.class.getClassLoader().getResourceAsStream(theFileName));
+
+		} catch (Exception e) {
+            Gebu.logger.catching(e);
 		}
 
-		sReturn = sReturn
-				.replace("**past foreground**", Prefs.get(PrefKey.PAST_FOREGROUND))
-				.replace("**past fontsize**", Prefs.get(PrefKey.PAST_FONTSIZE))
-				.replace("**past background**", Prefs.get(PrefKey.PAST_BACKGROUND))
+		return prpReturn;
 
-				.replace("**present foreground**", Prefs.get(PrefKey.PRESENT_FOREGROUND))
-				.replace("**present fontsize**", Prefs.get(PrefKey.PRESENT_FONTSIZE))
-				.replace("**present background**", Prefs.get(PrefKey.PRESENT_BACKGROUND))
+    }
 
-				.replace("**future foreground**", Prefs.get(PrefKey.FUTURE_FOREGROUND))
-				.replace("**future fontsize**", Prefs.get(PrefKey.FUTURE_FONTSIZE))
-				.replace("**future background**", Prefs.get(PrefKey.FUTURE_BACKGROUND))
-				;
+	/**
+	 * Loads project properties from resources.
+	 *
+	 * @return project properties
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public static Properties getProjectProperties() {
+		if (prpProject == null) {
+			prpProject = loadProperties("project.properties");
+		}
+		return prpProject;
+    }
 
-		return sReturn;
+	/**
+	 * Loads statistics view from resources.
+	 *
+	 * @return statistics view as template
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public static Template loadStatisticsView() {
+
+		try {
+
+			return new Template("statisticsview", new StringReader(loadFile("statisticsview.html")), new Configuration(Configuration.VERSION_2_3_26));
+
+		} catch (IOException e) {
+            Gebu.logger.catching(e);
+			return null;
+		}
+
+    }
+
+	/**
+	 * Loads event view from resources.
+	 *
+	 * @return event view as template
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	public static Template loadEventView() {
+
+		try {
+
+			return new Template("eventview", new StringReader(loadFile("eventview.html")), new Configuration(Configuration.VERSION_2_3_26));
+
+		} catch (IOException e) {
+            Gebu.logger.catching(e);
+			return null;
+		}
 
     }
 
